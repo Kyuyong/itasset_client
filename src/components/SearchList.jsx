@@ -3,7 +3,7 @@ import SolutionBox from './SolutionBox';
 
 
 export const SearchList = ({ searchResults }) => {
-
+  console.log(searchResults);
   console.log(searchResults)
   return (
     <div className="searchlist">
@@ -13,8 +13,9 @@ export const SearchList = ({ searchResults }) => {
       {searchResults.length > 0 ? (
         <div className="solutionsContainer">
           {searchResults.map((item) => (
-            <div key={item.id}>
+            <div key={item.id} >
               <SolutionBox
+                key={item.id}
                 id={item.id}
                 solName={item.sol_name}
                 solFullName={item.sol_full_name}

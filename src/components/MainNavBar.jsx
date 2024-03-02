@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
-import { BsLockFill, BsGearFill } from 'react-icons/bs';
+import { BsLockFill } from 'react-icons/bs';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 
 
 export const MainNavBar = ({ onLogout }) => {
@@ -24,10 +25,10 @@ export const MainNavBar = ({ onLogout }) => {
           <Link to="/" className="link">IT Asset</Link>
         </div>
         <div className="controls">
-          <div className="menu">
-            <BsGearFill size={24} />
-            <span>Setting</span>
-          </div>
+          <Link to="/registersol" className="menu regLink">
+            <AppRegistrationIcon size={24} />
+            <span>Register Sol.</span>
+          </Link>
           <div className="menu" onClick={onLogout}>
             <BsLockFill size={24} />
             <span>Logout</span>

@@ -216,6 +216,7 @@ a {
           align-items: center;
           gap: 50px;
 
+
           .menu {
             display: flex;
             flex-direction: column;
@@ -227,13 +228,12 @@ a {
               color: $whitegrayColor;
             }
           }
+
+          .regLink {
+            color: white;
+          }
         }
-
-
-
       }
-
-
     }
 
 
@@ -1362,6 +1362,25 @@ a {
 
           }
 
+        }
+      }
+
+    }
+
+    //REGISTER Solution 등록
+    .registerSol {
+
+      .box {
+        height: 70px;
+        width: 100%;
+
+        .bg {
+          background: linear-gradient(100deg, rgb(41, 162, 208) 0%, rgb(119, 47, 201) 100%);
+          height: 90px;
+          left: 0;
+          position: absolute;
+          top: 0;
+          width: 100%;
         }
       }
 

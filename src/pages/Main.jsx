@@ -10,7 +10,7 @@ import Footer from '../components/Footer';
 // Page List
 import Home from './Home';
 import Product from './Product';
-import RegisterSolution from './RegisterSolution';
+import RegisterSol from './RegisterSol';
 import Introduction from './Introduction';
 
 // Solution Data List (json file)
@@ -24,7 +24,7 @@ export const Main = ({ onLogout }) => {
   const showHome =
     !location.pathname.startsWith('/product')
     && !location.pathname.startsWith('/introduction')
-    && !location.pathname.startsWith('/registersolution')
+    && !location.pathname.startsWith('/registersol')
 
   return (
     <>
@@ -35,7 +35,7 @@ export const Main = ({ onLogout }) => {
         <Routes>
           <Route path="/product/:id" element={<Product solutionData={solutionData} />} />
           <Route path="/introduction" element={<Introduction solutionData={solutionData} />}></Route>
-          <Route path="/registersolution" element={<RegisterSolution />} />
+          <Route path="/registersol" element={<RegisterSol />} />
         </Routes>
         <ScrollToTop />
 
@@ -45,6 +45,5 @@ export const Main = ({ onLogout }) => {
     </>
   )
 }
-
 
 export default Main;

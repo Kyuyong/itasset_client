@@ -42,7 +42,6 @@ export const MainRecommend = ({ solutionData, developerData }) => {
           </div>
           <p className="text">새로운 AI/DT Solution을 <br></br> 만나보세요.</p>
           <p className="subText">The Best AI/DT Solution and System have arrived.</p>
-          {/* <button type="button" class="newBtn">See all products</button> */}
         </div>
         <div className="rightSide">
           <div className="solutionsContainer">
@@ -50,6 +49,7 @@ export const MainRecommend = ({ solutionData, developerData }) => {
               {latestSolutions.slice(0, 2).map((solution) => (
                 <div className="solutionColumn" key={solution.id}>
                   <SolutionBox
+                    key={solution.id}
                     id={solution.id}
                     solName={solution.sol_name}
                     solFullName={solution.sol_full_name}
@@ -63,6 +63,7 @@ export const MainRecommend = ({ solutionData, developerData }) => {
               {latestSolutions.slice(2, 4).map((solution) => (
                 <div className="solutionColumn" key={solution.id}>
                   <SolutionBox
+                    key={solution.id}
                     id={solution.id}
                     solName={solution.sol_name}
                     solFullName={solution.sol_full_name}
@@ -86,7 +87,7 @@ export const MainRecommend = ({ solutionData, developerData }) => {
         <hr className="line" />
         <p className="subText"> No. 1 기술전문회사로 도약하기 위해서 우리의 본업인 현장 경쟁력 강화를 위해 AI/DT전문가 양성하였습니다. <br></br>
           우리 회사 IT 전문가들의 잠재능력을 유감없이 보여주는 여러가지 사례와 과제들을 확인해보세요.</p>
-        <button type="button" class="bannerBtn">
+        <button type="button" className="bannerBtn">
           <Link to="/introduction" className="text">See More</Link>
         </button>
       </div>
@@ -105,6 +106,7 @@ export const MainRecommend = ({ solutionData, developerData }) => {
               {topLikedSolutions.slice(0, 2).map((solution) => (
                 <div className="solutionColumn" key={solution.id}>
                   <SolutionBox
+                    key={solution.id}
                     id={solution.id}
                     solName={solution.sol_name}
                     solFullName={solution.sol_full_name}
@@ -118,6 +120,7 @@ export const MainRecommend = ({ solutionData, developerData }) => {
               {topLikedSolutions.slice(2, 4).map((solution) => (
                 <div className="solutionColumn" key={solution.id}>
                   <SolutionBox
+                    key={solution.id}
                     id={solution.id}
                     solName={solution.sol_name}
                     solFullName={solution.sol_full_name}
@@ -136,7 +139,6 @@ export const MainRecommend = ({ solutionData, developerData }) => {
           </div>
           <p className="text">인기있는 AI/DT Solution을 <br></br> 만나보세요.</p>
           <p className="subText">The Best Solutions and System have arrived.</p>
-          {/* <button type="button" class="btn btn-light mostpopular-btn">See all products</button> */}
         </div>
       </div>
 
@@ -158,7 +160,7 @@ export const MainRecommend = ({ solutionData, developerData }) => {
         </div>
         <div className="rightSide">
           {filteredData.map((developer) => (
-            <div className="devBox">
+            <div className="devBox" key={developer.id}>
               <img src={process.env.PUBLIC_URL + "/image/developer/"
                 + developer.n_id + ".jpg"}
                 className="personCircle" alt="developer_img" />
