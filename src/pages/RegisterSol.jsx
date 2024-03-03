@@ -1,12 +1,22 @@
 import { Button, Container, TextField, Typography } from '@mui/material';
+// import { List, ListItem, ListItemText, Divider } from '@mui/material';
+
+
 import React, { useState } from 'react';
 import axios from 'axios';
 
 export const RegisterSol = ({ onSubmit }) => {
   const [solution, setSolution] = useState({
     sol_name: '',
+    sol_full_name: '',
     kor_name: '',
     n_id: '',
+    url: '',
+    github_url: '',
+    work_field: '',
+    date: '',
+    likeCnt: '',
+    img: '',
   });
   const handleChange = (e) => {
     setSolution({ ...solution, [e.target.name]: e.target.value });
@@ -20,20 +30,43 @@ export const RegisterSol = ({ onSubmit }) => {
       if (response.status >= 200 && response.status < 300) {
         // 성공 처리 로직
         alert('솔루션 등록 성공');
-        onSubmit(true, solution);
+        if (typeof onSubmit === 'function') {
+          onSubmit(true, solution);
+        }
       } else {
         // 실패 처리 로직
         alert('솔루션 등록 실패');
-        onSubmit(false, solution);
+        if (typeof onSubmit === 'function') {
+          onSubmit(false, solution);
+        }
       }
-    } catch (error) {
-      alert(`솔루션 등록 실패: ${error.message}`);
+    }
+    catch (error) {
+      let errorMessage = '솔루션 등록 실패';
+      if (error.response && error.response.status === 409) {
+        // 서버에서 전달된 에러 메시지 사용
+        errorMessage = error.response.data;
+      } else {
+        // 기타 에러 메시지
+        errorMessage = `솔루션 등록 실패: ${error.message}`;
+      }
+      alert(errorMessage);
       console.error('솔루션 등록 중 에러 발생', error);
     }
+
+
+
     setSolution({
       sol_name: '',
+      sol_full_name: '',
       kor_name: '',
       n_id: '',
+      url: '',
+      github_url: '',
+      work_field: '',
+      date: '',
+      likeCnt: '',
+      img: '',
     });
   };
 
@@ -66,8 +99,22 @@ export const RegisterSol = ({ onSubmit }) => {
             margin="normal"
             required
             fullWidth
+            name="sol_full_name"
+            label="Solution Full Name"
+            type="text"
+            id="sol_full_name"
+            autoComplete="sol_full_name"
+            value={solution.sol_full_name}
+            onChange={handleChange}
+          />
+
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
             name="kor_name"
-            label="한국어 Solution 이름"
+            label="한글 명칭"
             type="text"
             id="kor_name"
             autoComplete="kor_name"
@@ -86,6 +133,91 @@ export const RegisterSol = ({ onSubmit }) => {
             id="n_id"
             autoComplete="n_id"
             value={solution.n_id}
+            onChange={handleChange}
+          />
+
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="url"
+            label="시스템 바로가기 Link"
+            type="text"
+            id="url"
+            autoComplete="url"
+            value={solution.url}
+            onChange={handleChange}
+          />
+
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="github_url"
+            label="Github 바로가기 Link"
+            type="text"
+            id="github_url"
+            autoComplete="github_url"
+            value={solution.github_url}
+            onChange={handleChange}
+          />
+
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="work_field"
+            label="적용 업무 직군"
+            type="text"
+            id="work_field"
+            autoComplete="work_field"
+            value={solution.work_field}
+            onChange={handleChange}
+          />
+
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="date"
+            label="등록 일자"
+            type="text"
+            id="date"
+            autoComplete="date"
+            value={solution.date}
+            onChange={handleChange}
+          />
+
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="likeCnt"
+            label="좋아요 수"
+            type="text"
+            id="likeCnt"
+            autoComplete="likeCnt"
+            value={solution.likeCnt}
+            onChange={handleChange}
+          />
+
+
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="img"
+            label="Solution Image"
+            type="text"
+            id="img"
+            autoComplete="img"
+            value={solution.img}
             onChange={handleChange}
           />
 
