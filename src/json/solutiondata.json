@@ -11,7 +11,7 @@
     "url": "https://naver.com",
     "github_url": "https://github.com/Kyuyong/sko_homepage",
     "work_field": "RM",
-    "Date": "2023-09-21",
+    "date": "2023-09-21",
     "likeCnt": "123"
   },
   {
@@ -26,7 +26,7 @@
     "url": "https://daum.net",
     "github_url": "https://github.com/github/explore",
     "work_field": "Access",
-    "Date": "2023-10-21",
+    "date": "2023-10-21",
     "likeCnt": "5973"
   },
   {
@@ -41,7 +41,7 @@
     "url": "https://www.youtube.com/",
     "github_url": "https://github.com/github/codeql-cli-binaries",
     "work_field": "전송",
-    "Date": "2023-11-21",
+    "date": "2023-11-21",
     "likeCnt": "523"
   },
   {
@@ -56,7 +56,7 @@
     "url": "https://www.netflix.com/",
     "github_url": "https://github.com/Kyuyong/itasset",
     "work_field": "Access",
-    "Date": "2023-09-21",
+    "date": "2023-09-21",
     "likeCnt": "9975"
   },
   {
@@ -71,7 +71,7 @@
     "url": "https://openai.com/",
     "github_url": "https://github.com/Kyuyong/sko_homepage",
     "work_field": "Infra설비",
-    "Date": "2023-12-21",
+    "date": "2023-12-21",
     "likeCnt": "12"
   },
   {
@@ -86,7 +86,7 @@
     "url": "https://www.dhlottery.co.kr/",
     "github_url": "https://github.com/Kyuyong/sko_homepage",
     "work_field": "자산",
-    "Date": "2022-01-21",
+    "date": "2022-01-21",
     "likeCnt": "25"
   },
   {
@@ -101,7 +101,7 @@
     "url": "https://www.wavve.com/",
     "github_url": "https://github.com/Kyuyong/sko_homepage",
     "work_field": "SO",
-    "Date": "2022-02-21",
+    "date": "2022-02-21",
     "likeCnt": "8"
   },
   {
@@ -116,7 +116,7 @@
     "url": "https://www.aladin.co.kr/",
     "github_url": "https://github.com/Kyuyong/sko_homepage",
     "work_field": "경영",
-    "Date": "2022-03-21",
+    "date": "2022-03-21",
     "likeCnt": "1574"
   },
   {
@@ -131,7 +131,7 @@
     "url": "https://www.miricanvas.com/ko",
     "github_url": "https://github.com/Kyuyong/sko_homepage",
     "work_field": "SO",
-    "Date": "2022-04-21",
+    "date": "2022-04-21",
     "likeCnt": "21"
   },
   {
@@ -146,7 +146,7 @@
     "url": "https://github.com/",
     "github_url": "https://github.com/Kyuyong/sko_homepage",
     "work_field": "경영",
-    "Date": "2022-05-21",
+    "date": "2022-05-21",
     "likeCnt": "15"
   }
 ]

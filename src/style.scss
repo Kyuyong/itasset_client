@@ -1384,6 +1384,23 @@ a {
         }
       }
 
+      .paper {
+        .table {
+          .tableHead {
+            background: linear-gradient(100deg, rgb(41, 162, 208) 0%, rgb(119, 47, 201) 100%);
+
+            .MuiTableCell-head {
+              color: white;
+            }
+          }
+
+          .tableCell {
+            font-size: 12px;
+
+          }
+        }
+      }
+
     }
 
 
@@ -1415,6 +1432,12 @@ a {
       display: flex;
       justify-content: center; // 가로 방향으로 내용을 가운데 정렬
       align-items: center; // 세로 방향으로 내용을 가운데 정렬
+
+      .title {
+        font-size: 25px;
+        font-weight: 700;
+        margin: 0;
+      }
     }
 
     .leftSide {

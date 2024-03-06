@@ -8,7 +8,7 @@ export const MainRecommend = ({ solutionData, developerData }) => {
   //최근 등록된 Solutions
   const [latestSolutions, setLatestSolutions] = useState([]);
   useEffect(() => {
-    const sortedSolutions = solutionData.sort((a, b) => new Date(b.Date) - new Date(a.Date));
+    const sortedSolutions = solutionData.sort((a, b) => new Date(b.date) - new Date(a.date));
     setLatestSolutions(sortedSolutions.slice(0, 4));
   }, [solutionData]);
 
