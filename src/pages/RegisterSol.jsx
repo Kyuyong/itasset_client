@@ -1,9 +1,9 @@
+
+
 import { Button, Container, TextField, Typography } from '@mui/material';
-// import { List, ListItem, ListItemText, Divider } from '@mui/material';
-
-
 import React, { useState } from 'react';
 import axios from 'axios';
+// import moment from "moment";
 
 export const RegisterSol = ({ onSubmit }) => {
   const [solution, setSolution] = useState({
@@ -16,8 +16,9 @@ export const RegisterSol = ({ onSubmit }) => {
     work_field: '',
     date: '',
     likeCnt: '',
-    img: '',
+    img: ''
   });
+
   const handleChange = (e) => {
     setSolution({ ...solution, [e.target.name]: e.target.value });
   };
@@ -25,16 +26,15 @@ export const RegisterSol = ({ onSubmit }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       const response = await axios.post('/solutions/register', solution);
       if (response.status >= 200 && response.status < 300) {
-        // 성공 처리 로직
         alert('솔루션 등록 성공');
         if (typeof onSubmit === 'function') {
           onSubmit(true, solution);
         }
       } else {
-        // 실패 처리 로직
         alert('솔루션 등록 실패');
         if (typeof onSubmit === 'function') {
           onSubmit(false, solution);
@@ -44,31 +44,29 @@ export const RegisterSol = ({ onSubmit }) => {
     catch (error) {
       let errorMessage = '솔루션 등록 실패';
       if (error.response && error.response.status === 409) {
-        // 서버에서 전달된 에러 메시지 사용
         errorMessage = error.response.data;
       } else {
-        // 기타 에러 메시지
         errorMessage = `솔루션 등록 실패: ${error.message}`;
       }
       alert(errorMessage);
       console.error('솔루션 등록 중 에러 발생', error);
     }
-
-
-
-    setSolution({
-      sol_name: '',
-      sol_full_name: '',
-      kor_name: '',
-      n_id: '',
-      url: '',
-      github_url: '',
-      work_field: '',
-      date: '',
-      likeCnt: '',
-      img: '',
-    });
+    // setSolution({
+    //   sol_name: '',
+    //   sol_full_name: '',
+    //   kor_name: '',
+    //   n_id: '',
+    //   url: '',
+    //   github_url: '',
+    //   work_field: '',
+    //   date: '',
+    //   likeCnt: '',
+    //   img: '',
+    // });
   };
+
+
+
 
 
   return (
@@ -77,6 +75,8 @@ export const RegisterSol = ({ onSubmit }) => {
         <div className="bg" />
       </div>
       <div className="gap-60" />
+
+
       <Container component="main" maxWidth="xs">
         <Typography component="h1" variant="h5">Solution 등록</Typography>
         <form onSubmit={handleSubmit}>
@@ -184,7 +184,7 @@ export const RegisterSol = ({ onSubmit }) => {
             required
             fullWidth
             name="date"
-            label="등록 일자"
+            label="등록 일자 (YYYY-MM-DD)"
             type="text"
             id="date"
             autoComplete="date"
@@ -220,6 +220,7 @@ export const RegisterSol = ({ onSubmit }) => {
             value={solution.img}
             onChange={handleChange}
           />
+
 
 
 
