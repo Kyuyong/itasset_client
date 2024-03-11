@@ -1,18 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BsFillStarFill } from 'react-icons/bs';
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import ProductContent from '../components/ProductContent';
 import ProductReviews from '../components/ProductReviews';
+import axios from 'axios';
 
 
-export const Product = (props) => {
+export const Product = () => {
 
-  let { id } = useParams();
+
+  const location = useLocation();
+  ////////////////////////
+  // Product ID 기준 불러오기
+  const [product, getProduct] = useState([]);
+  const productId = location.pathname.split("/")[2];
+
+
+  useEffect(() => {
+    // 데이터 불러오기 함수
+    const fetchProduct = async () => {
+      try {
+        const response = await axios.get(`/solutions/getsolution/${productId}`);
+        getProduct(response.data[0]);
+        // console.log(response.data);
+      } catch (error) {
+        console.error("solutions 가져올때 오류가 발생하였습니다:", error);
+      }
+    };
+    fetchProduct();
+  }, [productId]);
+  ////////////////////////
+
   const [showReviews, setShowReviews] = useState(false); // 리뷰 보기 상태 관리
-
-  let findItem = props.solutionData.find(function (solutionData) {
-    return solutionData.id === id;
-  });
 
   return (
     <div className="product">
@@ -21,35 +40,14 @@ export const Product = (props) => {
           <div className="innerContainer">
             <div className="leftSide">
               <div className="imgBox">
-                <img src={process.env.PUBLIC_URL + "/image/solution/solution" + findItem.id + ".png"}
+                <img src={process.env.PUBLIC_URL + product.img}
                   alt="newsolution-box" />
               </div>
               <div className="btnList">
-                {/* <button className="systemBtn">
-                  <span>
-                    <img style={{ height: '30px', width: '30px' }}
-                      src={process.env.PUBLIC_URL + "/image/icons/monitor-icon.png"}
-                      alt="github-mark" />
-                  </span>
-                  <span>
-                    <a href={findItem.url} style={{ marginLeft: "10px" }}
-                      target="_blank" rel="noopener noreferrer">시스템 바로가기</a>
-                  </span>
-                </button>
-                <button className="githubBtn">
-                  <span>
-                    <img style={{ height: '26px', width: '26px' }}
-                      src={process.env.PUBLIC_URL + "/image/icons/github-mark.png"}
-                      alt="github-mark" />
-                  </span>
-                  <span>
-                    <a href={findItem.github_url} style={{ marginLeft: "10px" }}
-                      target="_blank" rel="noopener noreferrer"> GitHub Code</a>
-                  </span>
-                </button> */}
+
                 <a
                   className="systemBtn"
-                  href={findItem.url}
+                  href={product.url}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -63,7 +61,7 @@ export const Product = (props) => {
 
                 <a
                   className="githubBtn"
-                  href={findItem.github_url}
+                  href={product.github_url}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -79,9 +77,9 @@ export const Product = (props) => {
             </div>
 
             <div className="rightSide">
-              <p className="title">{findItem.sol_name}</p>
-              <p className="fullNm">{findItem.sol_full_name}</p>
-              <p className="titlekr">{findItem.kor_name}</p>
+              <p className="title">{product.sol_name}</p>
+              <p className="fullNm">{product.sol_full_name}</p>
+              <p className="titlekr">{product.kor_name}</p>
               <div className="gap-20"></div>
               <div>
                 {[...Array(5)].map((_, index) => (
@@ -102,7 +100,7 @@ export const Product = (props) => {
         </div>
 
       </div>
-      {showReviews ? <ProductReviews /> : <ProductContent solutionData={props.solutionData} />}
+      {showReviews ? <ProductReviews /> : <ProductContent solutionData={product} />}
     </div>
   )
 }

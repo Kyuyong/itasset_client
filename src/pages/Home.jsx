@@ -1,34 +1,70 @@
-import React, { useState } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 import MainContents from "../components/MainContents";
 import MiddleNavBar from "../components/MiddleNavBar";
 import MainRecommend from "../components/MainRecommend";
 import SearchList from "../components/SearchList";
-import SolutionList from '../components/SolutionList';
+import AllSolution from '../components/AllSolution';
+import WorkField from '../components/WorkField';
 
-import solutionData from '../json/solutiondata.json';
 import developerData from '../json/developerdata.json';
 
 export const Home = () => {
 
   const [searchResults, setSearchResults] = useState([]);
   const navigate = useNavigate();
-
   const handleSearch = (results) => {
     setSearchResults(results);
     navigate("/search");
   };
 
+  ////////////////////////
+  // Solution 불러오기 선언구간
+  const [getsolutions, setGetSolutions] = useState([]);
+  const fetchSolutions = async () => {
+    try {
+      const response = await axios.get('/solutions/getsolution');
+      const sortedSolutions = response.data.sort((a, b) => a.id - b.id);
+      setGetSolutions(sortedSolutions);
+    } catch (error) {
+      console.error("solutions 가져올때 오류가 발생하였습니다:", error);
+    }
+  };
+  useEffect(() => {
+    fetchSolutions();
+  }, []);
+  ////////////////////////
+
+  ////////////////////////
+  // WorkFld 기준으로 불러오기
+  const [workFlSols, setWorkFlSols] = useState([]);
+  const work_field = useLocation().search
+  console.log(work_field);
+  useEffect(() => {
+    const fetchWorkSol = async () => {
+      try {
+        const response = await axios.get(`/solutions/getWorkfld/${work_field}`);
+        setWorkFlSols(response.data);
+      } catch (error) {
+        console.error("solutions 가져올때 오류가 발생하였습니다:", error);
+      }
+    };
+    fetchWorkSol();
+  }, [work_field]);
+  ////////////////////////
 
   return (
     <div className="home">
-      <MainContents solutionData={solutionData} onSearch={handleSearch} />
+      <MainContents solutionData={getsolutions} onSearch={handleSearch} />
       <MiddleNavBar />
       <Routes>
+        <Route path="/" element={<MainRecommend solutionData={getsolutions} developerData={developerData} />} />
         <Route path="/search" element={<SearchList searchResults={searchResults} />} />
-        <Route path="/all" element={<SolutionList solutionData={solutionData} />} />
-        <Route path="/" element={<MainRecommend solutionData={solutionData} developerData={developerData} />} />
+        <Route path="/all" element={<AllSolution solutionData={getsolutions} />} />
+        <Route path="/workfield" element={<WorkField solutionData={workFlSols} />} />
+
       </Routes>
     </div>
   )

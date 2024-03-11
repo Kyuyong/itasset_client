@@ -1,25 +1,26 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import '../style.scss'
 
 export const MiddleNavBar = () => {
   return (
     <nav className="mainMiddleNavBar">
       <div className="navbarContainer">
         <div className="middleIcon">
-          <Link to="/">
+          <NavLink to="/">
             <img src={process.env.PUBLIC_URL + "/image/icons/menu_icon_50px.png"} alt="menu_icon" />
-          </Link>
+          </NavLink>
         </div>
 
         <ul className="navLinks">
-          <li><Link to="/all">All</Link></li>
-          <li><Link to="/?menu=rm">RM</Link></li>
-          <li><Link to="/?menu=access">Access</Link></li>
-          <li><Link to="/?menu=transfer">전송</Link></li>
-          <li><Link to="/?menu=infra">Infra설비</Link></li>
-          <li><Link to="/?menu=assets">자산</Link></li>
-          <li><Link to="/?menu=so">SO</Link></li>
-          <li><Link to="/?menu=management">경영</Link></li>
+          <li><NavLink to="/all" >All</NavLink></li>
+          <li><NavLink to="/workfield/?work_field=rm" >RM</NavLink></li>
+          <li><NavLink to="/workfield/?work_field=access" >Access</NavLink></li>
+          <li><NavLink to="/workfield/?work_field=wire" >전송</NavLink></li>
+          <li><NavLink to="/workfield/?work_field=infra" >Infra설비</NavLink></li>
+          <li><NavLink to="/workfield/?work_field=asset" >자산</NavLink></li>
+          <li><NavLink to="/workfield/?work_field=so" >SO</NavLink></li>
+          <li><NavLink to="/workfield/?work_field=mgmt" >경영</NavLink></li>
         </ul>
       </div>
     </nav>

@@ -1,23 +1,32 @@
-import React from 'react'
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import axios from "axios";
 import SolutionBox from './SolutionBox';
 
-// 배열에서 랜덤으로 특정 개수의 요소를 추출하는 함수
 function getRandomIds(array, size) {
   const shuffled = array.sort(() => 0.5 - Math.random());
   return shuffled.slice(0, size).map(item => item.id);
 }
 
 export const ProductContent = (props) => {
-  let { id } = useParams();
 
-  let findItem = props.solutionData.find(function (solutionData) {
-    return solutionData.id === id;
-  });
+  // console.log(props)
+  let findItem = props.solutionData;
+  const [getsolutions, setGetSolutions] = useState([]);
 
-  // 3개의 랜덤 아이디를 추출
-  const randomIds = getRandomIds(props.solutionData, 3);
-  const filteredData = props.solutionData.filter(item => randomIds.includes(item.id));
+  const fetchSolutions = async () => {
+    try {
+      const response = await axios.get('/solutions/getsolution');
+      setGetSolutions(response.data);
+    } catch (error) {
+      console.error("solutions 가져올때 오류가 발생하였습니다:", error);
+    }
+  };
+  useEffect(() => {
+    fetchSolutions();
+  }, []);
+
+  const randomIds = getRandomIds(getsolutions, 3);
+  const filteredData = getsolutions.filter(item => randomIds.includes(item.id));
 
   return (
     <div className="productContent">
@@ -86,7 +95,7 @@ export const ProductContent = (props) => {
                   <div>
                     <span style={{ color: '#585858' }}>{findItem.headquarters} </span>
                     <span style={{ color: '#1CA8DB' }}>{findItem.team} </span>
-                    <div className="devNm">{findItem.developer}</div>
+                    <div className="devNm">{findItem.name}</div>
                   </div>
                 </div>
 
@@ -149,6 +158,7 @@ export const ProductContent = (props) => {
                 solFullName={item.sol_full_name}
                 korName={item.kor_name}
                 url={item.url}
+                img={item.img}
               />
             </div>
           ))}

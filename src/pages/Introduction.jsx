@@ -8,6 +8,8 @@ export const Introduction = ({ solutionData }) => {
     window.scrollTo(0, 0);
   }, []);
 
+  console.log(solutionData);
+
   return (
     <div className="introduction">
       <div className="mainBox">
@@ -29,8 +31,8 @@ export const Introduction = ({ solutionData }) => {
 
       <div className="contentsBox">
         <div className="gap-40"></div>
-        <h2>AI/DT Working Group Solution</h2>
-        <p>'23년 30명의 AI/DT 전문가가 만든 과제를 소개합니다.</p>
+        <div className="titleText">AI/DT Working Group Solution</div>
+        <div className="subText">'23년 30명의 AI/DT 전문가가 만든 과제를 소개합니다.</div>
 
         <div className="card">
           {solutionData.map((solution) => (
@@ -43,6 +45,7 @@ export const Introduction = ({ solutionData }) => {
                   solFullName={solution.sol_full_name}
                   korName={solution.kor_name}
                   url={solution.url}
+                  img={solution.img}
                 />
               </div>
 

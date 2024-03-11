@@ -1,14 +1,41 @@
 
 
-import { Button, Container, Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow, TextField, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import {
+  Button, Container, Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow, TextField, Typography
+} from '@mui/material';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-// import moment from "moment";
-
-import solutions from "../json/solutiondata.json"
+import moment from "moment";
 
 export const RegisterSol = ({ onSubmit }) => {
+
+
+  ////////////////////////
+  // Solution 불러오기 선언구간
+  const [getsolutions, setGetSolutions] = useState([]);
+
+  // 데이터 불러오기 함수
+  const fetchSolutions = async () => {
+    try {
+      const response = await axios.get('/solutions/getsolution');
+      // ID를 기준으로 오름차순 정렬
+      const sortedSolutions = response.data.sort((a, b) => a.id - b.id);
+      setGetSolutions(sortedSolutions);
+      console.log(response.data)
+    } catch (error) {
+      console.error("solutions 가져올때 오류가 발생하였습니다:", error);
+    }
+  };
+  useEffect(() => {
+    fetchSolutions();
+  }, []);
+  ////////////////////////
+
+
+
+  ////////////////////////
+  // Solution 등록 선언 구간 
   const [solution, setSolution] = useState({
     sol_name: '',
     sol_full_name: '',
@@ -17,51 +44,42 @@ export const RegisterSol = ({ onSubmit }) => {
     url: '',
     github_url: '',
     work_field: '',
-    date: '',
-    likeCnt: '',
-    // img: '' 
+    reg_date: '',
   });
   const [file, setFile] = useState(null);
-
   const handleChange = (e) => {
     setSolution({ ...solution, [e.target.name]: e.target.value });
   };
+
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
-
   const upload = async () => {
     try {
       const formData = new FormData();
       formData.append("file", file);
       const res = await axios.post("/upload", formData);
       return res.data;
-
     } catch (err) {
       console.log(err);
       toast.error("파일 업로드 중 오류가 발생했습니다.");
     }
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const imgUrl = await upload();
-
-    // 업로드된 이미지 URL을 solution 객체에 추가
-    const solutionData = { ...solution, imgUrl };
-
-
-    // try에서 solution --> solutionData로 변경함 
+    const currentDateTime = moment().format("YYYY-MM-DD HH:mm:ss");
+    const solutionData = { ...solution, imgUrl, date: currentDateTime };
     try {
       const response = await axios.post('/solutions/register', solutionData);
       if (response.status >= 200 && response.status < 300) {
-        alert('솔루션 등록 성공');
+        alert('Solution 등록 성공하였습니다.');
         if (typeof onSubmit === 'function') {
           onSubmit(true, solutionData);
         }
       } else {
-        alert('솔루션 등록 실패');
+        alert('Solution 등록 실패하였습니다.');
         if (typeof onSubmit === 'function') {
           onSubmit(false, solutionData);
         }
@@ -85,12 +103,10 @@ export const RegisterSol = ({ onSubmit }) => {
       url: '',
       github_url: '',
       work_field: '',
-      date: '',
-      likeCnt: '',
-      // img: '',
+      reg_date: '',
     });
   };
-
+  ////////////////////////
 
 
 
@@ -101,7 +117,6 @@ export const RegisterSol = ({ onSubmit }) => {
         <div className="bg" />
       </div>
       <div className="gap-60" />
-
 
       <Container component="main" maxWidth="xl">
         <Typography component="h1" variant="h5">Solution 등록</Typography>
@@ -158,24 +173,16 @@ export const RegisterSol = ({ onSubmit }) => {
             </Grid>
             <Grid item xs={4}>
               <TextField
-                variant="outlined" margin="normal" fullWidth name="date"
-                label="개발 일자 (YYYY-MM-DD)" type="text" id="date" autoComplete="date"
-                value={solution.date} onChange={handleChange}
+                variant="outlined" margin="normal" fullWidth name="reg_date"
+                label="개발 일자 (YYYY-MM-DD)" type="text" id="reg_date" autoComplete="reg_date"
+                value={solution.reg_date} onChange={handleChange}
               />
             </Grid>
             <Grid item xs={4}>
               <TextField
-                variant="outlined" margin="normal" fullWidth name="likeCnt"
-                label="좋아요 수" type="text" id="likeCnt" autoComplete="likeCnt"
-                value={solution.likeCnt} onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
                 variant="outlined" margin="normal" fullWidth name="img"
                 type="file" id="img" autoComplete="img" onChange={handleFileChange}
               />
-              {/* <input type="file" onChange={handleFileChange} /> */}
             </Grid>
           </Grid>
 
@@ -191,9 +198,19 @@ export const RegisterSol = ({ onSubmit }) => {
         <div className="gap-60" />
       </Container>
 
-
       <Container component="main" maxWidth="xl">
-        <Typography component="h1" variant="h4">Solution List</Typography>
+        <Grid container alignItems="center" justifyContent="space-between" spacing={2} sx={{ mt: 3, mb: 2 }}>
+          <Grid item xs>
+            <Typography component="h1" variant="h5">
+              Solution List
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Button variant="contained" color="primary" onClick={fetchSolutions}>
+              새로고침
+            </Button>
+          </Grid>
+        </Grid>
         <Paper className="paper">
           <Table className="table">
             <TableHead className="tableHead">
@@ -203,6 +220,9 @@ export const RegisterSol = ({ onSubmit }) => {
                 <TableCell className="tableCell">Solution Full Name</TableCell>
                 <TableCell className="tableCell">한글 명칭</TableCell>
                 <TableCell className="tableCell">개발자 사번</TableCell>
+                <TableCell className="tableCell">개발자</TableCell>
+                <TableCell className="tableCell">담당</TableCell>
+                <TableCell className="tableCell">팀</TableCell>
                 <TableCell className="tableCell">Link</TableCell>
                 <TableCell className="tableCell">Github Link</TableCell>
                 <TableCell className="tableCell">업무 직군</TableCell>
@@ -210,17 +230,20 @@ export const RegisterSol = ({ onSubmit }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {solutions.map((sol) => (
+              {getsolutions.map((sol) => (
                 <TableRow key={sol.id}>
                   <TableCell className="tableCell">{sol.id}</TableCell>
                   <TableCell className="tableCell">{sol.sol_name}</TableCell>
                   <TableCell className="tableCell">{sol.sol_full_name}</TableCell>
                   <TableCell className="tableCell">{sol.kor_name}</TableCell>
                   <TableCell className="tableCell">{sol.n_id}</TableCell>
+                  <TableCell className="tableCell">{sol.name}</TableCell>
+                  <TableCell className="tableCell">{sol.team}</TableCell>
+                  <TableCell className="tableCell">{sol.headquarters}</TableCell>
                   <TableCell className="tableCell">{sol.url}</TableCell>
                   <TableCell className="tableCell">{sol.github_url}</TableCell>
                   <TableCell className="tableCell">{sol.work_field}</TableCell>
-                  <TableCell className="tableCell">{sol.date}</TableCell>
+                  <TableCell className="tableCell">{sol.reg_date}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

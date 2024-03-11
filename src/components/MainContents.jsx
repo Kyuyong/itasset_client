@@ -16,8 +16,6 @@ export const MainContents = ({ solutionData, onSearch }) => {
     onSearch(filteredResults);
   };
 
-
-
   return (
     <div className="mainContents">
       <div className="mainBg">

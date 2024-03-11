@@ -8,7 +8,7 @@ export const MainRecommend = ({ solutionData, developerData }) => {
   //최근 등록된 Solutions
   const [latestSolutions, setLatestSolutions] = useState([]);
   useEffect(() => {
-    const sortedSolutions = solutionData.sort((a, b) => new Date(b.date) - new Date(a.date));
+    const sortedSolutions = solutionData.sort((a, b) => new Date(b.reg_date) - new Date(a.reg_date));
     setLatestSolutions(sortedSolutions.slice(0, 4));
   }, [solutionData]);
 
@@ -55,6 +55,7 @@ export const MainRecommend = ({ solutionData, developerData }) => {
                     solFullName={solution.sol_full_name}
                     korName={solution.kor_name}
                     url={solution.url}
+                    img={solution.img}
                   />
                 </div>
               ))}
@@ -69,6 +70,7 @@ export const MainRecommend = ({ solutionData, developerData }) => {
                     solFullName={solution.sol_full_name}
                     korName={solution.kor_name}
                     url={solution.url}
+                    img={solution.img}
                   />
                 </div>
               ))}
@@ -112,6 +114,7 @@ export const MainRecommend = ({ solutionData, developerData }) => {
                     solFullName={solution.sol_full_name}
                     korName={solution.kor_name}
                     url={solution.url}
+                    img={solution.img}
                   />
                 </div>
               ))}
@@ -126,6 +129,7 @@ export const MainRecommend = ({ solutionData, developerData }) => {
                     solFullName={solution.sol_full_name}
                     korName={solution.kor_name}
                     url={solution.url}
+                    img={solution.img}
                   />
                 </div>
               ))}

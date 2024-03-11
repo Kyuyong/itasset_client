@@ -1,15 +1,18 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import SolutionBox from './SolutionBox';
 
 
 export const SearchList = ({ searchResults }) => {
-  console.log(searchResults);
-  console.log(searchResults)
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    setCount(searchResults.length);
+  }, [searchResults]);
+
   return (
     <div className="searchlist">
       <div className="gap-100" />
 
-      <div className="titleText">검색 결과</div>
+      <div className="titleText">검색 결과 : {count}개가 검색되었습니다.</div>
       {searchResults.length > 0 ? (
         <div className="solutionsContainer">
           {searchResults.map((item) => (
@@ -21,6 +24,7 @@ export const SearchList = ({ searchResults }) => {
                 solFullName={item.sol_full_name}
                 korName={item.kor_name}
                 url={item.url}
+                img={item.img}
               />
             </div>
           ))}

@@ -1,11 +1,11 @@
 import React from 'react'
 
-export const SolutionBox = ({ id, solName, solFullName, korName, url }) => {
+export const SolutionBox = ({ id, solName, solFullName, korName, url, img }) => {
+
   return (
     <div className="solutionBox">
       <div className="imgBox">
-        <img src={process.env.PUBLIC_URL + "/image/solution/solution"
-          + id + ".png"}
+        <img src={process.env.PUBLIC_URL + img}
           alt="solutionImg" />
         <div className="overlayWrap">
           <div className="overlayBox">
