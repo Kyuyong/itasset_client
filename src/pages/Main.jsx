@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
+
 import axios from 'axios';
 
 // Componets List
@@ -15,12 +17,12 @@ import Introduction from './Introduction';
 import FileUpload from './FileUpload';
 
 export const Main = ({ onLogout }) => {
-  const location = useLocation();
-  const showHome =
-    !location.pathname.startsWith('/product')
-    && !location.pathname.startsWith('/introduction')
-    && !location.pathname.startsWith('/registersol')
-    && !location.pathname.startsWith('/fileupload')
+  // const location = useLocation();
+  // const showHome =
+  //   !location.pathname.startsWith('/product')
+  //   && !location.pathname.startsWith('/introduction')
+  //   && !location.pathname.startsWith('/registersol')
+  //   && !location.pathname.startsWith('/fileupload')
 
   ////////////////////////
   // Solution 불러오기 선언구간
@@ -43,8 +45,9 @@ export const Main = ({ onLogout }) => {
     <>
       <div className="main">
         <MainNavBar onLogout={onLogout} />
-        {showHome && <Home />}
+        {/* {showHome && <Home />} */}
         <Routes>
+          <Route path="*" element={<Home />} />
           <Route path="/product/:id" element={<Product />} />
           <Route path="/introduction" element={<Introduction solutionData={getsolutions} />}></Route>
           <Route path="/registersol" element={<RegisterSol />} />

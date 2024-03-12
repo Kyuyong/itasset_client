@@ -22,7 +22,6 @@ export const Product = () => {
       try {
         const response = await axios.get(`/solutions/getsolution/${productId}`);
         getProduct(response.data[0]);
-        // console.log(response.data);
       } catch (error) {
         console.error("solutions 가져올때 오류가 발생하였습니다:", error);
       }

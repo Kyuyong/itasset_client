@@ -1,29 +1,50 @@
+import axios from 'axios';
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';  //재로그인 로직을 위한 네비게이터
-import accountList from '../json/acountlist.json';
+import { useNavigate } from 'react-router-dom';
+// import { useContext } from 'react';
+// import { AuthContext } from '../context/authContext';
+
+// import accountList from '../json/acountlist.json';
 
 export const Login = ({ onLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState(false);
-  const logoutTimerRef = useRef();  // 자동 로그아웃 타이머 로직
-  const navigate = useNavigate(); //재로그인 로직을 위한 네비게이터
+  const logoutTimerRef = useRef();
+  const navigate = useNavigate();
+
+  // const { login } = useContext(AuthContext);
 
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    const accountExists =
-      accountList.some(account => account.id === username && account.password === password);
 
-    if (accountExists) {
-      clearTimeout(logoutTimerRef.current); // 기존 타이머 클리어
-      onLogin(true);
-      navigate('/');  // 재로그인을 해도 '/'로 이동하게 하는 로직
-      // 로그인 성공 시, 30분 후 자동 로그아웃 타이머 설정
-      logoutTimerRef.current = setTimeout(() => {  // 자동 로그아웃 타이머 로직
-        handleLogout();
-      }, 1800000); // 30 minutes  1800000
-    } else {
+    try {
+      // const response = login({ username, password })
+      const response = await axios.post('/login', {
+        username: username,
+        password: password,
+      });
+      const data = response.data;
+      console.log(data);
+
+      if (data.success && data.data.authUserValue === "Y") {
+        console.log('로그인 성공:', data);
+        clearTimeout(logoutTimerRef.current); // 기존 타이머 클리어
+        onLogin(true); // 로그인 상태를 true로 설정
+        navigate('/'); // 사용자를 홈 페이지로 리디렉션
+
+        // 로그인 성공 시, 30분 후 자동 로그아웃 타이머 설정
+        logoutTimerRef.current = setTimeout(() => {
+          handleLogout();
+        }, 1800000); // 30 minutes
+      } else {
+        // 로그인 실패 처리
+        console.log('로그인 실패:', data.message);
+        setLoginError(true);
+      }
+    } catch (error) {
+      console.error('로그인 요청 중 에러 발생:', error);
       setLoginError(true);
     }
   };
@@ -38,10 +59,6 @@ export const Login = ({ onLogin }) => {
   useEffect(() => {
     return () => clearTimeout(logoutTimerRef.current);
   }, []);
-
-
-
-
 
   return (
     <div className="loginContainer">

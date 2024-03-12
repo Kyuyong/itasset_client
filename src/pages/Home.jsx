@@ -15,6 +15,16 @@ export const Home = () => {
 
   const [searchResults, setSearchResults] = useState([]);
   const navigate = useNavigate();
+
+
+
+  // useEffect(() => {
+  //   // 검색 결과가 업데이트되면 /search로 이동
+  //   if (searchResults.length > 0) {
+  //     navigate("/search");
+  //   }
+  // }, [searchResults, navigate]);
+
   const handleSearch = (results) => {
     setSearchResults(results);
     navigate("/search");
@@ -41,7 +51,6 @@ export const Home = () => {
   // WorkFld 기준으로 불러오기
   const [workFlSols, setWorkFlSols] = useState([]);
   const work_field = useLocation().search
-  console.log(work_field);
   useEffect(() => {
     const fetchWorkSol = async () => {
       try {

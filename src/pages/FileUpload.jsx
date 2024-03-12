@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import moment from "moment";
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 
 export const FileUpload = () => {
   const [file, setFile] = useState(null);
@@ -15,7 +15,7 @@ export const FileUpload = () => {
 
     } catch (err) {
       console.log(err);
-      toast.error("파일 업로드 중 오류가 발생했습니다.");
+      // toast.error("파일 업로드 중 오류가 발생했습니다.");
     }
   };
 
@@ -24,13 +24,12 @@ export const FileUpload = () => {
   const handleClick = async e => {
     e.preventDefault();
     const imgUrl = await upload();
-    console.log(imgUrl);
     try {
       await axios.post('/solutions/upload', {
         imgUrl: imgUrl, // 업로드된 이미지의 URL
         date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
       });
-      toast.success("게시글이 성공적으로 등록되었습니다.");
+      // toast.success("게시글이 성공적으로 등록되었습니다.");
     } catch (err) {
       console.log(err)
     }

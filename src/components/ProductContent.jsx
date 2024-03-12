@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
+// import ReactQuill from "react-quill";
+// import 'react-quill/dist/quill.snow.css';
 import SolutionBox from './SolutionBox';
 
 function getRandomIds(array, size) {
@@ -9,7 +11,6 @@ function getRandomIds(array, size) {
 
 export const ProductContent = (props) => {
 
-  // console.log(props)
   let findItem = props.solutionData;
   const [getsolutions, setGetSolutions] = useState([]);
 

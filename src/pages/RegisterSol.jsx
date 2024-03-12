@@ -5,10 +5,31 @@ import {
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 import moment from "moment";
 
 export const RegisterSol = ({ onSubmit }) => {
+
+
+  // /// USER LIST 
+  // const [userList, setUserList] = useState([]);
+
+  // useEffect(() => {
+  //   const fetchUserList = async () => {
+  //     try {
+  //       const response = await axios.get('/auths/userlist');
+  //       setUserList(response.data);
+  //     } catch (error) {
+  //       console.error("가져오기 실패", error)
+  //     }
+  //   };
+  //   fetchUserList();
+  // }, []);
+
+  // console.log(userList);
+
+
+
 
 
   ////////////////////////
@@ -22,7 +43,6 @@ export const RegisterSol = ({ onSubmit }) => {
       // ID를 기준으로 오름차순 정렬
       const sortedSolutions = response.data.sort((a, b) => a.id - b.id);
       setGetSolutions(sortedSolutions);
-      console.log(response.data)
     } catch (error) {
       console.error("solutions 가져올때 오류가 발생하였습니다:", error);
     }
@@ -62,7 +82,7 @@ export const RegisterSol = ({ onSubmit }) => {
       return res.data;
     } catch (err) {
       console.log(err);
-      toast.error("파일 업로드 중 오류가 발생했습니다.");
+      // toast.error("파일 업로드 중 오류가 발생했습니다.");
     }
   };
 

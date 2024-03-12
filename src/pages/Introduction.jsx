@@ -8,8 +8,6 @@ export const Introduction = ({ solutionData }) => {
     window.scrollTo(0, 0);
   }, []);
 
-  console.log(solutionData);
-
   return (
     <div className="introduction">
       <div className="mainBox">
