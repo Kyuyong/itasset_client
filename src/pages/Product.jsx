@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { BsFillStarFill } from 'react-icons/bs';
-import { useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import ProductContent from '../components/ProductContent';
 import ProductReviews from '../components/ProductReviews';
+import ProductUpdate from '../components/ProductUpdate';
 import axios from 'axios';
 
 
 export const Product = () => {
-
-
   const location = useLocation();
+  const navigate = useNavigate();
+
+
   ////////////////////////
   // Product ID 기준 불러오기
   const [product, getProduct] = useState([]);
@@ -30,17 +32,26 @@ export const Product = () => {
   }, [productId]);
   ////////////////////////
 
-  const [showReviews, setShowReviews] = useState(false); // 리뷰 보기 상태 관리
+  // const [showReviews, setShowReviews] = useState(false); // 리뷰 보기 상태 관리
+
+  const goToReviews = () => {
+    navigate(`/product/${productId}/reviews`);
+  };
+  const goToSolution = () => {
+    navigate(`/product/${productId}`);
+  };
 
   return (
-    <div className="product">
+    <div className="product" >
       <div className="mainBox">
         <div className="mainBg">
           <div className="innerContainer">
             <div className="leftSide">
               <div className="imgBox">
-                <img src={process.env.PUBLIC_URL + product.img}
-                  alt="newsolution-box" />
+                {/* <img src={process.env.PUBLIC_URL + product.img}
+                  alt="newsolution-box" /> */}
+                {product && <img src={process.env.PUBLIC_URL + product.img} alt="newsolution-box" />}
+
               </div>
               <div className="btnList">
 
@@ -87,10 +98,23 @@ export const Product = () => {
               </div>
               <div className="like"> 4,905 (551 Reviews)</div>
               <hr />
-              <div className="proBtn" onClick={() => setShowReviews(!showReviews)}>
+              {/* <div className="proBtn" onClick={() => setShowReviews(!showReviews)}>
                 <button  >
                   {showReviews ? 'Solution 소개' : 'Reviews 보기'}
                 </button>
+              </div> */}
+              <div className="btns">
+
+                <div className="proBtn" onClick={goToSolution}>
+                  <button>
+                    Solution 안내
+                  </button>
+                </div>
+                <div className="proBtn" onClick={goToReviews}>
+                  <button>
+                    Reviews 보기
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -99,7 +123,13 @@ export const Product = () => {
         </div>
 
       </div>
-      {showReviews ? <ProductReviews /> : <ProductContent solutionData={product} />}
+      {/* <ProductContent solutionData={product} /> */}
+      <Routes>
+        <Route path="/" element={<ProductContent solutionData={product} />} />
+        <Route path="/reviews" element={<ProductReviews />} />
+        <Route path="/update" element={<ProductUpdate solutionData={product} />} />
+      </Routes>
+      {/* {showReviews ? <ProductReviews /> : <ProductContent solutionData={product} />} */}
     </div>
   )
 }

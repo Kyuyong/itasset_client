@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
-// import ReactQuill from "react-quill";
-// import 'react-quill/dist/quill.snow.css';
 import SolutionBox from './SolutionBox';
+import { BsPencil } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
 
 function getRandomIds(array, size) {
   const shuffled = array.sort(() => 0.5 - Math.random());
@@ -29,6 +29,20 @@ export const ProductContent = (props) => {
   const randomIds = getRandomIds(getsolutions, 3);
   const filteredData = getsolutions.filter(item => randomIds.includes(item.id));
 
+  const navigate = useNavigate();
+  const handleEditClick = () => {
+    navigate(`/product/${findItem.id}/update`); // ":id"는 실제 제품 ID로 대체해야 합니다.
+  };
+
+  // const getText = (html) => {
+  //   const doc = new DOMParser().parseFromString(html, "text/html")
+  //   return doc.body.textContent
+  // }
+
+  const DisplayStyledText = ({ htmlContent }) => (
+    <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
+  );
+
   return (
     <div className="productContent">
       <div className="contentBox">
@@ -36,54 +50,33 @@ export const ProductContent = (props) => {
           <div className="innerBox">
             <div className="leftSide">
               <div className="gap-60"></div>
-              <div className="title">Product Description</div>
+              <div className="titleBox">
+
+                <div className="title">Product Description</div>
+                <div className="edit" onClick={handleEditClick}>
+                  <BsPencil></BsPencil>
+                  <p>내용 수정하기</p>
+                </div>
+              </div>
               <div className="desc">
 
                 <div className="gap-40"></div>
                 <div className="subTitle">추진 방향</div>
-                <p>
-                  Each element is well presented in very complex documentation.
-                  You can read more about the documentation here.
-                  If you want to get inspiration or just show something directly to your clients,
-                  you can jump-start your development with our pre-built example pages.
-                  You will be able to quickly set up the basic structure for your web project.
-                  Each element is well presented in very complex documentation.
-                  You can read more about the documentation here.
-                  If you want to get inspiration or just show something directly to your clients,
-                  you can jump-start your development with our pre-built example pages.
-                  You will be able to quickly set up the basic structure for your web project.
-                  Each element is well presented in very complex documentation.
-                  You can read more about the documentation here.
-                  If you want to get inspiration or just show something directly to your clients,
-                  you can jump-start your development with our pre-built example pages.
-                  You will be able to quickly set up the basic structure for your web project.
-                </p>
-
+                <div className="itemBox">
+                  <DisplayStyledText htmlContent={findItem.direc} />
+                </div>
 
                 <div className="gap-40"></div>
                 <div className="subTitle">과제 대상</div>
-                <p>
-                  If you want to get inspiration or just show something directly to your clients,
-                  you can jump-start your development with our pre-built example pages.
-                  You will be able to quickly set up the basic structure for your web project.
-                  If you want to get inspiration or just show something directly to your clients,
-                  you can jump-start your development with our pre-built example pages.
-                  You will be able to quickly set up the basic structure for your web project.
-                  If you want to get inspiration or just show something directly to your clients,
-                  you can jump-start your development with our pre-built example pages.
-                  You will be able to quickly set up the basic structure for your web project.
-                </p>
-
+                <div className="itemBox">
+                  <DisplayStyledText htmlContent={findItem.target} />
+                </div>
 
                 <div className="gap-40"></div>
                 <div className="subTitle">기대 효과</div>
-                <p>
-                  During the development of this dashboard, we have used many existing resources from awesome developers. We want to thank them for providing their tools open source:
-                  MUI - The React UI library for faster and easier web development.
-                  React ChartJS 2 - Simple yet flexible React charting for designers & developers.
-                  ChromaJS - A small-ish zero-dependency JavaScript library for all kinds of color conversions and color scales.
-                  Nepcha Analytics for the analytics tool. Nepcha is already integrated with this template. You can use it to gain insights into your sources of traffic.
-                </p>
+                <div className="itemBox">
+                  <DisplayStyledText htmlContent={findItem.effect} />
+                </div>
 
               </div>
             </div>
@@ -91,7 +84,9 @@ export const ProductContent = (props) => {
             <div className="rightSide">
               <div className="devDesc">
                 <div className="developer">
-                  <img src={process.env.PUBLIC_URL + "/image/developer/" + findItem.n_id + ".jpg"}
+                  {/* <img src={process.env.PUBLIC_URL + "/image/developer/" + findItem.n_id + ".jpg"}
+                    className="devImg" alt="devImg" /> */}
+                  <img src={process.env.PUBLIC_URL + "/image/developer/person1.png"}
                     className="devImg" alt="devImg" />
                   <div>
                     <span style={{ color: '#585858' }}>{findItem.headquarters} </span>

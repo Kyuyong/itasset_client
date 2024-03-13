@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { BsLockFill } from 'react-icons/bs';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import { AuthContext } from '../context/authContext';
 
 
-export const MainNavBar = ({ onLogout }) => {
+export const MainNavBar = () => {
 
+  const { logout } = useContext(AuthContext);
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
@@ -29,7 +31,7 @@ export const MainNavBar = ({ onLogout }) => {
             <AppRegistrationIcon size={24} />
             <span>Register Sol.</span>
           </Link>
-          <div className="menu" onClick={onLogout}>
+          <div className="menu" onClick={logout}>
             <BsLockFill size={24} />
             <span>Logout</span>
           </div>
