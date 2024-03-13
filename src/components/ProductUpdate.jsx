@@ -29,6 +29,19 @@ export const ProductUpdate = (props) => {
     }
   };
 
+
+  const modules = {
+    toolbar: [
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+      ['bold', 'italic', 'underline', 'strike'],
+      ['blockquote', 'code-block'],
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+      [{ 'script': 'sub' }, { 'script': 'super' }],
+      [{ 'color': ['black', 'gray', 'red', 'green', 'blue', 'orange', 'violet', '#d0d1d2'] }, { 'background': [] }],
+      [{ 'align': [] }],
+    ]
+  };
+
   return (
     <div className="productUpdate">
       <div className="contentBox">
@@ -45,40 +58,23 @@ export const ProductUpdate = (props) => {
                   <div className="gap-20"></div>
                   <div className="subTitle">추진 방향</div>
                   <div className="editorContainer">
-                    <ReactQuill className="editor" theme="snow" value={direc} onChange={setDirec} />
+                    <ReactQuill className="editor" theme="snow" modules={modules} value={direc} onChange={setDirec} />
                   </div>
 
                   <div className="gap-20"></div>
                   <div className="subTitle">과제 대상</div>
                   <div className="editorContainer">
-                    <ReactQuill className="editor" theme="snow" value={target} onChange={setTarget} />
+                    <ReactQuill className="editor" theme="snow" modules={modules} value={target} onChange={setTarget} />
                   </div>
 
                   <div className="gap-20"></div>
                   <div className="subTitle">기대 효과</div>
                   <div className="editorContainer">
-                    <ReactQuill className="editor" theme="snow" value={effect} onChange={setEffect} />
+                    <ReactQuill className="editor" theme="snow" modules={modules} value={effect} onChange={setEffect} />
                   </div>
 
                 </div>
-
-
-
-                {/* <a
-                  className="systemBtn"
-                  href={product.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img
-                    style={{ verticalAlign: 'middle', height: '30px', width: '30px', marginRight: '10px' }}
-                    src={process.env.PUBLIC_URL + "/image/icons/monitor-icon.png"}
-                    alt="system-link"
-                  />
-                  시스템 바로가기
-                </a> */}
-
-
+                <div className="gap-20"></div>
                 <button className="updBtn" type="submit">
                   <BsFloppy2Fill /> 내용 업데이트 하기
                 </button>
@@ -95,8 +91,6 @@ export const ProductUpdate = (props) => {
 
                   </div>
                 </div>
-
-
                 <div className="langDesc">
                   <table>
                     <tbody>
@@ -105,11 +99,11 @@ export const ProductUpdate = (props) => {
                         <td>1.0.2</td>
                       </tr>
                       <tr>
-                        <td>Updated</td>
+                        <td>최근 업데이트</td>
                         <td>2023.08.21</td>
                       </tr>
                       <tr>
-                        <td>Released</td>
+                        <td>개발 일자</td>
                         <td>2023.03.05</td>
                       </tr>
                     </tbody>

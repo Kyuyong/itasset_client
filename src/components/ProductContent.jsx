@@ -3,6 +3,7 @@ import axios from "axios";
 import SolutionBox from './SolutionBox';
 import { BsPencil } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
+import DOMPurify from 'dompurify';
 
 function getRandomIds(array, size) {
   const shuffled = array.sort(() => 0.5 - Math.random());
@@ -34,14 +35,10 @@ export const ProductContent = (props) => {
     navigate(`/product/${findItem.id}/update`); // ":id"는 실제 제품 ID로 대체해야 합니다.
   };
 
-  // const getText = (html) => {
-  //   const doc = new DOMParser().parseFromString(html, "text/html")
-  //   return doc.body.textContent
-  // }
-
-  const DisplayStyledText = ({ htmlContent }) => (
-    <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
-  );
+  const DisplayStyledText = ({ htmlContent }) => {
+    const cleanHTML = DOMPurify.sanitize(htmlContent);
+    return <div dangerouslySetInnerHTML={{ __html: cleanHTML }} />;
+  };
 
   return (
     <div className="productContent">
@@ -97,7 +94,7 @@ export const ProductContent = (props) => {
 
                 <hr />
 
-                <div className="lang">
+                {/* <div className="lang">
                   <div className="left">
                     <img src={process.env.PUBLIC_URL + "/image/lang_icons/python.png"} className="langIcon" alt="lang1" />
                     <p>python</p>
@@ -106,7 +103,7 @@ export const ProductContent = (props) => {
                     <img src={process.env.PUBLIC_URL + "/image/lang_icons/django.png"} className="langIcon" alt="lang2" />
                     <p>django</p>
                   </div>
-                </div>
+                </div> */}
 
                 <div className="langDesc">
                   <table>
@@ -116,11 +113,11 @@ export const ProductContent = (props) => {
                         <td>1.0.2</td>
                       </tr>
                       <tr>
-                        <td>Updated</td>
+                        <td>최근 업데이트</td>
                         <td>2023.08.21</td>
                       </tr>
                       <tr>
-                        <td>Released</td>
+                        <td>개발 일자</td>
                         <td>2023.03.05</td>
                       </tr>
                       <tr>

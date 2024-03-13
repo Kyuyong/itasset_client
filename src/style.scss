@@ -1545,10 +1545,22 @@ body {
                   height: 300px;
                   overflow: scroll;
                   border: 1px solid lightgray;
+                  border-radius: 10px;
 
                   .editor {
                     height: 100%;
                     border: none;
+
+
+                    .ql-toolbar {
+                      position: sticky;
+                      top: 0;
+                      z-index: 1;
+                      background: #f0f0f0;
+                      border-radius: 5px;
+
+                    }
+
                   }
                 }
 
