@@ -7,13 +7,6 @@ export const AuthContextProvider = ({ children }) => {
     JSON.parse(localStorage.getItem("user")) || null
   );
 
-  // const login = async ({ username, password }) => {
-  //   const res = await axios.post("/login", {
-  //     username: username,
-  //     password: password,
-  //   });
-  //   setCurrentUser(res.data);
-  // };
 
   const login = async ({ username, password }) => {
     try {
@@ -42,7 +35,6 @@ export const AuthContextProvider = ({ children }) => {
         setCurrentUser(userDetails);
         localStorage.setItem("user", JSON.stringify(userDetails));
       } else {
-        // 로그인 실패 처리
         throw new Error("로그인 실패");
       }
     } catch (error) {
@@ -53,9 +45,8 @@ export const AuthContextProvider = ({ children }) => {
 
   const logout = () => {
     try {
-      // await axios.post("/auth/logout");
-      setCurrentUser(null); // 현재 사용자 상태를 null로 설정
-      localStorage.removeItem("user"); // localStorage에서 사용자 정보 제거
+      setCurrentUser(null);
+      localStorage.removeItem("user");
     } catch (error) {
       console.error("로그아웃 과정에서 오류 발생:", error);
     }

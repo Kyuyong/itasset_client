@@ -73,8 +73,8 @@ export const ProductReviews = () => {
               You can read more about the documentation here.
             </p>
             <div className="reviewActions">
-              <button className="reviewActionsBtn"> <BsTrashFill />삭제하기</button>
-              <button className="reviewActionsBtn"> <BsPenFill />수정하기</button>
+              <Button className="reviewActionsBtn"> <BsTrashFill />삭제하기</Button>
+              <Button className="reviewActionsBtn"> <BsPenFill />수정하기</Button>
             </div>
           </div>
 
@@ -90,8 +90,8 @@ export const ProductReviews = () => {
               이 시스템 정말 잘 만든것 같습니다. 현장에서 쓰기 너무 좋습니다.
             </p>
             <div className="reviewActions">
-              <button className="reviewActionsBtn"> <BsTrashFill />삭제하기</button>
-              <button className="reviewActionsBtn"> <BsPenFill />수정하기</button>
+              <Button className="reviewActionsBtn"> <BsTrashFill />삭제하기</Button>
+              <Button className="reviewActionsBtn"> <BsPenFill />수정하기</Button>
             </div>
           </div>
 
@@ -124,8 +124,8 @@ export const ProductReviews = () => {
               You can read more about the documentation here.
             </p>
             <div className="reviewActions">
-              <button className="reviewActionsBtn"> <BsTrashFill />삭제하기</button>
-              <button className="reviewActionsBtn"> <BsPenFill />수정하기</button>
+              <Button className="reviewActionsBtn"> <BsTrashFill />삭제하기</Button>
+              <Button className="reviewActionsBtn"> <BsPenFill />수정하기</Button>
             </div>
           </div>
 
@@ -133,7 +133,7 @@ export const ProductReviews = () => {
           <form className="commentForm">
             <textarea className="commentInput" placeholder="댓글을 입력하세요."></textarea>
             <div className="buttonContainer">
-              <button type="submit" className="submitBtn">댓글 달기</button>
+              <Button type="submit" className="submitBtn">댓글 달기</Button>
             </div>
           </form>
           <div className="gap-60"></div>

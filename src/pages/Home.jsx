@@ -16,15 +16,6 @@ export const Home = () => {
   const [searchResults, setSearchResults] = useState([]);
   const navigate = useNavigate();
 
-
-
-  // useEffect(() => {
-  //   // 검색 결과가 업데이트되면 /search로 이동
-  //   if (searchResults.length > 0) {
-  //     navigate("/search");
-  //   }
-  // }, [searchResults, navigate]);
-
   const handleSearch = (results) => {
     setSearchResults(results);
     navigate("/search");

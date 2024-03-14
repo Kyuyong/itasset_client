@@ -94,17 +94,6 @@ export const ProductContent = (props) => {
 
                 <hr />
 
-                {/* <div className="lang">
-                  <div className="left">
-                    <img src={process.env.PUBLIC_URL + "/image/lang_icons/python.png"} className="langIcon" alt="lang1" />
-                    <p>python</p>
-                  </div>
-                  <div className="right">
-                    <img src={process.env.PUBLIC_URL + "/image/lang_icons/django.png"} className="langIcon" alt="lang2" />
-                    <p>django</p>
-                  </div>
-                </div> */}
-
                 <div className="langDesc">
                   <table>
                     <tbody>

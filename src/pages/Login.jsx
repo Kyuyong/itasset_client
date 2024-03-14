@@ -29,51 +29,6 @@ export const Login = ({ onLogin }) => {
     }
   };
 
-
-  // const handleLogin = async (e) => {
-  //   e.preventDefault();
-
-  //   try {
-  //     // const response = login({ username, password })
-  //     const response = await axios.post('/login', {
-  //       username: username,
-  //       password: password,
-  //     });
-  //     const data = response.data;
-  //     console.log(data);
-
-  //     if (data.success && data.data.authUserValue === "Y") {
-  //       console.log('로그인 성공:', data);
-  //       clearTimeout(logoutTimerRef.current); // 기존 타이머 클리어
-  //       onLogin(true); // 로그인 상태를 true로 설정
-  //       navigate('/'); // 사용자를 홈 페이지로 리디렉션
-
-  //       // 로그인 성공 시, 30분 후 자동 로그아웃 타이머 설정
-  //       logoutTimerRef.current = setTimeout(() => {
-  //         handleLogout();
-  //       }, 1800000); // 30 minutes
-  //     } else {
-  //       // 로그인 실패 처리
-  //       console.log('로그인 실패:', data.message);
-  //       setLoginError(true);
-  //     }
-  //   } catch (error) {
-  //     console.error('로그인 요청 중 에러 발생:', error);
-  //     setLoginError(true);
-  //   }
-  // };
-
-  // const handleLogout = () => {
-  //   onLogin(false); // 로그인 상태 변경
-  //   // 필요한 경우, 로그인 페이지로 리디렉션하는 로직 추가
-  //   clearTimeout(logoutTimerRef.current); // 로그아웃 시 타이머 초기화
-  // };
-
-  // // 컴포넌트 언마운트 시 타이머 클리어
-  // useEffect(() => {
-  //   return () => clearTimeout(logoutTimerRef.current);
-  // }, []);
-
   return (
     <div className="loginContainer">
 
@@ -104,6 +59,7 @@ export const Login = ({ onLogin }) => {
               type="password"
               placeholder="i-net 비밀번호를 입력하세요."
               value={password}
+              autoComplete="off"
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>

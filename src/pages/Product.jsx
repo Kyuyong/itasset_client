@@ -32,8 +32,6 @@ export const Product = () => {
   }, [productId]);
   ////////////////////////
 
-  // const [showReviews, setShowReviews] = useState(false); // 리뷰 보기 상태 관리
-
   const goToReviews = () => {
     navigate(`/product/${productId}/reviews`);
   };
@@ -98,23 +96,13 @@ export const Product = () => {
               </div>
               <div className="like"> 4,905 (551 Reviews)</div>
               <hr />
-              {/* <div className="proBtn" onClick={() => setShowReviews(!showReviews)}>
-                <button  >
-                  {showReviews ? 'Solution 소개' : 'Reviews 보기'}
-                </button>
-              </div> */}
               <div className="btns">
-
-                <div className="proBtn" onClick={goToSolution}>
-                  <button>
-                    Solution 안내
-                  </button>
-                </div>
-                <div className="proBtn" onClick={goToReviews}>
-                  <button>
-                    Reviews 보기
-                  </button>
-                </div>
+                <button className="proBtn" onClick={goToSolution}>
+                  Solution 안내
+                </button>
+                <button className="proBtn" onClick={goToReviews}>
+                  Reviews 보기
+                </button>
               </div>
             </div>
 
@@ -123,13 +111,11 @@ export const Product = () => {
         </div>
 
       </div>
-      {/* <ProductContent solutionData={product} /> */}
       <Routes>
         <Route path="/" element={<ProductContent solutionData={product} />} />
         <Route path="/reviews" element={<ProductReviews />} />
         <Route path="/update" element={<ProductUpdate solutionData={product} />} />
       </Routes>
-      {/* {showReviews ? <ProductReviews /> : <ProductContent solutionData={product} />} */}
     </div>
   )
 }
