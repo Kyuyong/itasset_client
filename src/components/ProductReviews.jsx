@@ -1,26 +1,133 @@
-import React, { useState } from 'react'
-
+import React, { useContext, useState } from 'react'
+import { AuthContext } from "../context/authContext";
 import Stack from '@mui/material/Stack';
 import { pink } from '@mui/material/colors';
-import { Button, IconButton, Rating } from '@mui/material';
+import { Button, IconButton, Rating, TextField } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { BsPenFill, BsTrashFill } from 'react-icons/bs';
-
+import { v4 as uuidv4 } from 'uuid'
+import { format } from 'date-fns';
+import { useLocation } from 'react-router-dom';
 
 export const ProductReviews = () => {
 
+  const { currentUser } = useContext(AuthContext);
+  const [comments, setComments] = useState([]); // 댓글 데이터 상태
+  const [commentInput, setCommentInput] = useState(''); // 입력된 댓글 내용
+
+  // Product ID 기준 불러오기
+  const location = useLocation(); // useLocation 훅을 사용해 location 객체 얻기
+  const sol_id = location.pathname.split("/")[2];
+
   const [likeCount, setLikeCount] = useState(0);
 
+
   const handleLike = () => {
-    setLikeCount(likeCount + 1); // 버튼 클릭 시 좋아요 수 증가
+    setLikeCount(likeCount + 1);
   };
+
+  const handleAddComment = async (e) => {
+    e.preventDefault();
+    if (!commentInput.trim()) return;
+    const newComment = {
+      uuid: uuidv4(),
+      n_id: currentUser.userId,
+      n_name: currentUser.name,
+      team: currentUser.deptName,
+      headqt: currentUser.prntDeptName,
+      content: commentInput,
+      date: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+      sol_id
+    };
+
+    try {
+      const response = await fetch("/api/reviews/reviewreg", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newComment),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        // 서버에서 반환된 댓글 데이터로 댓글 목록 업데이트
+        setComments((prevComments) => [...prevComments, data]);
+        setCommentInput('');
+      } else {
+        // 서버 에러 처리
+        throw new Error('댓글을 저장하는데 실패했습니다.');
+      }
+    } catch (error) {
+      // 에러 처리
+      console.error('댓글 추가 에러:', error);
+    }
+  };
+
+  // const handleAddComment = (e) => {
+  //   e.preventDefault();
+  //   if (!commentInput.trim()) return;
+
+  //   const newComment = {
+  //     uuid: uuidv4(), // id -> uuid
+  //     n_id: currentUser.userId, // userId -> n_id
+  //     n_name: currentUser.name, // name -> n_name
+  //     team: currentUser.deptName, // deptName -> team
+  //     headqt: currentUser.prntDeptName, // prntDeptName -> headqt
+  //     content: commentInput,
+  //     date: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+  //     sol_id
+  //   };
+
+  //   setComments([...comments, newComment]);
+  //   setCommentInput('');
+  // };
+
+  console.log(comments);
+  console.log("product id;", sol_id);
+
   return (
     <div className="productReviews">
       <div className="contentBox">
         <div className="container">
-          <div className="gap-40"></div>
-          <div className="titleText">Reviews 보기</div>
           <div className="gap-20"></div>
+          <div className="titleText">Reviews 보기</div>
+
+          <form className="commentForm" onSubmit={handleAddComment}>
+            <TextField
+              fullWidth
+              variant="outlined"
+              placeholder="댓글을 입력하세요."
+              value={commentInput}
+              onChange={(e) => setCommentInput(e.target.value)}
+            />
+            <Button className="commentBtn" type="submit" variant="contained" color="primary">
+              댓글 달기
+            </Button>
+          </form>
+          {
+            [...comments].sort((a, b) => new Date(b.date) - new Date(a.date)).map((comment) => (
+              <div key={comment.uuid}>
+                <div className="reviewBox">
+                  <div className="reviewHeader">
+                    <div>
+                      <p className="reviewNm">{comment.n_name} </p>
+                      <p className="reviewTeam">{comment.team}</p>
+                    </div>
+                    <p className="reviewDate">{comment.date}</p>
+                  </div>
+                  <div className="reviewContent">
+                    {comment.content}
+                  </div>
+                  <div className="reviewActions">
+                    <Button className="reviewActionsBtn"> <BsTrashFill />삭제하기</Button>
+                    <Button className="reviewActionsBtn"> <BsPenFill />수정하기</Button>
+                  </div>
+                </div>
+              </div>
+            ))}
+
+          <div className="gap-30"></div>
           <div className="scored">
             <Stack direction="row" spacing={2} divider={<div style={{ margin: '0 auto' }} />} alignItems="center">
               <div className="scoreBox">
@@ -51,91 +158,6 @@ export const ProductReviews = () => {
             </Stack>
           </div>
 
-          <div className="gap-20"></div>
-
-          <div className="reviewBox">
-            <div className="reviewHeader">
-              <div>
-                <p className="reviewNm">강세운</p>
-                <p className="reviewTeam">평택품질개선팀</p>
-              </div>
-              <p className="reviewDate">2024.02.07</p>
-            </div>
-            <p className="reviewContent">
-              Each element is well presented in very complex documentation.
-              You can read more about the documentation here.
-              If you want to get inspiration or just show something directly to your clients,
-              you can jump-start your development with our pre-built example pages.
-              You will be able to quickly set up the basic structure for your web project.
-              Each element is well presented in very complex documentation.
-              You can read more about the documentation here.
-              Each element is well presented in very complex documentation.
-              You can read more about the documentation here.
-            </p>
-            <div className="reviewActions">
-              <Button className="reviewActionsBtn"> <BsTrashFill />삭제하기</Button>
-              <Button className="reviewActionsBtn"> <BsPenFill />수정하기</Button>
-            </div>
-          </div>
-
-          <div className="reviewBox">
-            <div className="reviewHeader">
-              <div>
-                <p className="reviewNm">도혜경</p>
-                <p className="reviewTeam">재무관리팀</p>
-              </div>
-              <p className="reviewDate">2024.02.07</p>
-            </div>
-            <p className="reviewContent">
-              이 시스템 정말 잘 만든것 같습니다. 현장에서 쓰기 너무 좋습니다.
-            </p>
-            <div className="reviewActions">
-              <Button className="reviewActionsBtn"> <BsTrashFill />삭제하기</Button>
-              <Button className="reviewActionsBtn"> <BsPenFill />수정하기</Button>
-            </div>
-          </div>
-
-          <div className="reviewBox">
-            <div className="reviewHeader">
-              <div>
-                <p className="reviewNm">정승근</p>
-                <p className="reviewTeam">강북품질개선팀</p>
-              </div>
-              <p className="reviewDate">2024.02.07</p>
-            </div>
-            <p className="reviewContent">
-              Each element is well presented in very complex documentation.
-              You can read more about the documentation here.
-              If you want to get inspiration or just show something directly to your clients,
-              you can jump-start your development with our pre-built example pages.
-              You will be able to quickly set up the basic structure for your web project.
-              Each element is well presented in very complex documentation.
-              You can read more about the documentation here.
-              Each element is well presented in very complex documentation.
-              You can read more about the documentation here.
-              Each element is well presented in very complex documentation.
-              You can read more about the documentation here.
-              If you want to get inspiration or just show something directly to your clients,
-              you can jump-start your development with our pre-built example pages.
-              You will be able to quickly set up the basic structure for your web project.
-              Each element is well presented in very complex documentation.
-              You can read more about the documentation here.
-              Each element is well presented in very complex documentation.
-              You can read more about the documentation here.
-            </p>
-            <div className="reviewActions">
-              <Button className="reviewActionsBtn"> <BsTrashFill />삭제하기</Button>
-              <Button className="reviewActionsBtn"> <BsPenFill />수정하기</Button>
-            </div>
-          </div>
-
-          <div className="gap-30"></div>
-          <form className="commentForm">
-            <textarea className="commentInput" placeholder="댓글을 입력하세요."></textarea>
-            <div className="buttonContainer">
-              <Button type="submit" className="submitBtn">댓글 달기</Button>
-            </div>
-          </form>
           <div className="gap-60"></div>
         </div>
       </div>

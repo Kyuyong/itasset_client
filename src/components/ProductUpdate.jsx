@@ -16,7 +16,7 @@ export const ProductUpdate = (props) => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`/solutions/update/${solutionData.id}`, {
+      await axios.put(`/api/solutions/update/${solutionData.id}`, {
         direc,
         target,
         effect

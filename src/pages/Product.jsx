@@ -22,7 +22,7 @@ export const Product = () => {
     // 데이터 불러오기 함수
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`/solutions/getsolution/${productId}`);
+        const response = await axios.get(`/api/solutions/getsolution/${productId}`);
         getProduct(response.data[0]);
       } catch (error) {
         console.error("solutions 가져올때 오류가 발생하였습니다:", error);

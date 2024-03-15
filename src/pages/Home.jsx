@@ -26,7 +26,7 @@ export const Home = () => {
   const [getsolutions, setGetSolutions] = useState([]);
   const fetchSolutions = async () => {
     try {
-      const response = await axios.get('/solutions/getsolution');
+      const response = await axios.get('/api/solutions/getsolution');
       const sortedSolutions = response.data.sort((a, b) => a.id - b.id);
       setGetSolutions(sortedSolutions);
     } catch (error) {
@@ -45,7 +45,7 @@ export const Home = () => {
   useEffect(() => {
     const fetchWorkSol = async () => {
       try {
-        const response = await axios.get(`/solutions/getWorkfld/${work_field}`);
+        const response = await axios.get(`/api/solutions/getWorkfld/${work_field}`);
         setWorkFlSols(response.data);
       } catch (error) {
         console.error("solutions 가져올때 오류가 발생하였습니다:", error);

@@ -5,31 +5,9 @@ import {
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-// import { toast } from 'react-toastify';
 import moment from "moment";
 
 export const RegisterSol = ({ onSubmit }) => {
-
-
-  // /// USER LIST 
-  // const [userList, setUserList] = useState([]);
-
-  // useEffect(() => {
-  //   const fetchUserList = async () => {
-  //     try {
-  //       const response = await axios.get('/auths/userlist');
-  //       setUserList(response.data);
-  //     } catch (error) {
-  //       console.error("가져오기 실패", error)
-  //     }
-  //   };
-  //   fetchUserList();
-  // }, []);
-
-  // console.log(userList);
-
-
-
 
 
   ////////////////////////
@@ -39,7 +17,7 @@ export const RegisterSol = ({ onSubmit }) => {
   // 데이터 불러오기 함수
   const fetchSolutions = async () => {
     try {
-      const response = await axios.get('/solutions/getsolution');
+      const response = await axios.get('/api/solutions/getsolution');
       // ID를 기준으로 오름차순 정렬
       const sortedSolutions = response.data.sort((a, b) => a.id - b.id);
       setGetSolutions(sortedSolutions);
@@ -74,25 +52,25 @@ export const RegisterSol = ({ onSubmit }) => {
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
+  console.log("업로드 file: ", file);
   const upload = async () => {
     try {
       const formData = new FormData();
       formData.append("file", file);
-      const res = await axios.post("/upload", formData);
+      formData.entries()  // 확인하기 
+      const res = await axios.post("/api/upload", formData);
       return res.data;
     } catch (err) {
       console.log(err);
-      // toast.error("파일 업로드 중 오류가 발생했습니다.");
     }
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const imgUrl = await upload();
     const currentDateTime = moment().format("YYYY-MM-DD HH:mm:ss");
     const solutionData = { ...solution, imgUrl, date: currentDateTime };
     try {
-      const response = await axios.post('/solutions/register', solutionData);
+      const response = await axios.post('/api/solutions/register', solutionData);
       if (response.status >= 200 && response.status < 300) {
         alert('Solution 등록 성공하였습니다.');
         if (typeof onSubmit === 'function') {

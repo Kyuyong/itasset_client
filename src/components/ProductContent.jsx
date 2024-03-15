@@ -12,12 +12,12 @@ function getRandomIds(array, size) {
 
 export const ProductContent = (props) => {
 
-  let findItem = props.solutionData;
+  let solutionData = props.solutionData;
   const [getsolutions, setGetSolutions] = useState([]);
 
   const fetchSolutions = async () => {
     try {
-      const response = await axios.get('/solutions/getsolution');
+      const response = await axios.get('/api/solutions/getsolution');
       setGetSolutions(response.data);
     } catch (error) {
       console.error("solutions 가져올때 오류가 발생하였습니다:", error);
@@ -32,7 +32,7 @@ export const ProductContent = (props) => {
 
   const navigate = useNavigate();
   const handleEditClick = () => {
-    navigate(`/product/${findItem.id}/update`); // ":id"는 실제 제품 ID로 대체해야 합니다.
+    navigate(`/product/${solutionData.id}/update`);
   };
 
   const DisplayStyledText = ({ htmlContent }) => {
@@ -60,19 +60,19 @@ export const ProductContent = (props) => {
                 <div className="gap-40"></div>
                 <div className="subTitle">추진 방향</div>
                 <div className="itemBox">
-                  <DisplayStyledText htmlContent={findItem.direc} />
+                  <DisplayStyledText htmlContent={solutionData.direc} />
                 </div>
 
                 <div className="gap-40"></div>
                 <div className="subTitle">과제 대상</div>
                 <div className="itemBox">
-                  <DisplayStyledText htmlContent={findItem.target} />
+                  <DisplayStyledText htmlContent={solutionData.target} />
                 </div>
 
                 <div className="gap-40"></div>
                 <div className="subTitle">기대 효과</div>
                 <div className="itemBox">
-                  <DisplayStyledText htmlContent={findItem.effect} />
+                  <DisplayStyledText htmlContent={solutionData.effect} />
                 </div>
 
               </div>
@@ -81,14 +81,14 @@ export const ProductContent = (props) => {
             <div className="rightSide">
               <div className="devDesc">
                 <div className="developer">
-                  {/* <img src={process.env.PUBLIC_URL + "/image/developer/" + findItem.n_id + ".jpg"}
+                  {/* <img src={process.env.PUBLIC_URL + "/image/developer/" + solutionData.n_id + ".jpg"}
                     className="devImg" alt="devImg" /> */}
                   <img src={process.env.PUBLIC_URL + "/image/developer/person1.png"}
                     className="devImg" alt="devImg" />
                   <div>
-                    <span style={{ color: '#585858' }}>{findItem.headquarters} </span>
-                    <span style={{ color: '#1CA8DB' }}>{findItem.team} </span>
-                    <div className="devNm">{findItem.name}</div>
+                    <span style={{ color: '#585858' }}>{solutionData.headquarters} </span>
+                    <span style={{ color: '#1CA8DB' }}>{solutionData.team} </span>
+                    <div className="devNm">{solutionData.name}</div>
                   </div>
                 </div>
 

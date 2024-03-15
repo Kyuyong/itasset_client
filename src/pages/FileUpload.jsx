@@ -10,7 +10,7 @@ export const FileUpload = () => {
     try {
       const formData = new FormData();
       formData.append("file", file);
-      const res = await axios.post("/upload", formData);
+      const res = await axios.post("/api/upload", formData);
       return res.data;
 
     } catch (err) {
@@ -25,7 +25,7 @@ export const FileUpload = () => {
     e.preventDefault();
     const imgUrl = await upload();
     try {
-      await axios.post('/solutions/upload', {
+      await axios.post('/api/solutions/upload', {
         imgUrl: imgUrl, // 업로드된 이미지의 URL
         date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
       });

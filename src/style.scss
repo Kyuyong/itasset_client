@@ -137,7 +137,7 @@ body {
       background-position: center;
       background-size: cover;
       padding: 20px;
-      margin: 5vw 0 100px 10vw;
+      margin: 5vw 0 100px 15vw;
       border-top-left-radius: 20px;
       border-bottom-left-radius: 20px;
 
@@ -157,8 +157,8 @@ body {
       flex-direction: column;
       justify-content: center;
       background-color: rgba(255, 255, 255, 0.8);
-      padding: 20px;
-      margin: 5vw 20vh 100px 0;
+      padding: 40px;
+      margin: 5vw 35vh 100px 0;
       border-top-right-radius: 20px;
       border-bottom-right-radius: 20px;
       gap: 50px;
@@ -169,6 +169,7 @@ body {
         color: $grayColor;
         font-size: 30px;
         font-weight: 800;
+        font-family: $notoSans;
       }
 
       .inputName {
@@ -1381,10 +1382,10 @@ body {
               background-color: #edf9ff;
               box-shadow: 3px 4px 4px 0px rgba(0, 0, 0, 0.25);
               border-radius: 15px;
-              min-height: 100px;
+              // min-height: 100px;
               height: 100%;
-              margin: 20px auto;
-              padding: 20px;
+              margin: 10px auto;
+              padding: 5px 20px;
 
               .reviewHeader {
                 display: flex;
@@ -1399,7 +1400,7 @@ body {
                 }
 
                 .reviewNm {
-                  font-size: 20px;
+                  font-size: 16px;
                   font-weight: 500;
                   padding-left: 10px;
                 }
@@ -1413,13 +1414,13 @@ body {
                 }
 
                 .reviewTeam {
-                  font-size: 18px;
+                  font-size: 14px;
                   font-weight: 400;
                   color: $blueColor;
                 }
 
                 .reviewDate {
-                  font-size: 14px;
+                  font-size: 12px;
                   padding-right: 10px;
                 }
               }
@@ -1427,7 +1428,7 @@ body {
               .reviewContent {
                 background-color: #ffffff;
                 padding: 20px;
-                min-height: 80px;
+                // min-height: 80px;
                 border-radius: 10px;
               }
 
@@ -1435,7 +1436,7 @@ body {
                 display: flex;
                 justify-content: flex-end;
                 gap: 10px;
-                margin-top: 20px;
+                // margin-top: 20px;
 
                 .reviewActionsBtn {
                   width: 100px;
@@ -1459,11 +1460,18 @@ body {
 
             .commentForm {
               display: flex;
-              flex-direction: column;
+              // flex-direction: row;
+              // align-items: center;
               gap: 10px;
 
+              .commentInput,
+              .commentBtn {
+                flex: 1;
+                height: 100px;
+              }
+
               .commentInput {
-                width: 100%;
+                // flex-grow: 1;
                 padding: 10px;
                 font-size: 16px;
                 border: 1px solid #ccc;
@@ -1471,27 +1479,11 @@ body {
                 resize: vertical;
               }
 
-              .buttonContainer {
-                display: flex;
-                justify-content: flex-end;
-              }
-
-              .submitBtn {
-                padding: 8px 16px;
-                background-color: $blueColor;
-                color: white;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-              }
-
-              .submitBtn:hover {
-                background-color: darkblue;
+              .commentBtn {
+                width: 120px;
+                height: 100%;
               }
             }
-
-
-
 
           }
 
