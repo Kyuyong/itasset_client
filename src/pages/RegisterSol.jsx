@@ -52,21 +52,55 @@ export const RegisterSol = ({ onSubmit }) => {
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
+
   console.log("업로드 file: ", file);
+
+  // const upload = async () => {
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append("file", file);
+  //     console.log("업로드 시도: ", file); // 업로드 시도하는 파일 로그
+
+  //     // FormData의 내용을 로깅
+  //     for (let [key, value] of formData.entries()) {
+  //       console.log(`${key}: ${value}`);
+  //     }
+
+  //     const res = await axios.post("/api/upload", formData);
+  //     return res.data;
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
   const upload = async () => {
     try {
       const formData = new FormData();
-      formData.append("file", file);
-      formData.entries()  // 확인하기 
-      const res = await axios.post("/api/upload", formData);
+      formData.append("file", file); // 파일 추가
+      console.log("업로드 시도: ", file); // 업로드 시도하는 파일 로그
+
+      // FormData의 내용을 로깅
+      for (let [key, value] of formData.entries()) {
+        console.log(`${key}: ${value}`);
+      }
+
+      const res = await axios.post("/api/upload", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data' // 필요한 경우 명시적으로 세팅
+        }
+      });
+      console.log("업로드 성공: ", res.data); // 응답 로그
       return res.data;
     } catch (err) {
-      console.log(err);
+      console.error("업로드 실패: ", err);
     }
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const imgUrl = await upload();
+
+
     const currentDateTime = moment().format("YYYY-MM-DD HH:mm:ss");
     const solutionData = { ...solution, imgUrl, date: currentDateTime };
     try {

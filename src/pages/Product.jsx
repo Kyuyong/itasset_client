@@ -20,6 +20,7 @@ export const Product = () => {
 
   useEffect(() => {
     // 데이터 불러오기 함수
+    console.log("에러 확인용 ProductId:", productId); // 값 확인
     const fetchProduct = async () => {
       try {
         const response = await axios.get(`/api/solutions/getsolution/${productId}`);
@@ -113,7 +114,7 @@ export const Product = () => {
       </div>
       <Routes>
         <Route path="/" element={<ProductContent solutionData={product} />} />
-        <Route path="/reviews" element={<ProductReviews />} />
+        <Route path="/reviews" element={<ProductReviews productId={productId} />} />
         <Route path="/update" element={<ProductUpdate solutionData={product} />} />
       </Routes>
     </div>

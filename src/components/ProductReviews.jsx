@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from "../context/authContext";
 import Stack from '@mui/material/Stack';
 import { pink } from '@mui/material/colors';
@@ -7,20 +7,16 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { BsPenFill, BsTrashFill } from 'react-icons/bs';
 import { v4 as uuidv4 } from 'uuid'
 import { format } from 'date-fns';
-import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 
-export const ProductReviews = () => {
+export const ProductReviews = ({ productId }) => {
 
   const { currentUser } = useContext(AuthContext);
-  const [comments, setComments] = useState([]); // 댓글 데이터 상태
-  const [commentInput, setCommentInput] = useState(''); // 입력된 댓글 내용
-
-  // Product ID 기준 불러오기
-  const location = useLocation(); // useLocation 훅을 사용해 location 객체 얻기
-  const sol_id = location.pathname.split("/")[2];
-
+  const [comments, setComments] = useState([]);
+  const [commentInput, setCommentInput] = useState('');
   const [likeCount, setLikeCount] = useState(0);
 
+  const sol_id = productId;
 
   const handleLike = () => {
     setLikeCount(likeCount + 1);
@@ -39,7 +35,6 @@ export const ProductReviews = () => {
       date: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
       sol_id
     };
-
     try {
       const response = await fetch("/api/reviews/reviewreg", {
         method: 'POST',
@@ -48,10 +43,10 @@ export const ProductReviews = () => {
         },
         body: JSON.stringify(newComment),
       });
-
       if (response.ok) {
         const data = await response.json();
         // 서버에서 반환된 댓글 데이터로 댓글 목록 업데이트
+        console.log('서버로 받은 data: ', data);
         setComments((prevComments) => [...prevComments, data]);
         setCommentInput('');
       } else {
@@ -64,27 +59,18 @@ export const ProductReviews = () => {
     }
   };
 
-  // const handleAddComment = (e) => {
-  //   e.preventDefault();
-  //   if (!commentInput.trim()) return;
+  useEffect(() => {
+    const fetchComment = async () => {
+      try {
+        const response = await axios.get(`/api/reviews/getreview?sol_id=${sol_id}`);
+        setComments(response.data);
+      } catch (error) {
+        console.error("댓글 가져올때 오류가 발생했습니다.", error);
+      };
+    };
+    fetchComment();
+  }, [sol_id]);
 
-  //   const newComment = {
-  //     uuid: uuidv4(), // id -> uuid
-  //     n_id: currentUser.userId, // userId -> n_id
-  //     n_name: currentUser.name, // name -> n_name
-  //     team: currentUser.deptName, // deptName -> team
-  //     headqt: currentUser.prntDeptName, // prntDeptName -> headqt
-  //     content: commentInput,
-  //     date: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
-  //     sol_id
-  //   };
-
-  //   setComments([...comments, newComment]);
-  //   setCommentInput('');
-  // };
-
-  console.log(comments);
-  console.log("product id;", sol_id);
 
   return (
     <div className="productReviews">

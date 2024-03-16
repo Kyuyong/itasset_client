@@ -13,6 +13,7 @@ import Home from './Home';
 import Product from './Product';
 import RegisterSol from './RegisterSol';
 import Introduction from './Introduction';
+import FileUpload from './FileUpload';
 
 export const Main = ({ onLogout }) => {
 
@@ -40,6 +41,8 @@ export const Main = ({ onLogout }) => {
           <Route path="/product/:id/*" element={<Product />} />
           <Route path="/introduction" element={<Introduction solutionData={getsolutions} />}></Route>
           <Route path="/registersol" element={<RegisterSol />} />
+          <Route path="/fileupload" element={<FileUpload />} />
+
         </Routes>
         <ScrollToTop />
       </div>
