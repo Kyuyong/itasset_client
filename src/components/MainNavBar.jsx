@@ -7,7 +7,7 @@ import { AuthContext } from '../context/authContext';
 
 export const MainNavBar = () => {
 
-  const { logout } = useContext(AuthContext);
+  const { currentUser, logout } = useContext(AuthContext);
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
@@ -27,10 +27,16 @@ export const MainNavBar = () => {
           <Link to="/" className="link">IT Asset</Link>
         </div>
         <div className="controls">
-          <Link to="/registersol" className="menu regLink">
+          {currentUser.isAdmin && ( // currentUser.isAdmin을 사용하여 조건부 렌더링
+            <Link to="/admin" className="menu regLink">
+              <AppRegistrationIcon size={24} />
+              <span>Admin 관리</span>
+            </Link>
+          )}
+          {/* <Link to="/admin" className="menu regLink">
             <AppRegistrationIcon size={24} />
-            <span>Register Sol.</span>
-          </Link>
+            <span>Admin 관리</span>
+          </Link> */}
           <div className="menu" onClick={logout}>
             <BsLockFill size={24} />
             <span>Logout</span>

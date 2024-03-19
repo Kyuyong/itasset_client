@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 
 import axios from 'axios';
 
@@ -11,11 +11,12 @@ import Footer from '../components/Footer';
 // Page List
 import Home from './Home';
 import Product from './Product';
-import RegisterSol from './RegisterSol';
 import Introduction from './Introduction';
 import FileUpload from './FileUpload';
+import Admin from './Admin';
+import RegisterSol from './RegisterSol';
 
-export const Main = ({ onLogout }) => {
+export const Main = () => {
 
   const [getsolutions, setGetSolutions] = useState([]);
   const fetchSolutions = async () => {
@@ -32,21 +33,26 @@ export const Main = ({ onLogout }) => {
   }, []);
   ////////////////////////
 
+  const location = useLocation();
+  const isAdminPage = location.pathname.startsWith('/admin');
+
+
   return (
     <>
       <div className="main">
         <MainNavBar />
         <Routes>
           <Route path="*" element={<Home />} />
-          <Route path="/product/:id/*" element={<Product />} />
+          <Route path="/product/:productId/*" element={<Product />} />
           <Route path="/introduction" element={<Introduction solutionData={getsolutions} />}></Route>
-          <Route path="/registersol" element={<RegisterSol />} />
+          <Route path="/admin/*" element={<Admin />} />
+          <Route path="/reg" element={<RegisterSol />} />
           <Route path="/fileupload" element={<FileUpload />} />
-
         </Routes>
         <ScrollToTop />
       </div>
-      <Footer />
+      {/* <Footer /> */}
+      {!isAdminPage && <Footer />}
     </>
   )
 }

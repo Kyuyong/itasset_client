@@ -1,26 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { BsFillStarFill } from 'react-icons/bs';
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Route, Routes, useNavigate, useParams } from 'react-router-dom';
 import ProductContent from '../components/ProductContent';
 import ProductReviews from '../components/ProductReviews';
 import ProductUpdate from '../components/ProductUpdate';
 import axios from 'axios';
+import { Button, IconButton } from '@mui/material';
+import { pink } from '@mui/material/colors';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 
 export const Product = () => {
-  const location = useLocation();
+  const [likeCount, setLikeCount] = useState(0);
   const navigate = useNavigate();
-
+  const handleLike = () => {
+    setLikeCount(likeCount + 1);
+  };
 
   ////////////////////////
   // Product ID 기준 불러오기
   const [product, getProduct] = useState([]);
-  const productId = location.pathname.split("/")[2];
-
+  const { productId } = useParams();
 
   useEffect(() => {
     // 데이터 불러오기 함수
-    console.log("에러 확인용 ProductId:", productId); // 값 확인
+    // console.log("에러 확인용 ProductId:", productId); // 값 확인
     const fetchProduct = async () => {
       try {
         const response = await axios.get(`/api/solutions/getsolution/${productId}`);
@@ -30,6 +34,7 @@ export const Product = () => {
       }
     };
     fetchProduct();
+
   }, [productId]);
   ////////////////////////
 
@@ -40,6 +45,8 @@ export const Product = () => {
     navigate(`/product/${productId}`);
   };
 
+
+
   return (
     <div className="product" >
       <div className="mainBox">
@@ -49,8 +56,9 @@ export const Product = () => {
               <div className="imgBox">
                 {/* <img src={process.env.PUBLIC_URL + product.img}
                   alt="newsolution-box" /> */}
-                {product && <img src={process.env.PUBLIC_URL + product.img} alt="newsolution-box" />}
-
+                {product && product.img && (
+                  <img src={process.env.PUBLIC_URL + product.img} alt="newsolution-box" />
+                )}
               </div>
               <div className="btnList">
 
@@ -105,6 +113,18 @@ export const Product = () => {
                   Reviews 보기
                 </button>
               </div>
+
+              <div className="scoreBox">
+                <Button variant="contained" className="likeBtn"
+                  onClick={handleLike} sx={{ backgroundColor: pink[300] }}>
+                  마음에 들면 좋아요
+                </Button>
+                <IconButton sx={{ color: pink[500] }}>
+                  <FavoriteIcon />
+                </IconButton>
+                <p>{likeCount}</p>
+              </div>
+
             </div>
 
           </div>
@@ -113,9 +133,9 @@ export const Product = () => {
 
       </div>
       <Routes>
-        <Route path="/" element={<ProductContent solutionData={product} />} />
+        <Route path="/" element={<ProductContent solutionData={product} productId={productId} />} />
         <Route path="/reviews" element={<ProductReviews productId={productId} />} />
-        <Route path="/update" element={<ProductUpdate solutionData={product} />} />
+        <Route path="/update" element={<ProductUpdate solutionData={product} productId={productId} />} />
       </Routes>
     </div>
   )

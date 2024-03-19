@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from "../context/authContext";
 import Stack from '@mui/material/Stack';
-import { pink } from '@mui/material/colors';
-import { Button, IconButton, Rating, TextField } from '@mui/material';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import { Button, Rating, TextField } from '@mui/material';
 import { BsPenFill, BsTrashFill } from 'react-icons/bs';
 import { v4 as uuidv4 } from 'uuid'
 import { format } from 'date-fns';
@@ -14,13 +12,7 @@ export const ProductReviews = ({ productId }) => {
   const { currentUser } = useContext(AuthContext);
   const [comments, setComments] = useState([]);
   const [commentInput, setCommentInput] = useState('');
-  const [likeCount, setLikeCount] = useState(0);
-
   const sol_id = productId;
-
-  const handleLike = () => {
-    setLikeCount(likeCount + 1);
-  };
 
   const handleAddComment = async (e) => {
     e.preventDefault();
@@ -112,8 +104,8 @@ export const ProductReviews = ({ productId }) => {
                 </div>
               </div>
             ))}
-
           <div className="gap-30"></div>
+
           <div className="scored">
             <Stack direction="row" spacing={2} divider={<div style={{ margin: '0 auto' }} />} alignItems="center">
               <div className="scoreBox">
@@ -131,15 +123,6 @@ export const ProductReviews = ({ productId }) => {
               <div className="scoreBox">
                 <p>업무 효율성</p>
                 <Rating name="half-rating-read" defaultValue={5} precision={0.5} readOnly />
-              </div>
-              <div className="scoreBox">
-                <Button variant="outlined" className="likeBtn">
-                  마음에 들면 좋아요
-                  <IconButton onClick={handleLike} sx={{ color: pink[500] }}>
-                    <FavoriteIcon />
-                  </IconButton>
-                  <p>{likeCount} </p>
-                </Button>
               </div>
             </Stack>
           </div>

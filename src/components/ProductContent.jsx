@@ -10,35 +10,35 @@ function getRandomIds(array, size) {
   return shuffled.slice(0, size).map(item => item.id);
 }
 
-export const ProductContent = (props) => {
+export const ProductContent = ({ solutionData, productId }) => {
 
-  let solutionData = props.solutionData;
+  const navigate = useNavigate();
   const [getsolutions, setGetSolutions] = useState([]);
+  const randomIds = getRandomIds(getsolutions, 3);
+  const filteredData = getsolutions.filter(item => randomIds.includes(item.id));
+  // console.log("solutionData로 들어온 값:", solutionData);
 
-  const fetchSolutions = async () => {
-    try {
-      const response = await axios.get('/api/solutions/getsolution');
-      setGetSolutions(response.data);
-    } catch (error) {
-      console.error("solutions 가져올때 오류가 발생하였습니다:", error);
-    }
-  };
   useEffect(() => {
+    const fetchSolutions = async () => {
+      try {
+        const response = await axios.get('/api/solutions/getsolution');
+        setGetSolutions(response.data);
+      } catch (error) {
+        console.error("solutions 가져올때 오류가 발생하였습니다:", error);
+      }
+    };
     fetchSolutions();
   }, []);
 
-  const randomIds = getRandomIds(getsolutions, 3);
-  const filteredData = getsolutions.filter(item => randomIds.includes(item.id));
-
-  const navigate = useNavigate();
   const handleEditClick = () => {
-    navigate(`/product/${solutionData.id}/update`);
+    navigate(`/product/${productId}/update`);
   };
 
   const DisplayStyledText = ({ htmlContent }) => {
     const cleanHTML = DOMPurify.sanitize(htmlContent);
     return <div dangerouslySetInnerHTML={{ __html: cleanHTML }} />;
   };
+
 
   return (
     <div className="productContent">
@@ -107,7 +107,7 @@ export const ProductContent = (props) => {
                       </tr>
                       <tr>
                         <td>개발 일자</td>
-                        <td>2023.03.05</td>
+                        <td>{solutionData.reg_date}</td>
                       </tr>
                       <tr>
                         <td>Reviews</td>
@@ -117,6 +117,12 @@ export const ProductContent = (props) => {
                   </table>
                 </div>
 
+                <div className="devIntro">
+                  <div className="title">개발자 소개</div>
+                  <div className="desc">
+                    저는 AI/DT 분야의 전문가로, SK오앤에스에서 최고가 되고자 합니다. Python, Django, SQL을 능숙하게 다루며, 이 기술들을 활용하여 회사의 비전과 목표 달성에 기여하고자 합니다. 기술적 능력뿐만 아니라, 지속 가능한 성장과 혁신을 통해 SK오앤에스의 미래를 모양질 수 있는 핵심 인재가 되겠습니다. 회사의 성장과 함께 제 개인적인 발전도 이루며, 업계에서 인정받는 전문가로서의 길을 걸을 준비가 되어 있습니다.
+                  </div>
+                </div>
 
               </div>
             </div>

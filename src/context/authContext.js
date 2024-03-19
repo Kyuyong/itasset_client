@@ -33,6 +33,12 @@ export const AuthContextProvider = ({ children }) => {
               break;
           }
         });
+
+        // Admin 여부 확인 요청 추가
+        const adminResponse = await axios.get("/api/developers/getadmin");
+        userDetails.isAdmin = adminResponse.data.some(admin => admin.n_id === userDetails.userId);
+
+
         setCurrentUser(userDetails);
         localStorage.setItem("user", JSON.stringify(userDetails));
       } else {

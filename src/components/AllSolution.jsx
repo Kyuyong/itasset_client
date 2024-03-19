@@ -9,6 +9,8 @@ export const AllSolution = ({ solutionData }) => {
     setCount(solutionData.length);
   }, [solutionData]);
 
+  console.log(solutionData);
+
 
   return (
     <div className="allSolution">

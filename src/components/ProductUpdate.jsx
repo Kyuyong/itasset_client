@@ -1,22 +1,39 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { BsFloppy2Fill } from 'react-icons/bs';
 import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
 import { useNavigate } from 'react-router-dom';
 
 
-export const ProductUpdate = (props) => {
-  const solutionData = props.solutionData;
+export const ProductUpdate = ({ solutionData, productId }) => {
+
   const [direc, setDirec] = useState(solutionData.direc);
   const [target, setTarget] = useState(solutionData.target);
   const [effect, setEffect] = useState(solutionData.effect);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  // Warning 잡는 로직 인데, 안잡힘 : Listener added for a synchronous 'DOMNodeInserted' DOM Mutation Event.
+  const quillRef = useRef(null);
+  useEffect(() => {
+    const observer = new MutationObserver((mutations) => {
+      console.log('ReactQuill 내부 DOM 변화 감지됨', mutations);
+    });
+    const config = {
+      childList: true,
+      subtree: true,
+    };
+    const editor = quillRef.current ? quillRef.current.getEditor().root : null;
+    if (editor) {
+      observer.observe(editor, config);
+    }
+    return () => observer.disconnect();
+  }, []);
 
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`/api/solutions/update/${solutionData.id}`, {
+      await axios.put(`/api/solutions/update/${productId}`, {
         direc,
         target,
         effect
@@ -28,7 +45,6 @@ export const ProductUpdate = (props) => {
       alert("업데이트에 실패했습니다.");
     }
   };
-
 
   const modules = {
     toolbar: [
@@ -58,19 +74,19 @@ export const ProductUpdate = (props) => {
                   <div className="gap-20"></div>
                   <div className="subTitle">추진 방향</div>
                   <div className="editorContainer">
-                    <ReactQuill className="editor" theme="snow" modules={modules} value={direc} onChange={setDirec} />
+                    <ReactQuill ref={quillRef} className="editor" theme="snow" modules={modules} value={direc} onChange={setDirec} />
                   </div>
 
                   <div className="gap-20"></div>
                   <div className="subTitle">과제 대상</div>
                   <div className="editorContainer">
-                    <ReactQuill className="editor" theme="snow" modules={modules} value={target} onChange={setTarget} />
+                    <ReactQuill ref={quillRef} className="editor" theme="snow" modules={modules} value={target} onChange={setTarget} />
                   </div>
 
                   <div className="gap-20"></div>
                   <div className="subTitle">기대 효과</div>
                   <div className="editorContainer">
-                    <ReactQuill className="editor" theme="snow" modules={modules} value={effect} onChange={setEffect} />
+                    <ReactQuill ref={quillRef} className="editor" theme="snow" modules={modules} value={effect} onChange={setEffect} />
                   </div>
 
                 </div>
