@@ -9,9 +9,11 @@ import SearchList from "../components/SearchList";
 import AllSolution from '../components/AllSolution';
 import WorkField from '../components/WorkField';
 
-import developerData from '../json/developerdata.json';
+// import developerData from '../json/developerdata.json';
 
-export const Home = () => {
+export const Home = ({ getDevelopers }) => {
+
+  // console.log("Home에서 보는 getDevelopers : ", getDevelopers);
 
   const [searchResults, setSearchResults] = useState([]);
   const navigate = useNavigate();
@@ -36,6 +38,8 @@ export const Home = () => {
   useEffect(() => {
     fetchSolutions();
   }, []);
+  // console.log("Home에서 보는 getsolutions : ", getsolutions);
+
   ////////////////////////
 
   ////////////////////////
@@ -60,7 +64,7 @@ export const Home = () => {
       <MainContents solutionData={getsolutions} onSearch={handleSearch} />
       <MiddleNavBar />
       <Routes>
-        <Route path="/" element={<MainRecommend solutionData={getsolutions} developerData={developerData} />} />
+        <Route path="/" element={<MainRecommend solutionData={getsolutions} getDevelopers={getDevelopers} />} />
         <Route path="/search" element={<SearchList searchResults={searchResults} />} />
         <Route path="/all" element={<AllSolution solutionData={getsolutions} />} />
         <Route path="/workfield" element={<WorkField solutionData={workFlSols} />} />

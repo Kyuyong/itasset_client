@@ -11,8 +11,10 @@ export const RegisterDev = () => {
     n_id: '',
     introduction: '',
   });
+  const maxChars = 300; // 개발자 소개글 최대 문자 수
   const [file, setFile] = useState(null);
   const [getDevelopers, setGetDevelopers] = useState([]);
+
   const handleInputChange = (e) => {
     setDeveloperInfo({ ...developerInfo, [e.target.name]: e.target.value });
   };
@@ -52,9 +54,11 @@ export const RegisterDev = () => {
       });
       if (response.status === 200) {
         console.log("서버로부터 받은 데이터:", response.data);
-        const data = await response.json();
-        setGetDevelopers((prevDevelopers) => [...prevDevelopers, data]);
-        setDeveloperInfo('');
+        setGetDevelopers((prevDevelopers) => [...prevDevelopers, response.data]);
+        setDeveloperInfo({
+          n_id: '',
+          introduction: ''
+        });
       } else {
         throw new Error('개발자 등록에 실패했습니다.');
       }
@@ -85,6 +89,7 @@ export const RegisterDev = () => {
   useEffect(() => {
     fetchDevelopers();
   }, []);
+  // console.log(developerInfo.introduction.length);
 
   return (
     <div className="registerDev">
@@ -110,7 +115,6 @@ export const RegisterDev = () => {
                   <TextField
                     variant="outlined" margin="none" fullWidth name="dev_img"
                     type="file" id="dev_img" autoComplete="dev_img"
-
                     onChange={handleFileChange}
                   />
                 </Grid>
@@ -120,6 +124,7 @@ export const RegisterDev = () => {
                     label="개발자 소개글" type="text" id="introduction" autoComplete="introduction"
                     multiline rows={6}
                     onChange={handleInputChange}
+                    helperText={`등록한 글자 수: ${developerInfo.introduction.length} / 최대 글자 수 : ${maxChars}`}
                   />
                 </Grid>
               </Grid>
@@ -142,51 +147,6 @@ export const RegisterDev = () => {
         </Grid>
       </Container>
 
-      {/* <Container main="main" maxWidth="xl">
-        <Typography component="h1" variant="h5" className="title" style={{ marginBottom: '15px' }}>
-          <AssignmentIndIcon />개발자 등록
-        </Typography>
-
-        <form onSubmit={handleAddDeveloper}>
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <TextField
-                variant="outlined" margin="none" required fullWidth name="n_id"
-                label="N사번" type="text" id="n_id" autoComplete="n_id"
-                onChange={handleInputChange}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                variant="outlined" margin="none" fullWidth name="dev_img"
-                type="file" id="dev_img" autoComplete="dev_img"
-
-                onChange={handleFileChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined" margin="none" fullWidth name="introduction"
-                label="개발자 소개글" type="text" id="introduction" autoComplete="introduction"
-                multiline rows={6}
-                onChange={handleInputChange}
-              />
-            </Grid>
-          </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            등록
-          </Button>
-        </form>
-      </Container>
-
-      <hr style={{ margin: '0 auto', width: '93%', marginTop: '20px' }} />
-
-      <UserSearch /> */}
       <hr style={{ margin: '0 auto', width: '93%', marginTop: '20px' }} />
 
       <Container component="main" maxWidth="xl">
@@ -208,9 +168,10 @@ export const RegisterDev = () => {
           <Table className="table">
             <TableHead className="tableHead">
               <TableRow>
-                <TableCell className="tableCell">ID</TableCell>
                 <TableCell className="tableCell">사번</TableCell>
-                <TableCell className="tableCell">이미지 경로</TableCell>
+                <TableCell className="tableCell">성명</TableCell>
+                <TableCell className="tableCell">팀</TableCell>
+                <TableCell className="tableCell">담당</TableCell>
                 <TableCell className="tableCell">개발자 소개글</TableCell>
               </TableRow>
             </TableHead>
@@ -218,12 +179,20 @@ export const RegisterDev = () => {
             <TableBody>
               {getDevelopers.map((developer, index) => (
                 <TableRow key={index}>
-                  <TableCell>{developer.id}</TableCell>
                   <TableCell>{developer.n_id}</TableCell>
-                  <TableCell>
-                    {developer.dev_img}
-                  </TableCell>
-                  <TableCell>{developer.introduction}</TableCell>
+                  <TableCell>{developer.name}</TableCell>
+                  <TableCell>{developer.team}</TableCell>
+                  <TableCell>{developer.headquarters}</TableCell>
+                  <TableCell
+                    style={{
+                      maxWidth: '400px', // 최대 넓이 설정
+                      maxHeight: '100px', // 최대 높이 설정
+                      overflow: 'auto', // 내용이 넘칠 경우 스크롤바 표시
+                      whiteSpace: 'normal' // 공백 문자로 인한 줄바꿈 허용
+                      // overflow: 'hidden', // 내용이 넘칠 경우 숨김
+                      // textOverflow: 'ellipsis' // 텍스트가 넘칠 경우 "..."으로 표시
+                    }}
+                  >{developer.introduction}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

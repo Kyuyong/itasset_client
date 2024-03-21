@@ -10,9 +10,12 @@ import { pink } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
 
-export const Product = () => {
-  const [likeCount, setLikeCount] = useState(0);
+
+export const Product = ({ getDevelopers }) => {
   const navigate = useNavigate();
+  const [reviewCnt, setReviewCnt] = useState([]);
+
+  const [likeCount, setLikeCount] = useState(0);
   const handleLike = () => {
     setLikeCount(likeCount + 1);
   };
@@ -23,8 +26,6 @@ export const Product = () => {
   const { productId } = useParams();
 
   useEffect(() => {
-    // 데이터 불러오기 함수
-    // console.log("에러 확인용 ProductId:", productId); // 값 확인
     const fetchProduct = async () => {
       try {
         const response = await axios.get(`/api/solutions/getsolution/${productId}`);
@@ -45,6 +46,23 @@ export const Product = () => {
     navigate(`/product/${productId}`);
   };
 
+  useEffect(() => {
+    const fetchReview = async () => {
+      try {
+        const response = await axios.get(`/api/reviews/getreview?sol_id=${productId}`);
+        setReviewCnt(response.data);
+      } catch (error) {
+        console.error("댓글 가져올때 오류가 발생했습니다.", error);
+      };
+    };
+    fetchReview();
+  }, [productId]);
+
+  // console.log("reviewCnt : ", reviewCnt.length)
+
+  // console.log("Product에서 보는 product : ", product);
+  // console.log("Product에서 보는 productId : ", productId);
+  // console.log("Product에서 보는 getDevelopers : ", getDevelopers);
 
 
   return (
@@ -54,8 +72,6 @@ export const Product = () => {
           <div className="innerContainer">
             <div className="leftSide">
               <div className="imgBox">
-                {/* <img src={process.env.PUBLIC_URL + product.img}
-                  alt="newsolution-box" /> */}
                 {product && product.img && (
                   <img src={process.env.PUBLIC_URL + product.img} alt="newsolution-box" />
                 )}
@@ -103,7 +119,9 @@ export const Product = () => {
                   <BsFillStarFill key={index} style={{ color: '#EFC42D', margin: '2px' }} />
                 ))}
               </div>
-              <div className="like"> 4,905 (551 Reviews)</div>
+              <div className="like">
+                Reviews : <span style={{ color: '#f06292' }}>{reviewCnt?.length}</span> 개
+              </div>
               <hr />
               <div className="btns">
                 <button className="proBtn" onClick={goToSolution}>
@@ -124,18 +142,15 @@ export const Product = () => {
                 </IconButton>
                 <p>{likeCount}</p>
               </div>
-
             </div>
-
           </div>
-
         </div>
-
       </div>
+
       <Routes>
-        <Route path="/" element={<ProductContent solutionData={product} productId={productId} />} />
+        <Route path="/" element={<ProductContent solutionData={product} productId={productId} getDevelopers={getDevelopers} />} />
         <Route path="/reviews" element={<ProductReviews productId={productId} />} />
-        <Route path="/update" element={<ProductUpdate solutionData={product} productId={productId} />} />
+        <Route path="/update" element={<ProductUpdate solutionData={product} productId={productId} getDevelopers={getDevelopers} />} />
       </Routes>
     </div>
   )

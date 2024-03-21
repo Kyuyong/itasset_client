@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import SolutionBox from './SolutionBox';
 import { Link } from 'react-router-dom';
 import { BsFillStarFill } from 'react-icons/bs';
+import { Box, Button, Typography } from '@mui/material';
 
-export const MainRecommend = ({ solutionData, developerData }) => {
+export const MainRecommend = ({ solutionData, getDevelopers }) => {
 
   //최근 등록된 Solutions
   const [latestSolutions, setLatestSolutions] = useState([]);
@@ -20,12 +21,25 @@ export const MainRecommend = ({ solutionData, developerData }) => {
   }, [solutionData]);
 
   //랜덤으로 개발자 소개 (3명)
-  const randomIds = getRandomIds(developerData, 3);
-  const filteredData = developerData.filter(item => randomIds.includes(item.id));
-  function getRandomIds(array, size) {
-    const shuffled = array.sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, size).map(item => item.id);
-  }
+  const [randomDevelopers, setRandomDevelopers] = useState([]);
+  const [expandedStates, setExpandedStates] = useState({});
+  // 랜덤 개발자 목록 생성 함수
+  const generateRandomDevelopers = (developers, size) => {
+    const shuffled = developers.sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, size);
+  };
+  // 초기 랜덤 개발자 목록 설정
+  useEffect(() => {
+    const randomDevs = generateRandomDevelopers(getDevelopers, 3);
+    setRandomDevelopers(randomDevs);
+    // 초기화시 모든 개발자의 "더보기/접기" 상태를 false로 설정
+    const initialStates = randomDevs.reduce((acc, curr) => ({ ...acc, [curr.id]: false }), {});
+    setExpandedStates(initialStates);
+  }, [getDevelopers]);
+  // "더보기/접기" 상태 토글 함수
+  const toggleExpand = (id) => {
+    setExpandedStates((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
 
   return (
     <div className="mainRecommend">
@@ -85,7 +99,7 @@ export const MainRecommend = ({ solutionData, developerData }) => {
 
       <div className="mainBanner">
         <p className="text">Creative AI/DT Solution Courses</p>
-        <p className="subText">‘23년 새로운 AI/DT Solution 및 과제를 소개합니다.</p>
+        <p className="subText">‘24년 새로운 AI/DT Solution 및 과제를 소개합니다.</p>
         <hr className="line" />
         <p className="subText"> No. 1 기술전문회사로 도약하기 위해서 우리의 본업인 현장 경쟁력 강화를 위해 AI/DT전문가 양성하였습니다. <br></br>
           우리 회사 IT 전문가들의 잠재능력을 유감없이 보여주는 여러가지 사례와 과제들을 확인해보세요.</p>
@@ -157,21 +171,38 @@ export const MainRecommend = ({ solutionData, developerData }) => {
             <BsFillStarFill key={index} style={{ color: '#EFC42D', margin: '2px' }} />
           ))}
           <p className="title">AI/DT 개발자를 소개합니다.</p>
-          <p>SK오앤에스는 40명의 AI/DT전문가와 함께 성장하고 있습니다.
-            현장 업무에 필요한 여러가지 아이디어 발굴을 통해서,
-            새로운 New Vision과 Value 찾아가는데 노력을 하고 있습니다.
-            언제든지 AI/DT전문가의 능력이 필요하면 연락주세요.</p>
+          <p>SK오앤에스는 <span style={{ color: '#f06292' }}>{getDevelopers?.length}</span>명의 AI/DT 전문가 팀과 함께 성장하며,
+            현장 업무를 혁신하는 다양한 아이디어를 발굴하여 새로운 비전과 가치를 추구하고 있습니다.
+            우리는 기술의 힘으로 업무 방식을 개선하고, 더 나은 미래를 설계하는 데 중점을 두고 있습니다.
+            AI/DT 전문가의 도움이 필요한 순간,
+            언제든지 저희에게 연락해 주세요.
+            우리는 여러분의 도전을 지원하고, 함께 성장해 나가기 위해 여기 있습니다.</p>
         </div>
         <div className="rightSide">
-          {filteredData.map((developer) => (
-            <div className="devBox" key={developer.id}>
-              <img src={process.env.PUBLIC_URL + "/image/developer/"
-                + developer.n_id + ".jpg"}
-                className="personCircle" alt="developer_img" />
-              <p>{developer.comment}</p>
-              <p className="name">{developer.developer}</p>
-              <p className="team">{developer.team}</p>
-            </div>
+          {randomDevelopers.map((developer) => (
+            <Box className="devBox" key={developer.id}>
+              <img
+                // src={`${process.env.PUBLIC_URL}/image/developer/${developer.n_id}.jpg`}
+                src={process.env.PUBLIC_URL + developer.dev_img}
+                className="personCircle"
+                alt="developer_img"
+              />
+              <Typography
+                variant="body2"
+                component="p"
+              >
+                {expandedStates[developer.id] ? developer.introduction : `${developer.introduction.substring(0, 150)}...`}
+              </Typography>
+              <Button onClick={() => toggleExpand(developer.id)}>
+                {expandedStates[developer.id] ? '접기' : '더 보기'}
+              </Button>
+              <Typography variant="subtitle1" component="p" className="name">
+                {developer.name}
+              </Typography>
+              <Typography variant="subtitle1" component="p" className="team">
+                {developer.team}
+              </Typography>
+            </Box>
           ))}
         </div>
       </div>

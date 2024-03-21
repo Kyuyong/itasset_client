@@ -173,14 +173,17 @@ export const RegisterSol = ({ onSubmit }) => {
             <Grid item xs={4}>
               <TextField
                 variant="outlined" margin="none" fullWidth name="reg_date"
-                label="개발 일자 (YYYY-MM-DD)" type="text" id="reg_date" autoComplete="reg_date"
+                label="개발 일자" type="date" id="reg_date" autoComplete="reg_date"
                 value={solution.reg_date} onChange={handleChange}
+                InputLabelProps={{ shrink: true }}
               />
             </Grid>
             <Grid item xs={4}>
               <TextField
                 variant="outlined" margin="none" fullWidth name="img"
                 type="file" id="img" autoComplete="img" onChange={handleFileChange}
+                label="Solution 이미지"
+                InputLabelProps={{ shrink: true }}
               />
             </Grid>
             {/* <Grid item xs={4}>

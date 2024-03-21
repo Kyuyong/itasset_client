@@ -8,7 +8,7 @@ export const Footer = () => {
 
         <div className="leftSide">
           <p className="title">IT Asset</p>
-          <p>Create Infra AI/DT</p>
+          <p><b>Create Infra AI/DT ,</b> <span style={{ fontSize: "12px", color: "#fafafa" }}>Developer K Y</span></p>
         </div>
         <div className="rightSide">
           <p className="title">(주)SK오앤에스</p>

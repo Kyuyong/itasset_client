@@ -56,7 +56,7 @@ export const UserSearch = () => {
 
 
   return (
-    <div>
+    <div className="userSearch">
       <Container main="main" maxWidth="xl">
         <Typography component="h1" variant="h5" className="title" style={{ marginBottom: '20px' }} >
           <PersonSearchIcon />
@@ -73,12 +73,12 @@ export const UserSearch = () => {
 
         <TableContainer component={Paper}>
           <Table>
-            <TableHead>
+            <TableHead className="tablehead">
               <TableRow>
-                <TableCell>사번</TableCell>
-                <TableCell>성명</TableCell>
-                <TableCell>팀</TableCell>
-                <TableCell>담당</TableCell>
+                <TableCell className="cell">사번</TableCell>
+                <TableCell className="cell">성명</TableCell>
+                <TableCell className="cell">팀</TableCell>
+                <TableCell className="cell">담당</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

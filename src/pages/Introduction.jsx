@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
-import SolutionBox from '../components/SolutionBox';
+// import SolutionBox from '../components/SolutionBox';
 
 
-export const Introduction = ({ solutionData }) => {
+export const Introduction = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -30,9 +30,12 @@ export const Introduction = ({ solutionData }) => {
       <div className="contentsBox">
         <div className="gap-40"></div>
         <div className="titleText">AI/DT Working Group Solution</div>
-        <div className="subText">'23년 30명의 AI/DT 전문가가 만든 과제를 소개합니다.</div>
-
-        <div className="card">
+        <div className="subText">'24년 AI/DT 전문가가 만든 과제를 소개합니다.</div>
+        <div className="gap-40"></div>
+        <div className="titleText">'24년 AI/DT 전문가 그룹을 육성 중입니다.</div>
+        <div className="titleText">AI/DT 신규 과제가 완료되면 공유 하겠습니다.</div>
+        <div className="gap-100"></div>
+        {/* <div className="card">
           {solutionData.map((solution) => (
             <div className="cardBox" key={solution.id}>
               <div className="solBox">
@@ -74,7 +77,7 @@ export const Introduction = ({ solutionData }) => {
             </div>
           ))}
           <div className="gap-60"></div>
-        </div>
+        </div> */}
 
       </div>
 
