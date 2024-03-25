@@ -9,7 +9,7 @@ export const AllSolution = ({ solutionData }) => {
     setCount(solutionData.length);
   }, [solutionData]);
 
-  console.log(solutionData);
+  // console.log("All Solution Data 로그값 : ",solutionData);
 
 
   return (

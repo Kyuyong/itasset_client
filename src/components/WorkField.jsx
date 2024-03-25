@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import SolutionBox from './SolutionBox';
+import { useNavigate } from 'react-router-dom';
 
 
 export const WorkField = ({ solutionData }) => {
 
   const [titleText, setTitleText] = useState('');
   const [count, setCount] = useState(0);
+  const navigate = useNavigate();
+
   useEffect(() => {
+    if (solutionData.length === 0) {
+      alert(`해당 카테고리에는 등록된 Solution이 없습니다.`); // Alert 메시지
+      navigate('/'); // 홈으로 리디렉션
+      return; // 더 이상 진행하지 않도록 return
+    }
+
     const replacedTitleText = {
       'rm': 'RM',
       'access': 'Access',
@@ -18,7 +27,7 @@ export const WorkField = ({ solutionData }) => {
     }[solutionData[0].work_field];
     setTitleText(replacedTitleText);
     setCount(solutionData.length);
-  }, [solutionData]);
+  }, [solutionData, navigate]);
 
   return (
     <div className="workfield">

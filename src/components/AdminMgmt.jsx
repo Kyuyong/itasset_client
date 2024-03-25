@@ -39,7 +39,7 @@ export const AdminMgmt = () => {
     }
   };
 
-  const fetchUser = async () => {
+  const fetchAdmin = async () => {
     try {
       const response = await axios.get("/api/developers/getadmin");
       setAdmin(response.data);
@@ -48,7 +48,7 @@ export const AdminMgmt = () => {
     };
   };
   useEffect(() => {
-    fetchUser();
+    fetchAdmin();
   }, []);
 
 
@@ -90,7 +90,7 @@ export const AdminMgmt = () => {
                 <ListAltIcon /> Admin 계정 리스트
               </Typography>
               <Grid item>
-                <Button variant="contained" color="primary" onClick={fetchUser}>
+                <Button variant="contained" color="primary" onClick={fetchAdmin}>
                   새로고침
                 </Button>
               </Grid>

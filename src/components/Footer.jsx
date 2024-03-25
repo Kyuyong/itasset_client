@@ -7,7 +7,7 @@ export const Footer = () => {
       <div className="footerBox">
 
         <div className="leftSide">
-          <p className="title">IT Asset</p>
+          <img src={`${process.env.PUBLIC_URL}/image/logo/OrionW.png`} alt="mainLogo" />
           <p><b>Create Infra AI/DT ,</b> <span style={{ fontSize: "12px", color: "#fafafa" }}>Developer K Y</span></p>
         </div>
         <div className="rightSide">

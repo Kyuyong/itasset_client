@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from "axios";
 import SolutionBox from './SolutionBox';
 import { BsPencil } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import DOMPurify from 'dompurify';
+import { AuthContext } from '../context/authContext';
 
 function getRandomIds(array, size) {
   const shuffled = array.sort(() => 0.5 - Math.random());
@@ -13,7 +14,10 @@ function getRandomIds(array, size) {
 export const ProductContent = ({ solutionData, productId, getDevelopers }) => {
 
   const navigate = useNavigate();
+  // const [isAuthorized, setIsAuthorized] = useState(false);
   const [getsolutions, setGetSolutions] = useState([]);
+  const { currentUser } = useContext(AuthContext);
+
   useEffect(() => {
     const fetchSolutions = async () => {
       try {
@@ -25,6 +29,14 @@ export const ProductContent = ({ solutionData, productId, getDevelopers }) => {
     };
     fetchSolutions();
   }, []);
+
+
+  const isAdmin = currentUser?.isAdmin; // currentUser 객체에서 isAdmin 정보를 가져옵니다.
+  const userId = currentUser?.userId; // currentUser 객체에서 사용자 ID 정보를 가져옵니다.
+
+  const isAuthorized = isAdmin || solutionData.n_id === userId;
+
+
 
   const randomIds = getRandomIds(getsolutions, 3);
   const filteredData = getsolutions.filter(item => randomIds.includes(item.id));
@@ -44,6 +56,11 @@ export const ProductContent = ({ solutionData, productId, getDevelopers }) => {
   // console.log("Contents에서 보는 developerData : ", developerData);
 
   // console.log("Contents에서 보는 solutionData : ", solutionData);
+  // console.log("Contents에서 보는 solutionData.n_id : ", solutionData.n_id);
+  // console.log("isAdmin 조건은? ", isAdmin);
+  // console.log("userId ? ", userId);
+  // console.log("currentUser? ", currentUser);
+
   // console.log("Contents에서 보는 productId : ", productId);
   return (
     <div className="productContent">
@@ -55,10 +72,12 @@ export const ProductContent = ({ solutionData, productId, getDevelopers }) => {
               <div className="titleBox">
 
                 <div className="title">Product Description</div>
-                <div className="edit" onClick={handleEditClick}>
-                  <BsPencil></BsPencil>
-                  <p>내용 수정하기</p>
-                </div>
+                {isAuthorized && (
+                  <div className="edit" onClick={handleEditClick}>
+                    <BsPencil></BsPencil>
+                    <p>내용 수정하기</p>
+                  </div>
+                )}
               </div>
               <div className="desc">
 
@@ -117,10 +136,6 @@ export const ProductContent = ({ solutionData, productId, getDevelopers }) => {
                         <td>{solutionData.reupdate}</td>
                       </tr>
 
-                      <tr>
-                        <td>Reviews</td>
-                        <td>See 551 Reviews</td>
-                      </tr>
                     </tbody>
                   </table>
                 </div>

@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from "../context/authContext";
-import Stack from '@mui/material/Stack';
-import { Button, Rating, TextField } from '@mui/material';
-import { BsPenFill, BsTrashFill } from 'react-icons/bs';
+import { Button, TextField } from '@mui/material';
+import { BsTrashFill } from 'react-icons/bs';
 import { v4 as uuidv4 } from 'uuid'
 import { format } from 'date-fns';
 import axios from 'axios';
+// import { Rating } from '@mui/material';
+// import Stack from '@mui/material/Stack';
 
 export const ProductReviews = ({ productId }) => {
 
@@ -14,6 +15,7 @@ export const ProductReviews = ({ productId }) => {
   const [commentInput, setCommentInput] = useState('');
   const sol_id = productId;
 
+  // 댓글 등록 함수
   const handleAddComment = async (e) => {
     e.preventDefault();
     if (!commentInput.trim()) return;
@@ -38,16 +40,25 @@ export const ProductReviews = ({ productId }) => {
       if (response.ok) {
         const data = await response.json();
         // 서버에서 반환된 댓글 데이터로 댓글 목록 업데이트
-        console.log('서버로 받은 data: ', data);
+        // console.log('서버로 받은 data: ', data);
         setComments((prevComments) => [...prevComments, data]);
         setCommentInput('');
       } else {
-        // 서버 에러 처리
         throw new Error('댓글을 저장하는데 실패했습니다.');
       }
     } catch (error) {
-      // 에러 처리
       console.error('댓글 추가 에러:', error);
+    }
+  };
+
+  // 댓글 삭제 함수
+  const handleDeleteComment = async (uuid) => {
+    try {
+      await axios.delete(`/api/reviews/deletereview/${uuid}`);
+      setComments(comments.filter(comment => comment.uuid !== uuid));
+    } catch (error) {
+      console.error("댓글 삭제 에러", error);
+      alert("댓글 삭제에 실패했습니다.");
     }
   };
 
@@ -98,15 +109,20 @@ export const ProductReviews = ({ productId }) => {
                     {comment.content}
                   </div>
                   <div className="reviewActions">
-                    <Button className="reviewActionsBtn"> <BsTrashFill />삭제하기</Button>
-                    <Button className="reviewActionsBtn"> <BsPenFill />수정하기</Button>
+                    {currentUser.userId === comment.n_id && (
+                      <Button className="reviewActionsBtn" onClick={() => handleDeleteComment(comment.uuid)}>
+                        <BsTrashFill /> 삭제하기
+                      </Button>
+                    )}
+                    {/* <Button className="reviewActionsBtn"> <BsTrashFill />삭제하기</Button> */}
+                    {/* <Button className="reviewActionsBtn"> <BsPenFill />수정하기</Button> */}
                   </div>
                 </div>
               </div>
             ))}
           <div className="gap-30"></div>
 
-          <div className="scored">
+          {/* <div className="scored">
             <Stack direction="row" spacing={2} divider={<div style={{ margin: '0 auto' }} />} alignItems="center">
               <div className="scoreBox">
                 <p>현장 활용도</p>
@@ -125,7 +141,7 @@ export const ProductReviews = ({ productId }) => {
                 <Rating name="half-rating-read" defaultValue={5} precision={0.5} readOnly />
               </div>
             </Stack>
-          </div>
+          </div> */}
 
           <div className="gap-60"></div>
         </div>

@@ -59,6 +59,7 @@ export const RegisterDev = () => {
           n_id: '',
           introduction: ''
         });
+        alert('개발자 등록 성공하였습니다.');
       } else {
         throw new Error('개발자 등록에 실패했습니다.');
       }

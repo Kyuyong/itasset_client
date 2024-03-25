@@ -11,6 +11,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 
 
 
+
 export const Product = ({ getDevelopers }) => {
   const navigate = useNavigate();
   const [reviewCnt, setReviewCnt] = useState([]);
@@ -58,12 +59,17 @@ export const Product = ({ getDevelopers }) => {
     fetchReview();
   }, [productId]);
 
-  // console.log("reviewCnt : ", reviewCnt.length)
+  const handleLinkClick = (e, url) => {
+    e.preventDefault();
+    if (url) {
+      window.open(url, '_blank', 'noopener,noreferrer')
+    } else alert("등록된 URL이 없습니다.");
+  };
 
+  // console.log("reviewCnt : ", reviewCnt.length)
   // console.log("Product에서 보는 product : ", product);
   // console.log("Product에서 보는 productId : ", productId);
   // console.log("Product에서 보는 getDevelopers : ", getDevelopers);
-
 
   return (
     <div className="product" >
@@ -77,34 +83,26 @@ export const Product = ({ getDevelopers }) => {
                 )}
               </div>
               <div className="btnList">
-
-                <a
+                <Button
                   className="systemBtn"
-                  href={product.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                  onClick={(e) => handleLinkClick(e, product.url)}>
                   <img
-                    style={{ verticalAlign: 'middle', height: '30px', width: '30px', marginRight: '10px' }}
-                    src={process.env.PUBLIC_URL + "/image/icons/monitor-icon.png"}
-                    alt="system-link"
+                    src={`${process.env.PUBLIC_URL}/image/icons/monitor-icon.png`}
+                    alt="System Link"
+                    style={{ marginRight: 8, verticalAlign: 'middle', height: '26px' }}
                   />
                   시스템 바로가기
-                </a>
-
-                <a
+                </Button>
+                <Button
                   className="githubBtn"
-                  href={product.github_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                  onClick={(e) => handleLinkClick(e, product.github_url)}>
                   <img
-                    style={{ verticalAlign: 'middle', height: '26px', width: '26px', marginRight: '10px' }}
-                    src={process.env.PUBLIC_URL + "/image/icons/github-mark.png"}
+                    src={`${process.env.PUBLIC_URL}/image/icons/github-mark.png`}
                     alt="github-link"
+                    style={{ marginRight: 8, verticalAlign: 'middle', height: '26px' }}
                   />
                   GitHub Code
-                </a>
+                </Button>
 
               </div>
             </div>

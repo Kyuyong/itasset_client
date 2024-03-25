@@ -34,13 +34,15 @@ export const Login = ({ onLogin }) => {
 
 
       <div className="leftSide">
-        <div className="logoName">IT Asset</div>
+        <div className="logoName">Orion</div>
 
       </div>
 
       <div className="rightSide">
-
-        <div className="loginTitle">Welcome to IT Asset!</div>
+        <div className="logoBox">
+          <img src={`${process.env.PUBLIC_URL}/image/logo/Orion.png`} alt="mainLogo" />
+          <div className="loginTitle">Welcome to You!</div>
+        </div>
 
         <form onSubmit={handleLogin} >
           <div className="inputName">사번</div>

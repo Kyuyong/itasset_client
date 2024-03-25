@@ -1,4 +1,4 @@
-import { Button, Grid, TextField } from '@mui/material';
+import { Box, Button, FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, TextField } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import { BsFloppy2Fill } from 'react-icons/bs';
@@ -18,6 +18,12 @@ export const ProductUpdate = ({ solutionData, productId, getDevelopers }) => {
   const navigate = useNavigate();
 
   const [formValues, setFormValues] = useState({
+    sol_name: solutionData.sol_name || '',
+    sol_full_name: solutionData.sol_full_name || '',
+    kor_name: solutionData.kor_name || '',
+    work_field: solutionData.work_field || '',
+    url: solutionData.url || '',
+    github_url: solutionData.github_url || '',
     version: solutionData.version || '',
     reupdate: solutionData.reupdate || '',
     reg_date: solutionData.reg_date || ''
@@ -77,6 +83,8 @@ export const ProductUpdate = ({ solutionData, productId, getDevelopers }) => {
       setDeveloperInfo(developerData.introduction);
     }
   }, [developerData]);
+
+  // 개발자 소개글 
   const handleDevIntroUpdate = async (e) => {
     e.preventDefault();
     // 개발자 리스트가 없을 경우 저장을 중단하고 경고 메시지를 보여줍니다.
@@ -97,6 +105,7 @@ export const ProductUpdate = ({ solutionData, productId, getDevelopers }) => {
     }
   };
 
+  // 개발자 이미지
   const upload = async () => {
     try {
       const formData = new FormData();
@@ -116,7 +125,7 @@ export const ProductUpdate = ({ solutionData, productId, getDevelopers }) => {
       console.error("업로드 실패: ", err);
     }
   };
-
+  // 개발자 이미지
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -130,11 +139,7 @@ export const ProductUpdate = ({ solutionData, productId, getDevelopers }) => {
       reader.readAsDataURL(file);
     }
   };
-
-
-  console.log(developerData.n_id);
-
-
+  // 개발자 이미지
   const handleUploadClick = async (e) => {
     e.preventDefault();
     const dev_img = (await upload()).filePath;
@@ -175,6 +180,12 @@ export const ProductUpdate = ({ solutionData, productId, getDevelopers }) => {
     e.preventDefault();
     try {
       await axios.put(`/api/solutions/updatesoletc/${productId}`, {
+        sol_name: formValues.sol_name,
+        sol_full_name: formValues.sol_full_name,
+        kor_name: formValues.kor_name,
+        work_field: formValues.work_field,
+        url: formValues.url,
+        github_url: formValues.github_url,
         version: formValues.version,
         reupdate: formValues.reupdate,
         reg_date: formValues.reg_date
@@ -186,7 +197,7 @@ export const ProductUpdate = ({ solutionData, productId, getDevelopers }) => {
       alert("업데이트에 실패했습니다.");
     }
   };
-
+  // console.log("developerData n_id ? ", developerData.n_id);
   return (
     <div className="productUpdate">
       <div className="contentBox">
@@ -229,6 +240,8 @@ export const ProductUpdate = ({ solutionData, productId, getDevelopers }) => {
             <div className="rightSide">
               <div className="devDesc">
                 <div className="developer">
+                  <div className="gap-20"></div>
+                  <div className="title">개발자 사진 변경</div>
                   <img src={imagePreviewUrl} className="devImg" alt="devImg" />
                   <div>
                     <span style={{ color: '#585858' }}>{solutionData.headquarters} </span>
@@ -248,15 +261,109 @@ export const ProductUpdate = ({ solutionData, productId, getDevelopers }) => {
                       </label>
                     </div>
                     <div>
-                      <Button fullWidth onClick={handleUploadClick} variant="contained" color="primary">이미지 업로드</Button>
+                      <Button fullWidth onClick={handleUploadClick} variant="contained" color="primary">이미지 업데이트</Button>
                     </div>
                   </div>
                 </div>
-
-                <div className="gap-60"></div>
+                <div className="gap-20"></div>
+                <hr style={{ width: '80%' }} />
+                <div className="gap-40"></div>
+                <div className="title">Product 세부내용 Edit</div>
+                <div className="gap-20"></div>
                 <div className="langDesc">
                   <form onSubmit={handleSolUpateEtc}>
                     <Grid container spacing={2}>
+                      <Grid item xs={12}>
+                        <TextField
+                          fullWidth
+                          label="Solution 이름"
+                          name="sol_name"
+                          variant="outlined"
+                          value={formValues.sol_name}
+                          onChange={handleChange}
+                          type="text"
+                          InputLabelProps={{ shrink: true }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          fullWidth
+                          label="Solution Full Name"
+                          name="sol_full_name"
+                          variant="outlined"
+                          value={formValues.sol_full_name}
+                          onChange={handleChange}
+                          type="text"
+                          InputLabelProps={{ shrink: true }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          fullWidth
+                          label="Solution 한글 명칭"
+                          name="kor_name"
+                          variant="outlined"
+                          value={formValues.kor_name}
+                          onChange={handleChange}
+                          type="text"
+                          InputLabelProps={{ shrink: true }}
+                        />
+                      </Grid>
+                      {/* <Grid item xs={12}>
+                        <TextField
+                          fullWidth
+                          label="업무 직군"
+                          name="work_field"
+                          variant="outlined"
+                          value={formValues.work_field}
+                          onChange={handleChange}
+                          type="text"
+                          InputLabelProps={{ shrink: true }}
+                        />
+                      </Grid> */}
+                      <Grid item xs={12}>
+                        <Box sx={{
+                          border: 1, borderColor: 'grey.400', borderRadius: '5px', p: 2
+                        }}>
+
+                          <FormControl component="fieldset">
+                            <FormLabel component="legend">업무 직군</FormLabel>
+                            <RadioGroup row aria-label="work_field" name="work_field" value={formValues.work_field} onChange={handleChange}>
+                              <FormControlLabel value="rm" control={<Radio />} label="RM" />
+                              <FormControlLabel value="access" control={<Radio />} label="Access" />
+                              <FormControlLabel value="wire" control={<Radio />} label="전송" />
+                              <FormControlLabel value="infra" control={<Radio />} label="Infra설비" />
+                              <FormControlLabel value="asset" control={<Radio />} label="자산" />
+                              <FormControlLabel value="so" control={<Radio />} label="SO" />
+                              <FormControlLabel value="mgmt" control={<Radio />} label="경영" />
+                            </RadioGroup>
+                          </FormControl>
+                        </Box>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          fullWidth
+                          label="Site URL"
+                          name="url"
+                          variant="outlined"
+                          value={formValues.url}
+                          onChange={handleChange}
+                          type="text"
+                          InputLabelProps={{ shrink: true }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          fullWidth
+                          label="Github URL"
+                          name="github_url"
+                          variant="outlined"
+                          value={formValues.github_url}
+                          onChange={handleChange}
+                          type="text"
+                          InputLabelProps={{ shrink: true }}
+                        />
+                      </Grid>
 
                       <Grid item xs={12}>
                         <TextField
@@ -305,7 +412,11 @@ export const ProductUpdate = ({ solutionData, productId, getDevelopers }) => {
                     </Grid>
                   </form>
                 </div>
-                <div className="gap-40"></div>
+                <div className="gap-20"></div>
+                <hr style={{ width: '80%' }} />
+                <div className="gap-20"></div>
+                <div className="title">개발자 소개글 수정</div>
+                <div className="gap-20"></div>
                 <form onSubmit={handleDevIntroUpdate}>
                   <TextField
                     variant="outlined" margin="none" fullWidth name="introduction"
@@ -325,7 +436,7 @@ export const ProductUpdate = ({ solutionData, productId, getDevelopers }) => {
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
                   >
-                    소개글 수정하기
+                    소개글 업데이트
                   </Button>
                 </form>
 

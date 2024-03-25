@@ -141,6 +141,8 @@ body {
       border-top-left-radius: 20px;
       border-bottom-left-radius: 20px;
 
+
+
       .logoName {
         position: absolute;
         color: white;
@@ -163,13 +165,25 @@ body {
       border-bottom-right-radius: 20px;
       gap: 50px;
 
-      .loginTitle {
+      .logoBox {
+
         display: flex;
         justify-content: center;
-        color: $grayColor;
-        font-size: 30px;
-        font-weight: 800;
-        font-family: $notoSans;
+        flex-direction: column;
+        align-items: center;
+
+        img {
+          width: 45%;
+        }
+
+        .loginTitle {
+          display: flex;
+          justify-content: center;
+          color: $grayColor;
+          font-size: 26px;
+          font-weight: 200;
+          font-family: $notoSans;
+        }
       }
 
       .inputName {
@@ -278,6 +292,12 @@ body {
           .link {
             text-decoration: none;
             color: white;
+
+            // mainNavBar Logo Image
+            img {
+              width: 13%;
+              margin-left: 10px;
+            }
 
             &:hover {
               color: $whitegrayColor;
@@ -1077,29 +1097,14 @@ body {
                 gap: 50px;
                 margin-top: 30px;
 
-                a {
-                  width: 200px;
-                  font-size: 16px;
-                  display: inline-flex;
-                  align-items: center;
-                  justify-content: center;
-                  height: 50px;
-                  border-radius: 10px;
-                  text-decoration: none;
-                  border: none;
-                  cursor: pointer;
-                  padding: 0 15px;
+                .systemBtn,
+                .githubBtn {
                   background-color: white;
-                  color: $grayColor;
 
                   &:hover {
                     background-color: $blueColor;
                     box-shadow: 0px 5px 5px #00000040;
                     color: white;
-                  }
-
-                  img {
-                    margin-right: 10px;
                   }
                 }
               }
@@ -1460,6 +1465,7 @@ body {
                 padding: 20px;
                 // min-height: 80px;
                 border-radius: 10px;
+                margin-bottom: 15px;
               }
 
               .reviewActions {
@@ -1624,10 +1630,15 @@ body {
                 .devDesc {
                   text-align: center;
 
+                  .title {
+                    font-size: 30px;
+                    color: $grayColor;
+                  }
+
                   .devImg {
                     height: 200px;
                     width: 200px;
-                    margin: 50px;
+                    margin: 10px;
                     border-radius: 50%;
                   }
 
@@ -1784,6 +1795,10 @@ body {
         font-size: 25px;
         font-weight: 700;
         margin: 0;
+      }
+
+      img {
+        width: 20%;
       }
     }
 

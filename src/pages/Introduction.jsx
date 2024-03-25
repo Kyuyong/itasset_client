@@ -17,7 +17,7 @@ export const Introduction = () => {
               <h1>Creative AI/DT Solution Courses</h1>
               <div className="gap-20" />
               <p>
-                ‘23년 새로운 AI/DT Solution 및 과제를 소개합니다.
+                ‘24년 새로운 AI/DT Solution 및 과제를 소개합니다.
               </p>
               <hr />
               <p>No. 1 기술전문회사로 도약하기 위해서 우리의 본업인 현장 경쟁력 강화를 위해 AI/DT전문가 양성하였습니다. <br></br>
