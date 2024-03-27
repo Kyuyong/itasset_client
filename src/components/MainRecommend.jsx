@@ -20,6 +20,9 @@ export const MainRecommend = ({ solutionData, getDevelopers }) => {
     setTopLikedSolutions(sortedByLikes.slice(0, 4));
   }, [solutionData]);
 
+
+  // console.log("topLikedSolutions : ", topLikedSolutions);
+
   //랜덤으로 개발자 소개 (3명)
   const [randomDevelopers, setRandomDevelopers] = useState([]);
   const [expandedStates, setExpandedStates] = useState({});

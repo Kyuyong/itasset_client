@@ -15,16 +15,37 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 export const Product = ({ getDevelopers }) => {
   const navigate = useNavigate();
   const [reviewCnt, setReviewCnt] = useState([]);
+  const { productId } = useParams();
 
+  // 좋아요 수 가져오기와 업데이트 하기 
   const [likeCount, setLikeCount] = useState(0);
-  const handleLike = () => {
-    setLikeCount(likeCount + 1);
+  const handleLike = async () => {
+
+    try {
+      const newLikeCount = likeCount + 1;
+      setLikeCount(newLikeCount);
+      await axios.put(`/api/solutions/likes/${productId}`, { likeCount: newLikeCount });
+
+    } catch (error) {
+      console.error("좋아요 업데이트 실패: ", error);
+    }
   };
+
+  useEffect(() => {
+    const fetchLikes = async () => {
+      try {
+        const response = await axios.get(`/api/solutions/likes/${productId}`);
+        setLikeCount(response.data.likeCnt); // 받아온 좋아요 수로 상태 업데이트
+      } catch (error) {
+        console.error("좋아요 수 가져오기 실패: ", error);
+      }
+    };
+    fetchLikes();
+  }, [productId]); // productId가 변경될 때마다 실행
 
   ////////////////////////
   // Product ID 기준 불러오기
   const [product, getProduct] = useState([]);
-  const { productId } = useParams();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -65,7 +86,6 @@ export const Product = ({ getDevelopers }) => {
       window.open(url, '_blank', 'noopener,noreferrer')
     } else alert("등록된 URL이 없습니다.");
   };
-
   // console.log("reviewCnt : ", reviewCnt.length)
   // console.log("Product에서 보는 product : ", product);
   // console.log("Product에서 보는 productId : ", productId);
