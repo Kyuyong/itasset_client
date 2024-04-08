@@ -88,7 +88,7 @@ export const ProductContent = ({ solutionData, productId, getDevelopers }) => {
                 </div>
 
                 <div className="gap-40"></div>
-                <div className="subTitle">활용 대상</div>
+                <div className="subTitle">추진 내역</div>
                 <div className="itemBox">
                   <DisplayStyledText htmlContent={solutionData.target} />
                 </div>

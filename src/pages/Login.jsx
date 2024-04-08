@@ -40,7 +40,7 @@ export const Login = ({ onLogin }) => {
 
       <div className="rightSide">
         <div className="logoBox">
-          <img src={`${process.env.PUBLIC_URL}/image/logo/Orion.png`} alt="mainLogo" />
+          <img src={`${process.env.PUBLIC_URL}/image/logo/OroinLogoColor.png`} alt="mainLogo" />
           <div className="loginTitle">Welcome to You!</div>
         </div>
 

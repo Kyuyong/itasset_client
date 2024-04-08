@@ -218,7 +218,7 @@ export const ProductUpdate = ({ solutionData, productId, getDevelopers }) => {
                   </div>
 
                   <div className="gap-20"></div>
-                  <div className="subTitle">활용 대상</div>
+                  <div className="subTitle">추진 내역</div>
                   <div className="editorContainer">
                     <ReactQuill ref={quillRef} className="editor" theme="snow" modules={modules} value={target} onChange={setTarget} />
                   </div>

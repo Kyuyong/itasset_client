@@ -24,7 +24,7 @@ export const Product = ({ getDevelopers }) => {
     try {
       const newLikeCount = likeCount + 1;
       setLikeCount(newLikeCount);
-      await axios.put(`/api/solutions/likes/${productId}`, { likeCount: newLikeCount });
+      await axios.put(`/api/solutions/likes/${productId}`, { likeCnt: newLikeCount });
 
     } catch (error) {
       console.error("좋아요 업데이트 실패: ", error);
@@ -105,7 +105,8 @@ export const Product = ({ getDevelopers }) => {
               <div className="btnList">
                 <Button
                   className="systemBtn"
-                  onClick={(e) => handleLinkClick(e, product.url)}>
+                  onClick={(e) => handleLinkClick(e, product.url)}
+                  style={{ borderRadius: '10px' }}>
                   <img
                     src={`${process.env.PUBLIC_URL}/image/icons/monitor-icon.png`}
                     alt="System Link"
@@ -115,7 +116,8 @@ export const Product = ({ getDevelopers }) => {
                 </Button>
                 <Button
                   className="githubBtn"
-                  onClick={(e) => handleLinkClick(e, product.github_url)}>
+                  onClick={(e) => handleLinkClick(e, product.github_url)}
+                  style={{ borderRadius: '10px', textTransform: 'none' }}>
                   <img
                     src={`${process.env.PUBLIC_URL}/image/icons/github-mark.png`}
                     alt="github-link"

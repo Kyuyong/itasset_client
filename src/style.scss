@@ -173,7 +173,8 @@ body {
         align-items: center;
 
         img {
-          width: 45%;
+          width: 30%;
+          margin-bottom: 10px;
         }
 
         .loginTitle {
@@ -295,7 +296,7 @@ body {
 
             // mainNavBar Logo Image
             img {
-              width: 13%;
+              width: 8%;
               margin-left: 10px;
             }
 
@@ -318,6 +319,7 @@ body {
             align-items: center;
             gap: 4px;
             cursor: pointer;
+            width: 120px;
 
             &:hover {
               color: $whitegrayColor;

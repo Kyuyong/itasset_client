@@ -10,16 +10,16 @@ export const MainNavBar = () => {
   const { currentUser, logout } = useContext(AuthContext);
   const [scrolled, setScrolled] = useState(false);
 
-  const [logoImage, setLogoImage] = useState(`${process.env.PUBLIC_URL}/image/logo/OrionW.png`);
+  const [logoImage, setLogoImage] = useState(`${process.env.PUBLIC_URL}/image/logo/OrionLogoWhite.png`);
 
   useEffect(() => {
     const handleScroll = () => {
       const isScrolled = window.scrollY > 100;
       setScrolled(isScrolled);
       if (isScrolled) {
-        setLogoImage(`${process.env.PUBLIC_URL}/image/logo/Orion.png`);
+        setLogoImage(`${process.env.PUBLIC_URL}/image/logo/OroinLogoColor.png`);
       } else {
-        setLogoImage(`${process.env.PUBLIC_URL}/image/logo/OrionW.png`);
+        setLogoImage(`${process.env.PUBLIC_URL}/image/logo/OrionLogoWhite.png`);
       }
     };
     window.addEventListener('scroll', handleScroll);
@@ -43,10 +43,7 @@ export const MainNavBar = () => {
               <span>Admin 관리</span>
             </Link>
           )}
-          {/* <Link to="/admin" className="menu regLink">
-            <AppRegistrationIcon size={24} />
-            <span>Admin 관리</span>
-          </Link> */}
+
           <div className="menu" onClick={logout}>
             <BsLockFill size={24} />
             <span>{currentUser.name}님 Logout</span>

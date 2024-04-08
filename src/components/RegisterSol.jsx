@@ -259,13 +259,13 @@ export const RegisterSol = ({ onSubmit }) => {
                   <TableCell className="tableCell">{sol.sol_name}</TableCell>
                   <TableCell className="tableCell">{sol.sol_full_name}</TableCell>
                   <TableCell className="tableCell">{sol.kor_name}</TableCell>
-                  <TableCell className="tableCell">{sol.n_id}</TableCell>
-                  <TableCell className="tableCell">{sol.name}</TableCell>
-                  <TableCell className="tableCell">{sol.team}</TableCell>
-                  <TableCell className="tableCell">{sol.headquarters}</TableCell>
-                  <TableCell className="tableCell">{sol.url}</TableCell>
+                  <TableCell className="tableCell" style={{ width: '60px', maxWidth: '60px' }}>{sol.n_id}</TableCell>
+                  <TableCell className="tableCell" style={{ width: '50px', maxWidth: '50px' }}>{sol.name}</TableCell>
+                  <TableCell className="tableCell" style={{ width: '90px', maxWidth: '90px' }}>{sol.team}</TableCell>
+                  <TableCell className="tableCell" style={{ width: '90px', maxWidth: '90px' }}>{sol.headquarters}</TableCell>
+                  <TableCell className="tableCell" style={{ width: '300px', maxWidth: '300px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{sol.url}</TableCell>
                   {/* <TableCell className="tableCell">{sol.github_url}</TableCell> */}
-                  <TableCell className="tableCell">{sol.work_field}</TableCell>
+                  <TableCell className="tableCell" style={{ width: '60px', maxWidth: '60px' }}>{sol.work_field}</TableCell>
                   <TableCell className="tableCell">{sol.reg_date}</TableCell>
                 </TableRow>
               ))}

@@ -202,7 +202,9 @@ export const RegisterDev = () => {
         </Paper>
 
       </Container>
-      <div className="gap-60"></div>
+      <div className="gap-100"></div>
+      <div className="gap-100"></div>
+      <div className="gap-100"></div>
     </div>
   )
 }
