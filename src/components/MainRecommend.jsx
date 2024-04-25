@@ -26,9 +26,23 @@ export const MainRecommend = ({ solutionData, getDevelopers }) => {
   //랜덤으로 개발자 소개 (3명)
   const [randomDevelopers, setRandomDevelopers] = useState([]);
   const [expandedStates, setExpandedStates] = useState({});
+
   // 랜덤 개발자 목록 생성 함수
   const generateRandomDevelopers = (developers, size) => {
-    const shuffled = developers.sort(() => 0.5 - Math.random());
+    // const shuffled = developers.sort(() => 0.5 - Math.random());
+    // return shuffled.slice(0, size);
+    // 암호학적으로 안전한 난수 배열 생성
+    const randomValues = new Uint32Array(developers.length);
+    window.crypto.getRandomValues(randomValues);
+
+    // 개발자 목록을 섞습니다.
+    const shuffled = developers.sort((a, b) => {
+      const randomA = randomValues[developers.indexOf(a)] / 4294967295;
+      const randomB = randomValues[developers.indexOf(b)] / 4294967295;
+      return randomA - randomB;
+    });
+
+    // 요청된 크기만큼의 개발자 목록을 반환합니다.
     return shuffled.slice(0, size);
   };
   // 초기 랜덤 개발자 목록 설정

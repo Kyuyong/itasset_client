@@ -6,9 +6,28 @@ import { useNavigate } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 import { AuthContext } from '../context/authContext';
 
-function getRandomIds(array, size) {
-  const shuffled = array.sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, size).map(item => item.id);
+// function getRandomIds(array, size) {
+//   const shuffled = array.sort(() => 0.5 - Math.random());
+//   return shuffled.slice(0, size).map(item => item.id);
+// }
+
+const getRandomIds = (array, size) => {
+  const randomValues = new Uint32Array(array.length);
+  window.crypto.getRandomValues(randomValues);
+
+  // 객체의 인덱스를 기반으로 정렬하기 위한 배열 생성
+  const indices = array.map((_, index) => index);
+
+  // 인덱스를 섞습니다.
+  const shuffledIndices = indices.sort((a, b) => {
+    const randomA = randomValues[a] / 4294967295;
+    const randomB = randomValues[b] / 4294967295;
+    return randomA - randomB;
+  });
+
+  // 요청된 크기만큼의 인덱스를 반환하고, 해당 인덱스를 사용하여 id 배열을 생성합니다.
+  return shuffledIndices.slice(0, size).map(index => array[index].id);
+
 }
 
 export const ProductContent = ({ solutionData, productId, getDevelopers }) => {
