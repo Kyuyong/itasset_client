@@ -22,9 +22,12 @@ export const Product = ({ getDevelopers }) => {
   const handleLike = async () => {
 
     try {
-      const newLikeCount = likeCount + 1;
-      setLikeCount(newLikeCount);
-      await axios.put(`/api/solutions/likes/${productId}`, { likeCnt: newLikeCount });
+      // const newLikeCount = likeCount + 1;
+      // setLikeCount(newLikeCount);
+      // await axios.put(`/api/solutions/likes/${productId}`, { likeCnt: newLikeCount });
+      const response = await axios.post(`/api/solutions/likes/${productId}`);
+      const updatedLikeCount = response.data.likeCnt; // 백엔드에서 업데이트된 좋아요 수 받기
+      setLikeCount(updatedLikeCount); // 상태 업데이트
 
     } catch (error) {
       console.error("좋아요 업데이트 실패: ", error);

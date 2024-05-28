@@ -38,7 +38,7 @@ export const MainNavBar = () => {
         </div>
         <div className="controls">
           {currentUser.isAdmin && ( // currentUser.isAdmin을 사용하여 조건부 렌더링
-            <Link to="/admin" className="menu regLink">
+            <Link to="/controlpanel" className="menu regLink">
               <AppRegistrationIcon size={24} />
               <span>Admin 관리</span>
             </Link>

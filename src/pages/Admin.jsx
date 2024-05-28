@@ -18,13 +18,13 @@ export const Admin = () => {
       <div className="content">
         <div className="menuSection">
           <ul>
-            <li><Link to="/admin/" className="menuNm">
+            <li><Link to="/controlpanel/" className="menuNm">
               <IntegrationInstructionsIcon />Solution 등록
             </Link></li>
-            <li><Link to="/admin/registerdev" className="menuNm">
+            <li><Link to="/controlpanel/registerdev" className="menuNm">
               <AssignmentIndIcon />개발자 등록
             </Link></li>
-            <li><Link to="/admin/adminmgmt" className="menuNm">
+            <li><Link to="/controlpanel/adminmgmt" className="menuNm">
               <AdminPanelSettingsIcon />Admin 계정 관리
             </Link></li>
           </ul>

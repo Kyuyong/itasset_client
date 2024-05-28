@@ -1,9 +1,7 @@
-// import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../context/authContext';
-// import  { useEffect, useRef } from 'react';
 
 
 
@@ -12,9 +10,8 @@ export const Login = ({ onLogin }) => {
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState(false);
   const navigate = useNavigate();
-  // const logoutTimerRef = useRef();
 
-  const { login } = useContext(AuthContext);
+  const { login, loginAttempts } = useContext(AuthContext);  // 로그인 횟수 loginAttempts 변수 추가 
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -24,7 +21,7 @@ export const Login = ({ onLogin }) => {
       // onLogin(true); // 로그인 상태를 true로 설정
       navigate('/'); // 사용자를 홈 페이지로 리디렉션
     } catch (error) {
-      console.error('로그인 요청 중 에러 발생:', error);
+      console.error('Login - 로그인 요청 중 에러 발생:', error);
       setLoginError(true); // 로그인 실패 처리
     }
   };
@@ -66,7 +63,17 @@ export const Login = ({ onLogin }) => {
             />
           </div>
 
-          {loginError && <div className="errorMessageWrap">로그인 정보가 올바르지 않습니다.</div>}
+          {/* {loginError && <div className="errorMessageWrap">로그인 정보가 올바르지 않습니다.</div>} */}
+          {loginError && (
+            <div className="errorMessageWrap">
+              로그인 정보가 올바르지 않습니다.
+              {loginAttempts > 0 && (
+                <div className="loginAttemptsMessage">
+                  로그인 시도 {loginAttempts}회 실패했습니다. 5회 이상 실패 시 로그인이 제한됩니다.
+                </div>
+              )}
+            </div>
+          )}
           <div>
             <button className="bottomButton" type="submit">로그인</button>
           </div>

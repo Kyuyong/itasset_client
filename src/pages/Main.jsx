@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom';
 
 import axios from 'axios';
@@ -7,6 +7,7 @@ import axios from 'axios';
 import MainNavBar from '../components/MainNavBar';
 import ScrollToTop from '../components/ScrollToTop';
 import Footer from '../components/Footer';
+import RequireAdmin from "../components/RequireAdmin";
 
 // Page List
 import Home from './Home';
@@ -15,9 +16,11 @@ import Introduction from './Introduction';
 import FileUpload from './FileUpload';
 import Admin from './Admin';
 import RegisterSol from './RegisterSol';
+import { AuthContext } from '../context/authContext';
 
 export const Main = () => {
   const [getDevelopers, setGetDevelopers] = useState([]);
+  const { currentUser } = useContext(AuthContext);
 
   ////////////////////////
   // Solution 목록 가져오기
@@ -37,7 +40,7 @@ export const Main = () => {
   ////////////////////////
 
   const location = useLocation();
-  const isAdminPage = location.pathname.startsWith('/admin');
+  const isAdminPage = location.pathname.startsWith('/controlpanel');
 
   ////////////////////////
   // 개발자 목록 가져오기
@@ -62,7 +65,9 @@ export const Main = () => {
           <Route path="*" element={<Home getDevelopers={getDevelopers} />} />
           <Route path="/product/:productId/*" element={<Product getDevelopers={getDevelopers} />} />
           <Route path="/introduction" element={<Introduction />}></Route>
-          <Route path="/admin/*" element={<Admin />} />
+          {currentUser && currentUser.isAdmin && (
+            <Route path="/controlpanel/*" element={<RequireAdmin><Admin /></RequireAdmin>} />
+          )}
           <Route path="/reg" element={<RegisterSol />} />
           <Route path="/fileupload" element={<FileUpload />} />
         </Routes>
