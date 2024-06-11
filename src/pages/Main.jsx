@@ -15,8 +15,11 @@ import Product from './Product';
 import Introduction from './Introduction';
 import FileUpload from './FileUpload';
 import Admin from './Admin';
-import RegisterSol from './RegisterSol';
+// import RegisterSol from './RegisterSol';
 import { AuthContext } from '../context/authContext';
+import IdeaBorad from './IdeaBoard/IdeaBorad';
+import SolMgmt from './SolMgmt/SolMgmt';
+import DashBoard from './DashBoard/DashBoard';
 
 export const Main = () => {
   const [getDevelopers, setGetDevelopers] = useState([]);
@@ -68,8 +71,11 @@ export const Main = () => {
           {currentUser && currentUser.isAdmin && (
             <Route path="/controlpanel/*" element={<RequireAdmin><Admin /></RequireAdmin>} />
           )}
-          <Route path="/reg" element={<RegisterSol />} />
+          {/* <Route path="/reg" element={<RegisterSol />} /> */}
           <Route path="/fileupload" element={<FileUpload />} />
+          <Route path="/idearegister" element={<IdeaBorad />} />
+          <Route path="/solmgmt" element={<SolMgmt />} />
+          <Route path="/dashboard" element={<DashBoard />} />
         </Routes>
         <ScrollToTop />
       </div>
