@@ -15,35 +15,19 @@ import Product from './Product';
 import Introduction from './Introduction';
 import FileUpload from './FileUpload';
 import Admin from './Admin';
-// import RegisterSol from './RegisterSol';
 import { AuthContext } from '../context/authContext';
 import IdeaBorad from './IdeaBoard/IdeaBorad';
 import SolMgmt from './SolMgmt/SolMgmt';
 import DashBoard from './DashBoard/DashBoard';
+import Portfolio from './Portfolio/Portfolio';
 
 export const Main = () => {
   const [getDevelopers, setGetDevelopers] = useState([]);
   const { currentUser } = useContext(AuthContext);
 
-  ////////////////////////
-  // Solution 목록 가져오기
-  // const [getsolutions, setGetSolutions] = useState([]);
-  // const fetchSolutions = async () => {
-  //   try {
-  //     const response = await axios.get('/api/solutions/getsolution');
-  //     const sortedSolutions = response.data.sort((a, b) => a.id - b.id);
-  //     setGetSolutions(sortedSolutions);
-  //   } catch (error) {
-  //     console.error("solutions 가져올때 오류가 발생하였습니다:", error);
-  //   }
-  // };
-  // useEffect(() => {
-  //   fetchSolutions();
-  // }, []);
-  ////////////////////////
-
   const location = useLocation();
   const isAdminPage = location.pathname.startsWith('/controlpanel');
+  const isPortfolioPage = location.pathname.startsWith('/portfolio');
 
   ////////////////////////
   // 개발자 목록 가져오기
@@ -59,28 +43,42 @@ export const Main = () => {
     fetchDevelopers();
   }, []);
 
+
+  useEffect(() => {
+    const handleScroll = (event) => {
+      if (window.scrollY < 10) {
+        window.scrollTo(0, 10);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   // console.log("Main에서 보는 getDevelopers : ", getDevelopers);
   return (
     <>
       <div className="main">
-        <MainNavBar />
+        {!isPortfolioPage && <MainNavBar />}
         <Routes>
           <Route path="*" element={<Home getDevelopers={getDevelopers} />} />
           <Route path="/product/:productId/*" element={<Product getDevelopers={getDevelopers} />} />
           <Route path="/introduction" element={<Introduction />}></Route>
+          <Route path="/portfolio" element={<Portfolio />}></Route>
           {currentUser && currentUser.isAdmin && (
             <Route path="/controlpanel/*" element={<RequireAdmin><Admin /></RequireAdmin>} />
           )}
-          {/* <Route path="/reg" element={<RegisterSol />} /> */}
           <Route path="/fileupload" element={<FileUpload />} />
           <Route path="/idearegister" element={<IdeaBorad />} />
           <Route path="/solmgmt" element={<SolMgmt />} />
           <Route path="/dashboard" element={<DashBoard />} />
         </Routes>
-        <ScrollToTop />
+        {!isPortfolioPage && <ScrollToTop />}
       </div>
-      {/* <Footer /> */}
-      {!isAdminPage && <Footer />}
+      {!(isAdminPage || isPortfolioPage) && <Footer />}
     </>
   )
 }

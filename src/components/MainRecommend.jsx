@@ -62,7 +62,7 @@ export const MainRecommend = ({ solutionData, getDevelopers }) => {
     <div className="mainRecommend">
       <div className="gap-100" />
 
-      <div className="titleText">New Solution</div>
+      <div className="titleText">따끈따끈 새로운 Solutions</div>
       <div className="subText">새로운 AI/DT Solution를 공유합니다.</div>
 
       <div className="newBox">
@@ -111,8 +111,6 @@ export const MainRecommend = ({ solutionData, getDevelopers }) => {
       </div>
 
       <div className="gap-60"></div>
-      <hr />
-      <div className="gap-60"></div>
 
       <div className="mainBanner">
         <p className="text">Creative AI/DT Solution Courses</p>
@@ -121,15 +119,13 @@ export const MainRecommend = ({ solutionData, getDevelopers }) => {
         <p className="subText"> No. 1 기술전문회사로 도약하기 위해서 우리의 본업인 현장 경쟁력 강화를 위해 AI/DT전문가 양성하였습니다. <br></br>
           우리 회사 IT 전문가들의 잠재능력을 유감없이 보여주는 여러가지 사례와 과제들을 확인해보세요.</p>
         <button type="button" className="bannerBtn">
-          <Link to="/introduction" className="text">See More</Link>
+          <Link to="/portfolio" className="text">See More</Link>
         </button>
       </div>
 
       <div className="gap-60"></div>
-      <hr />
-      <div className="gap-60"></div>
 
-      <div className="titleText">Popular AI/DT Solutions</div>
+      <div className="titleText">화제의 인기 Solutions</div>
       <div className="subText">인기가 있고, 사용률이 높은 Solution입니다.</div>
 
       <div className="popularBox">
@@ -178,9 +174,6 @@ export const MainRecommend = ({ solutionData, getDevelopers }) => {
       </div>
 
       <div className="gap-60"></div>
-      <hr />
-      <div className="gap-60"></div>
-
 
       <div className="joinUsBox">
         <div className="leftSide">

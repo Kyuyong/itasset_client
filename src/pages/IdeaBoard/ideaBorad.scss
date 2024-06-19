@@ -1,1 +1,19 @@
-.ideaBoard {}
+.ideaBoard {
+
+  width: 100vw;
+
+  .box {
+    height: 70px;
+    width: 100%;
+
+    .bg {
+      background: #0c0c1d;
+      height: 90px;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+    }
+  }
+
+}

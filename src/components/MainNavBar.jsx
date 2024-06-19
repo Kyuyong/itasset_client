@@ -4,6 +4,7 @@ import { BsLockFill } from 'react-icons/bs';
 import { LuClipboardEdit } from "react-icons/lu";
 import { BsClipboardData } from "react-icons/bs";
 import { AiOutlineDashboard } from "react-icons/ai";
+import { FaCode } from "react-icons/fa6";
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import { AuthContext } from '../context/authContext';
 
@@ -46,11 +47,15 @@ export const MainNavBar = () => {
           </Link>
           <Link to="/solmgmt" className="menu regLink">
             <BsClipboardData size={24} />
-            <span>과제 관리</span>
+            <span>Sol Mgmt</span>
           </Link>
           <Link to="/dashboard" className="menu regLink">
             <AiOutlineDashboard size={24} />
             <span>DashBoard</span>
+          </Link>
+          <Link to="/portfolio" className="menu regLink">
+            <FaCode size={24} />
+            <span>Working Group</span>
           </Link>
           {currentUser.isAdmin && ( // currentUser.isAdmin을 사용하여 조건부 렌더링
             <Link to="/controlpanel" className="menu regLink">
