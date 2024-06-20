@@ -17,7 +17,6 @@ export const Home = ({ getDevelopers }) => {
 
   const [searchResults, setSearchResults] = useState([]);
   const navigate = useNavigate();
-
   const handleSearch = (results) => {
     setSearchResults(results);
     navigate("/search");
@@ -68,7 +67,6 @@ export const Home = ({ getDevelopers }) => {
         <Route path="/search" element={<SearchList searchResults={searchResults} />} />
         <Route path="/all" element={<AllSolution solutionData={getsolutions} />} />
         <Route path="/workfield" element={<WorkField solutionData={workFlSols} />} />
-
       </Routes>
     </div>
   )

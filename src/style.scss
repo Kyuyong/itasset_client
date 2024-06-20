@@ -2097,7 +2097,16 @@ body {
   background-color: #2980b9;
 }
 
+// 404 NOT FOUND
+.notFound {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
+  h1 {
+    font-size: 100px;
+  }
+}
 
 
 /* ======== gap 정의 ======== */

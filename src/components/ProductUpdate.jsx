@@ -29,9 +29,9 @@ export const ProductUpdate = ({ solutionData, productId, getDevelopers }) => {
     reg_date: solutionData.reg_date || ''
   });
 
-  const [imageFile, setImageFile] = useState(null);
-  const [imagePreviewUrl, setImagePreviewUrl] = useState(
-    developerData?.dev_img || `${process.env.PUBLIC_URL}/image/developer/basic.jpg`);
+  // const [imageFile, setImageFile] = useState(null);
+  // const [imagePreviewUrl, setImagePreviewUrl] = useState(
+  //   developerData?.dev_img || `${process.env.PUBLIC_URL}/image/developer/basic.jpg`);
 
   // Warning 잡는 로직 인데, 안잡힘 : Listener added for a synchronous 'DOMNodeInserted' DOM Mutation Event.
   const quillRef = useRef(null);
@@ -105,70 +105,73 @@ export const ProductUpdate = ({ solutionData, productId, getDevelopers }) => {
     }
   };
 
-  // 개발자 이미지
-  const upload = async () => {
-    try {
-      const formData = new FormData();
-      formData.append("file", imageFile); // 파일 추가
-      console.log("업로드 시도: ", imageFile); // 업로드 시도하는 파일 로그
-      for (let [key, value] of formData.entries()) {
-        console.log(`${key}: ${value}`);
-      }
-      const res = await axios.post("/api/upload/developers", formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data' // 필요한 경우 명시적으로 세팅
-        }
-      });
-      console.log("업로드 성공: ", res.data); // 응답 로그
-      return res.data;
-    } catch (err) {
-      console.error("업로드 실패: ", err);
-    }
-  };
-  // 개발자 이미지
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      let reader = new FileReader();
+  // // 개발자 이미지
+  // const upload = async () => {
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append("file", imageFile); // 파일 추가
+  //     console.log("업로드 시도: ", imageFile); // 업로드 시도하는 파일 로그
+  //     for (let [key, value] of formData.entries()) {
+  //       console.log(`${key}: ${value}`);
+  //     }
+  //     const res = await axios.post("/api/upload/developers", formData, {
+  //       headers: {
+  //         'Content-Type': 'multipart/form-data' // 필요한 경우 명시적으로 세팅
+  //       }
+  //     });
+  //     console.log("업로드 성공: ", res.data); // 응답 로그
+  //     return res.data;
+  //   } catch (err) {
+  //     console.error("업로드 실패: ", err);
+  //   }
+  // };
 
-      reader.onloadend = () => {
-        setImageFile(file); // 업로드할 파일 상태 업데이트
-        setImagePreviewUrl(reader.result); // 미리보기 URL 업데이트
-      };
+  // // 개발자 이미지
+  // const handleFileChange = (e) => {
+  //   const file = e.target.files[0];
 
-      reader.readAsDataURL(file);
-    }
-  };
-  // 개발자 이미지
-  const handleUploadClick = async (e) => {
-    e.preventDefault();
-    const dev_img = (await upload()).filePath;
-    console.log("handaleUpladClick에 들어온 imgPath", dev_img);
-    const imgData = { dev_img, n_id: developerData.n_id };
-    try {
-      const response = await axios.put("/api/developers/updatedevimg", imgData, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      if (response.status === 200) {
-        console.log("서버로부터 받은 데이터:", response.data);
-        alert("개발자 이미지 변경 성공!");
-        navigate(`/product/${productId}/`);
-      } else {
-        throw new Error('이미지 등록에 실패했습니다.');
-      }
-    } catch (error) {
-      let errorMessage = '이미지 등록 실패';
-      if (error.response && error.response.status === 409) {
-        errorMessage = error.response.data;
-      } else {
-        errorMessage = `이미지 등록 실패: ${error.message}`;
-      }
-      alert(errorMessage);
-      console.error('이미지 등록 중 에러 발생', error);
-    }
-  };
+  //   if (file) {
+
+  //     let reader = new FileReader();
+
+  //     reader.onloadend = () => {
+  //       setImageFile(file); // 업로드할 파일 상태 업데이트
+  //       setImagePreviewUrl(reader.result); // 미리보기 URL 업데이트
+  //     };
+
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
+  // // 개발자 이미지
+  // const handleUploadClick = async (e) => {
+  //   e.preventDefault();
+  //   const dev_img = (await upload()).filePath;
+  //   console.log("handaleUpladClick에 들어온 imgPath", dev_img);
+  //   const imgData = { dev_img, n_id: developerData.n_id };
+  //   try {
+  //     const response = await axios.put("/api/developers/updatedevimg", imgData, {
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       }
+  //     });
+  //     if (response.status === 200) {
+  //       console.log("서버로부터 받은 데이터:", response.data);
+  //       alert("개발자 이미지 변경 성공!");
+  //       navigate(`/product/${productId}/`);
+  //     } else {
+  //       throw new Error('이미지 등록에 실패했습니다.');
+  //     }
+  //   } catch (error) {
+  //     let errorMessage = '이미지 등록 실패';
+  //     if (error.response && error.response.status === 409) {
+  //       errorMessage = error.response.data;
+  //     } else {
+  //       errorMessage = `이미지 등록 실패: ${error.message}`;
+  //     }
+  //     alert(errorMessage);
+  //     console.error('이미지 등록 중 에러 발생', error);
+  //   }
+  // };
 
   // Solution 부가 정보 수정하기
   const handleChange = (e) => {
@@ -239,7 +242,7 @@ export const ProductUpdate = ({ solutionData, productId, getDevelopers }) => {
 
             <div className="rightSide">
               <div className="devDesc">
-                <div className="developer">
+                {/* <div className="developer">
                   <div className="gap-20"></div>
                   <div className="title">개발자 사진 변경</div>
                   <img src={imagePreviewUrl} className="devImg" alt="devImg" />
@@ -266,7 +269,7 @@ export const ProductUpdate = ({ solutionData, productId, getDevelopers }) => {
                   </div>
                 </div>
                 <div className="gap-20"></div>
-                <hr style={{ width: '80%' }} />
+                <hr style={{ width: '80%' }} /> */}
                 <div className="gap-40"></div>
                 <div className="title">Product 세부내용 Edit</div>
                 <div className="gap-20"></div>
@@ -309,18 +312,7 @@ export const ProductUpdate = ({ solutionData, productId, getDevelopers }) => {
                           InputLabelProps={{ shrink: true }}
                         />
                       </Grid>
-                      {/* <Grid item xs={12}>
-                        <TextField
-                          fullWidth
-                          label="업무 직군"
-                          name="work_field"
-                          variant="outlined"
-                          value={formValues.work_field}
-                          onChange={handleChange}
-                          type="text"
-                          InputLabelProps={{ shrink: true }}
-                        />
-                      </Grid> */}
+
                       <Grid item xs={12}>
                         <Box sx={{
                           border: 1, borderColor: 'grey.400', borderRadius: '5px', p: 2

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { BsLockFill } from 'react-icons/bs';
-import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+// import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import { AuthContext } from '../context/authContext';
 
 
@@ -37,12 +37,13 @@ export const MainNavBar = () => {
           </Link>
         </div>
         <div className="controls">
-          {currentUser.isAdmin && ( // currentUser.isAdmin을 사용하여 조건부 렌더링
+          {/* {currentUser.isAdmin && ( 
+            // currentUser.isAdmin을 사용하여 조건부 렌더링
             <Link to="/controlpanel" className="menu regLink">
               <AppRegistrationIcon size={24} />
               <span>Admin 관리</span>
             </Link>
-          )}
+          )} */}
 
           <div className="menu" onClick={logout}>
             <BsLockFill size={24} />
