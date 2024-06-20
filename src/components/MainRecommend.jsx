@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import SolutionBox from './SolutionBox';
 import { Link } from 'react-router-dom';
-import { BsFillStarFill } from 'react-icons/bs';
-import { Box, Button, Typography } from '@mui/material';
+// import { BsFillStarFill } from 'react-icons/bs';
+// import { Box, Button, Typography } from '@mui/material';
 
 export const MainRecommend = ({ solutionData, getDevelopers }) => {
 
@@ -23,40 +23,40 @@ export const MainRecommend = ({ solutionData, getDevelopers }) => {
 
   // console.log("topLikedSolutions : ", topLikedSolutions);
 
-  //랜덤으로 개발자 소개 (3명)
-  const [randomDevelopers, setRandomDevelopers] = useState([]);
-  const [expandedStates, setExpandedStates] = useState({});
+  // //랜덤으로 개발자 소개 (3명)
+  // const [randomDevelopers, setRandomDevelopers] = useState([]);
+  // const [expandedStates, setExpandedStates] = useState({});
 
-  // 랜덤 개발자 목록 생성 함수
-  const generateRandomDevelopers = (developers, size) => {
-    // const shuffled = developers.sort(() => 0.5 - Math.random());
-    // return shuffled.slice(0, size);
-    // 암호학적으로 안전한 난수 배열 생성
-    const randomValues = new Uint32Array(developers.length);
-    window.crypto.getRandomValues(randomValues);
+  // // 랜덤 개발자 목록 생성 함수
+  // const generateRandomDevelopers = (developers, size) => {
+  //   // const shuffled = developers.sort(() => 0.5 - Math.random());
+  //   // return shuffled.slice(0, size);
+  //   // 암호학적으로 안전한 난수 배열 생성
+  //   const randomValues = new Uint32Array(developers.length);
+  //   window.crypto.getRandomValues(randomValues);
 
-    // 개발자 목록을 섞습니다.
-    const shuffled = developers.sort((a, b) => {
-      const randomA = randomValues[developers.indexOf(a)] / 4294967295;
-      const randomB = randomValues[developers.indexOf(b)] / 4294967295;
-      return randomA - randomB;
-    });
+  //   // 개발자 목록을 섞습니다.
+  //   const shuffled = developers.sort((a, b) => {
+  //     const randomA = randomValues[developers.indexOf(a)] / 4294967295;
+  //     const randomB = randomValues[developers.indexOf(b)] / 4294967295;
+  //     return randomA - randomB;
+  //   });
 
-    // 요청된 크기만큼의 개발자 목록을 반환합니다.
-    return shuffled.slice(0, size);
-  };
-  // 초기 랜덤 개발자 목록 설정
-  useEffect(() => {
-    const randomDevs = generateRandomDevelopers(getDevelopers, 3);
-    setRandomDevelopers(randomDevs);
-    // 초기화시 모든 개발자의 "더보기/접기" 상태를 false로 설정
-    const initialStates = randomDevs.reduce((acc, curr) => ({ ...acc, [curr.id]: false }), {});
-    setExpandedStates(initialStates);
-  }, [getDevelopers]);
-  // "더보기/접기" 상태 토글 함수
-  const toggleExpand = (id) => {
-    setExpandedStates((prev) => ({ ...prev, [id]: !prev[id] }));
-  };
+  //   // 요청된 크기만큼의 개발자 목록을 반환합니다.
+  //   return shuffled.slice(0, size);
+  // };
+  // // 초기 랜덤 개발자 목록 설정
+  // useEffect(() => {
+  //   const randomDevs = generateRandomDevelopers(getDevelopers, 3);
+  //   setRandomDevelopers(randomDevs);
+  //   // 초기화시 모든 개발자의 "더보기/접기" 상태를 false로 설정
+  //   const initialStates = randomDevs.reduce((acc, curr) => ({ ...acc, [curr.id]: false }), {});
+  //   setExpandedStates(initialStates);
+  // }, [getDevelopers]);
+  // // "더보기/접기" 상태 토글 함수
+  // const toggleExpand = (id) => {
+  //   setExpandedStates((prev) => ({ ...prev, [id]: !prev[id] }));
+  // };
 
   return (
     <div className="mainRecommend">
@@ -178,17 +178,16 @@ export const MainRecommend = ({ solutionData, getDevelopers }) => {
       </div>
 
       <div className="gap-60"></div>
-      <hr />
-      <div className="gap-60"></div>
 
 
+      {/* 
       <div className="joinUsBox">
         <div className="leftSide">
           {[...Array(5)].map((_, index) => (
             <BsFillStarFill key={index} style={{ color: '#EFC42D', margin: '2px' }} />
           ))}
           <p className="title">AI/DT 개발자를 소개합니다.</p>
-          <p>SK오앤에스는 <span style={{ color: '#f06292' }}>{getDevelopers?.length}</span>명의 AI/DT 전문가 팀과 함께 성장하며,
+          <p>SK오앤에스는 AI/DT 전문가 팀과 함께 성장하며,
             현장 업무를 혁신하는 다양한 아이디어를 발굴하여 새로운 비전과 가치를 추구하고 있습니다.
             우리는 기술의 힘으로 업무 방식을 개선하고, 더 나은 미래를 설계하는 데 중점을 두고 있습니다.
             AI/DT 전문가의 도움이 필요한 순간,
@@ -222,7 +221,7 @@ export const MainRecommend = ({ solutionData, getDevelopers }) => {
             </Box>
           ))}
         </div>
-      </div>
+      </div> */}
 
 
       <div className="gap-100"></div>

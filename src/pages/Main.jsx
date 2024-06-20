@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom';
-
-import axios from 'axios';
+import axiosInstance from '../axiosInstance';
+// import axios from 'axios';
 
 // Componets List
 import MainNavBar from '../components/MainNavBar';
@@ -14,12 +14,12 @@ import Product from './Product';
 import Introduction from './Introduction';
 
 // import Admin from './Admin';
-// import { AuthContext } from '../context/authContext';
+import { AuthContext } from '../context/authContext';
 // import RequireAdmin from "../components/RequireAdmin";
 
 export const Main = () => {
   const [getDevelopers, setGetDevelopers] = useState([]);
-  // const { currentUser } = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
 
   const location = useLocation();
   const isAdminPage = location.pathname.startsWith('/controlpanel');
@@ -28,15 +28,20 @@ export const Main = () => {
   // 개발자 목록 가져오기
   const fetchDevelopers = async () => {
     try {
-      const response = await axios.get("/api/developers/getdeveloper");
+      const response = await axiosInstance.get("/api/developers/getdeveloper");
       setGetDevelopers(response.data);
     } catch (error) {
       console.log("개발자 가져올때 오류가 발생했습니다.", error);
     };
   };
+  // useEffect(() => {
+  //   fetchDevelopers();
+  // }, []);
   useEffect(() => {
-    fetchDevelopers();
-  }, []);
+    if (currentUser) {
+      fetchDevelopers();
+    }
+  }, [currentUser]);
 
   // console.log("Main에서 보는 getDevelopers : ", getDevelopers);
   return (

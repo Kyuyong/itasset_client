@@ -14,6 +14,11 @@ export const AuthContextProvider = ({ children }) => {
       const { data } = response;
 
       if (data.success && data.data.authUserValue === "Y") {
+
+        // token 추가
+        const token = data.token;
+        sessionStorage.setItem("token", token);
+
         const userDetails = {};
         data.data.keyValuePairs.forEach(pair => {
           switch (pair[0]) {
@@ -35,7 +40,13 @@ export const AuthContextProvider = ({ children }) => {
         });
 
         // Admin 여부 확인 요청 추가
-        const adminResponse = await axios.get("/api/developers/getadmin");
+        // const adminResponse = await axios.get("/api/developers/getadmin");
+        // 토튼 token 인증 추가
+        const adminResponse = await axios.get("/api/developers/getadmin", {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
         userDetails.isAdmin = adminResponse.data.some(admin => admin.n_id === userDetails.userId);
 
 
@@ -59,13 +70,6 @@ export const AuthContextProvider = ({ children }) => {
         throw new Error("로그인 실패");
       }
     } catch (error) {
-      // if (error.response && error.response.status === 429) {
-      //   // 백엔드에서 로그인 시도 제한 오류를 받은 경우
-      //   alert(`로그인 시도 횟수 초과. 잠시 후 다시 시도하세요.`);
-      //   setLoginAttempts(error.response.data.attempts);
-      //   console.log(`로그인 시도 횟수 초과 - 서버에서 반환된 시도 횟수: ${error.response.data.attempts}`);
-      // }
-      // console.error(error);
       if (error.response) {
         console.log("받은 데이터:", error.response.data);
         const attempts = parseInt(error.response.data.attempts); // 문자열을 숫자로 변환
@@ -113,6 +117,7 @@ export const AuthContextProvider = ({ children }) => {
       setCurrentUser(null);
       sessionStorage.removeItem("user");
       sessionStorage.removeItem("loginTime");
+      sessionStorage.removeItem("token");  // 로그아웃을 하면 토큰 제거
     } catch (error) {
       console.error("로그아웃 과정에서 오류 발생:", error);
     }
