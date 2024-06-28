@@ -1,115 +1,120 @@
-$blueColor: #5395d1;
-$redColor: #ef0000;
-$hotpinkColor: #DD1B8F;
-$purpleColr: rgb(119, 47, 201);
-$whitegrayColor: #b7b7b7;
-$grayColor: #5a5a5a;
-$notoSans: "Noto Sans KR", Helvetica, sans-serif;
+// $blueColor: #5395d1;
+// $redColor: #ef0000;
+// $hotpinkColor: #DD1B8F;
+// $purpleColr: rgb(119, 47, 201);
+// $whitegrayColor: #b7b7b7;
+// $grayColor: #5a5a5a;
+// $notoSans: "Noto Sans KR", Helvetica, sans-serif;
+
+// // BG
+// $main-b : #2a3447;
+// $soft-bg : #384256;
+// $dark-bg : #222b3c;
 
 
-@font-face {
-  font-family: 'Noto Sans KR';
-  src: url('../public/fonts/NotoSansKR-Thin.ttf') format('truetype');
-  font-weight: 100;
-  font-style: normal;
-}
+// @font-face {
+//   font-family: 'Noto Sans KR';
+//   src: url('../public/fonts/NotoSansKR-Thin.ttf') format('truetype');
+//   font-weight: 100;
+//   font-style: normal;
+// }
 
-@font-face {
-  font-family: 'Noto Sans KR';
-  src: url('../public/fonts/NotoSansKR-ExtraLight.ttf') format('truetype');
-  font-weight: 200;
-  font-style: normal;
-}
+// @font-face {
+//   font-family: 'Noto Sans KR';
+//   src: url('../public/fonts/NotoSansKR-ExtraLight.ttf') format('truetype');
+//   font-weight: 200;
+//   font-style: normal;
+// }
 
-@font-face {
-  font-family: 'Noto Sans KR';
-  src: url('../public/fonts/NotoSansKR-Light.ttf') format('truetype');
-  font-weight: 300;
-  font-style: normal;
-}
+// @font-face {
+//   font-family: 'Noto Sans KR';
+//   src: url('../public/fonts/NotoSansKR-Light.ttf') format('truetype');
+//   font-weight: 300;
+//   font-style: normal;
+// }
 
-@font-face {
-  font-family: 'Noto Sans KR';
-  src: url('../public/fonts/NotoSansKR-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-}
+// @font-face {
+//   font-family: 'Noto Sans KR';
+//   src: url('../public/fonts/NotoSansKR-Regular.ttf') format('truetype');
+//   font-weight: 400;
+//   font-style: normal;
+// }
 
-@font-face {
-  font-family: 'Noto Sans KR';
-  src: url('../public/fonts/NotoSansKR-Medium.ttf') format('truetype');
-  font-weight: 500;
-  font-style: normal;
-}
+// @font-face {
+//   font-family: 'Noto Sans KR';
+//   src: url('../public/fonts/NotoSansKR-Medium.ttf') format('truetype');
+//   font-weight: 500;
+//   font-style: normal;
+// }
 
-@font-face {
-  font-family: 'Noto Sans KR';
-  src: url('../public/fonts/NotoSansKR-SemiBold.ttf') format('truetype');
-  font-weight: 600;
-  font-style: normal;
-}
+// @font-face {
+//   font-family: 'Noto Sans KR';
+//   src: url('../public/fonts/NotoSansKR-SemiBold.ttf') format('truetype');
+//   font-weight: 600;
+//   font-style: normal;
+// }
 
-@font-face {
-  font-family: 'Noto Sans KR';
-  src: url('../public/fonts/NotoSansKR-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-}
+// @font-face {
+//   font-family: 'Noto Sans KR';
+//   src: url('../public/fonts/NotoSansKR-Bold.ttf') format('truetype');
+//   font-weight: 700;
+//   font-style: normal;
+// }
 
-@font-face {
-  font-family: 'Noto Sans KR';
-  src: url('../public/fonts/NotoSansKR-ExtraBold.ttf') format('truetype');
-  font-weight: 800;
-  font-style: normal;
-}
+// @font-face {
+//   font-family: 'Noto Sans KR';
+//   src: url('../public/fonts/NotoSansKR-ExtraBold.ttf') format('truetype');
+//   font-weight: 800;
+//   font-style: normal;
+// }
 
-@font-face {
-  font-family: 'Noto Sans KR';
-  src: url('../public/fonts/NotoSansKR-Black.ttf') format('truetype');
-  font-weight: 900;
-  font-style: normal;
-}
-
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p {
-  margin: 0;
-  padding: 0;
-  font-family: $notoSans;
-  text-align: justify;
-}
-
-a {
-  text-decoration-line: none;
-}
-
-body {
-  background-color: #fdfdfd;
-}
-
-.admin {
-
-  display: flex;
+// @font-face {
+//   font-family: 'Noto Sans KR';
+//   src: url('../public/fonts/NotoSansKR-Black.ttf') format('truetype');
+//   font-weight: 900;
+//   font-style: normal;
+// }
 
 
-  .menuSetion {
+// h1,
+// h2,
+// h3,
+// h4,
+// h5,
+// h6,
+// p {
+//   margin: 0;
+//   padding: 0;
+//   font-family: $notoSans;
+//   text-align: justify;
+// }
 
-    width: 10%;
-    background-color: #f0f0f0;
+// a {
+//   text-decoration-line: none;
+// }
 
-    ul {
-      list-style: none;
-      padding: 0;
-    }
+// body {
+//   background-color: #fdfdfd;
+// }
 
-  }
+// .admin {
+
+//   display: flex;
+
+
+//   .menuSetion {
+
+//     width: 10%;
+//     background-color: #f0f0f0;
+
+//     ul {
+//       list-style: none;
+//       padding: 0;
+//     }
+
+//   }
 
 
 
 
-}
+// }

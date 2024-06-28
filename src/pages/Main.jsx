@@ -7,7 +7,7 @@ import axios from 'axios';
 import MainNavBar from '../components/MainNavBar';
 import ScrollToTop from '../components/ScrollToTop';
 import Footer from '../components/Footer';
-import RequireAdmin from "../components/RequireAdmin";
+import RequireAdmin from "../components/AdminComponents/RequireAdmin";
 
 // Page List
 import Home from './Home';

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { BsFillStarFill } from 'react-icons/bs';
 import { Route, Routes, useNavigate, useParams } from 'react-router-dom';
-import ProductContent from '../components/ProductContent';
-import ProductReviews from '../components/ProductReviews';
-import ProductUpdate from '../components/ProductUpdate';
+import ProductContent from '../components/ProductComponents/ProductContent';
+import ProductReviews from '../components/ProductComponents/ProductReviews';
+import ProductUpdate from '../components/ProductComponents/ProductUpdate';
+import ProductPNCR from '../components/ProductComponents/ProductPNCR';
 import axios from 'axios';
 import { Button, IconButton } from '@mui/material';
 import { pink } from '@mui/material/colors';
@@ -69,6 +70,9 @@ export const Product = ({ getDevelopers }) => {
   };
   const goToSolution = () => {
     navigate(`/product/${productId}`);
+  };
+  const goToPNCR = () => {
+    navigate(`/product/${productId}/pncr`);
   };
 
   useEffect(() => {
@@ -153,6 +157,9 @@ export const Product = ({ getDevelopers }) => {
                 <button className="proBtn" onClick={goToReviews}>
                   Reviews 보기
                 </button>
+                <button className='proBtn' onClick={goToPNCR}>
+                  PN/CR
+                </button>
               </div>
 
               <div className="scoreBox">
@@ -174,6 +181,7 @@ export const Product = ({ getDevelopers }) => {
         <Route path="/" element={<ProductContent solutionData={product} productId={productId} getDevelopers={getDevelopers} />} />
         <Route path="/reviews" element={<ProductReviews productId={productId} />} />
         <Route path="/update" element={<ProductUpdate solutionData={product} productId={productId} getDevelopers={getDevelopers} />} />
+        <Route path="/pncr" element={<ProductPNCR productId={productId} />} />
       </Routes>
     </div>
   )

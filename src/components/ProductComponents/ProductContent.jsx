@@ -1,10 +1,11 @@
+import "./productComponents.scss";
 import React, { useContext, useEffect, useState } from 'react';
 import axios from "axios";
-import SolutionBox from './SolutionBox';
+import SolutionBox from '../SolutionBox';
 import { BsPencil } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import DOMPurify from 'dompurify';
-import { AuthContext } from '../context/authContext';
+import { AuthContext } from '../../context/authContext';
 
 // function getRandomIds(array, size) {
 //   const shuffled = array.sort(() => 0.5 - Math.random());

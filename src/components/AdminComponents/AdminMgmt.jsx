@@ -1,3 +1,4 @@
+import "./admin.scss";
 import { Button, Container, Grid, TableContainer, TextField, Typography, Paper, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';

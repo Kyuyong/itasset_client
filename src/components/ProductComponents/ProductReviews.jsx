@@ -1,5 +1,6 @@
+import "./productComponents.scss";
 import React, { useContext, useEffect, useState } from 'react'
-import { AuthContext } from "../context/authContext";
+import { AuthContext } from "../../context/authContext";
 import { Button, TextField } from '@mui/material';
 import { BsTrashFill } from 'react-icons/bs';
 import { v4 as uuidv4 } from 'uuid'

@@ -1,7 +1,7 @@
 import React from 'react';
-import RegisterSol from '../components//RegisterSol';
-import RegisterDev from '../components/RegisterDev';
-import AdminMgmt from '../components/AdminMgmt';
+import RegisterSol from '../components/AdminComponents/RegisterSol';
+import RegisterDev from '../components/AdminComponents/RegisterDev';
+import AdminMgmt from '../components/AdminComponents/AdminMgmt';
 import { Link, Route, Routes } from 'react-router-dom';
 import IntegrationInstructionsIcon from '@mui/icons-material/IntegrationInstructions';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';

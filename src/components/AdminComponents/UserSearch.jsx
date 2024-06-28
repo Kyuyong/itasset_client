@@ -1,3 +1,4 @@
+import "./admin.scss";
 import { Container, Table, Paper, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TextField, Typography } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'

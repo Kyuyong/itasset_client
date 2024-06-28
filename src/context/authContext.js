@@ -105,7 +105,14 @@ export const AuthContextProvider = ({ children }) => {
     if (loginTime && (currentTime - loginTime > timeout)) {
       logout();
     }
-  }, []); // useCallback 의존성 배열이 비어 있으므로, 컴포넌트가 마운트될 때 한 번만 생성됩니다.
+  }, []); // useCallback 의존성 배열이 비어 있으므로, 컴포넌트가 마운트될 때 한 번만 생성됩니다.\
+
+
+  // 사용자 활동 감시 : session timeout reset
+  const resetSessionTimeout = () => {
+    const currentTime = new Date().getTime();
+    sessionStorage.setItem("loginTime", currentTime.toString());
+  };
 
 
   const logout = () => {
@@ -127,6 +134,19 @@ export const AuthContextProvider = ({ children }) => {
     const interval = setInterval(checkSessionTimeout, 5 * 60 * 1000); // 5분마다 세션 타임아웃을 확인합니다.
     return () => clearInterval(interval);
   }, [checkSessionTimeout]); // useEffect 의존성 배열에 checkSessionTimeout를 추가합니다.
+
+
+
+  // 사용자 활동 감시 : session timeout reset
+  useEffect(() => {
+    const events = ['mousemove', 'keydown', 'click', 'scroll'];
+    const handleUserActivity = () => resetSessionTimeout();
+
+    events.forEach(event => window.addEventListener(event, handleUserActivity));
+    return () => {
+      events.forEach(event => window.removeEventListener(event, handleUserActivity));
+    };
+  }, []);
 
 
   return (
