@@ -7,34 +7,22 @@ import { useNavigate } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 import { AuthContext } from '../../context/authContext';
 
-// function getRandomIds(array, size) {
-//   const shuffled = array.sort(() => 0.5 - Math.random());
-//   return shuffled.slice(0, size).map(item => item.id);
-// }
 
 const getRandomIds = (array, size) => {
-  const randomValues = new Uint32Array(array.length);
-  window.crypto.getRandomValues(randomValues);
-
-  // 객체의 인덱스를 기반으로 정렬하기 위한 배열 생성
+  const randomValues = new Uint32Array(array.length); window.crypto.getRandomValues(randomValues);
   const indices = array.map((_, index) => index);
 
-  // 인덱스를 섞습니다.
   const shuffledIndices = indices.sort((a, b) => {
     const randomA = randomValues[a] / 4294967295;
     const randomB = randomValues[b] / 4294967295;
     return randomA - randomB;
   });
-
-  // 요청된 크기만큼의 인덱스를 반환하고, 해당 인덱스를 사용하여 id 배열을 생성합니다.
   return shuffledIndices.slice(0, size).map(index => array[index].id);
-
 }
 
 export const ProductContent = ({ solutionData, productId, getDevelopers }) => {
 
   const navigate = useNavigate();
-  // const [isAuthorized, setIsAuthorized] = useState(false);
   const [getsolutions, setGetSolutions] = useState([]);
   const { currentUser } = useContext(AuthContext);
 
@@ -50,13 +38,9 @@ export const ProductContent = ({ solutionData, productId, getDevelopers }) => {
     fetchSolutions();
   }, []);
 
-
-  const isAdmin = currentUser?.isAdmin; // currentUser 객체에서 isAdmin 정보를 가져옵니다.
-  const userId = currentUser?.userId; // currentUser 객체에서 사용자 ID 정보를 가져옵니다.
-
+  const isAdmin = currentUser?.isAdmin;
+  const userId = currentUser?.userId;
   const isAuthorized = isAdmin || solutionData.n_id === userId;
-
-
 
   const randomIds = getRandomIds(getsolutions, 3);
   const filteredData = getsolutions.filter(item => randomIds.includes(item.id));
@@ -71,17 +55,7 @@ export const ProductContent = ({ solutionData, productId, getDevelopers }) => {
     const cleanHTML = DOMPurify.sanitize(htmlContent);
     return <div dangerouslySetInnerHTML={{ __html: cleanHTML }} />;
   };
-  // console.log("Contents에서 보는 getDevelopers : ", getDevelopers);
-  // console.log("Contents에서 보는 developerData reg_img : ", developerData.dev_img);
-  // console.log("Contents에서 보는 developerData : ", developerData);
 
-  // console.log("Contents에서 보는 solutionData : ", solutionData);
-  // console.log("Contents에서 보는 solutionData.n_id : ", solutionData.n_id);
-  // console.log("isAdmin 조건은? ", isAdmin);
-  // console.log("userId ? ", userId);
-  // console.log("currentUser? ", currentUser);
-
-  // console.log("Contents에서 보는 productId : ", productId);
   return (
     <div className="productContent">
       <div className="contentBox">
@@ -101,20 +75,29 @@ export const ProductContent = ({ solutionData, productId, getDevelopers }) => {
               </div>
               <div className="desc">
 
-                <div className="gap-40"></div>
-                <div className="subTitle">추진 방향</div>
+                <div className="gap-20"></div>
+                <div className="subTitleArea">
+                  <div className="subTitleBox"></div>
+                  <div className="subTitle">추진 방향</div>
+                </div>
                 <div className="itemBox">
                   <DisplayStyledText htmlContent={solutionData.direc} />
                 </div>
 
-                <div className="gap-40"></div>
-                <div className="subTitle">추진 내역</div>
+                <div className="gap-20"></div>
+                <div className="subTitleArea">
+                  <div className="subTitleBox"></div>
+                  <div className="subTitle">추진 내역</div>
+                </div>
                 <div className="itemBox">
                   <DisplayStyledText htmlContent={solutionData.target} />
                 </div>
 
-                <div className="gap-40"></div>
-                <div className="subTitle">기대 효과</div>
+                <div className="gap-20"></div>
+                <div className="subTitleArea">
+                  <div className="subTitleBox"></div>
+                  <div className="subTitle">기대 효과</div>
+                </div>
                 <div className="itemBox">
                   <DisplayStyledText htmlContent={solutionData.effect} />
                 </div>

@@ -6,11 +6,9 @@ import { BsTrashFill } from 'react-icons/bs';
 import { v4 as uuidv4 } from 'uuid'
 import { format } from 'date-fns';
 import axios from 'axios';
-// import { Rating } from '@mui/material';
-// import Stack from '@mui/material/Stack';
+
 
 export const ProductReviews = ({ productId }) => {
-
   const { currentUser } = useContext(AuthContext);
   const [comments, setComments] = useState([]);
   const [commentInput, setCommentInput] = useState('');
@@ -27,7 +25,7 @@ export const ProductReviews = ({ productId }) => {
       team: currentUser.deptName,
       headqt: currentUser.prntDeptName,
       content: commentInput,
-      date: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+      date: format(new Date(), 'yyyy-MM-dd HH:mm'),
       sol_id
     };
     try {
@@ -80,7 +78,7 @@ export const ProductReviews = ({ productId }) => {
     <div className="productReviews">
       <div className="contentBox">
         <div className="container">
-          <div className="gap-20"></div>
+          <div className="gap-60"></div>
           <div className="titleText">Reviews 보기</div>
 
           <form className="commentForm" onSubmit={handleAddComment}>
@@ -115,34 +113,13 @@ export const ProductReviews = ({ productId }) => {
                         <BsTrashFill /> 삭제하기
                       </Button>
                     )}
-                    {/* <Button className="reviewActionsBtn"> <BsTrashFill />삭제하기</Button> */}
-                    {/* <Button className="reviewActionsBtn"> <BsPenFill />수정하기</Button> */}
+
                   </div>
                 </div>
               </div>
             ))}
           <div className="gap-30"></div>
 
-          {/* <div className="scored">
-            <Stack direction="row" spacing={2} divider={<div style={{ margin: '0 auto' }} />} alignItems="center">
-              <div className="scoreBox">
-                <p>현장 활용도</p>
-                <Rating name="half-rating-read" defaultValue={4.5} precision={0.5} readOnly />
-              </div>
-              <div className="scoreBox">
-                <p>데이터 정확도</p>
-                <Rating name="half-rating-read" defaultValue={3.5} precision={0.5} readOnly />
-              </div>
-              <div className="scoreBox">
-                <p>Solution Quality</p>
-                <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly />
-              </div>
-              <div className="scoreBox">
-                <p>업무 효율성</p>
-                <Rating name="half-rating-read" defaultValue={5} precision={0.5} readOnly />
-              </div>
-            </Stack>
-          </div> */}
 
           <div className="gap-60"></div>
         </div>

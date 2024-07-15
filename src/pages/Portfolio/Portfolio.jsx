@@ -46,17 +46,17 @@ const Portfolio = () => {
     <div className="portfolio">
       <Cursor />
 
-      <section>
+      <section id="Portfolio">
         <PortNavbar />
         <Hero />
       </section>
-      <section>
+      <section id="Target">
         <Parallax />
       </section>
-      <section>
+      <section id="Services">
         <Services />
       </section>
-      <section>
+      <section id="Solutions">
         <Solutions />
       </section>
 

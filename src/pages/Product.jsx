@@ -1,51 +1,86 @@
-import React, { useEffect, useState } from 'react';
-import { BsFillStarFill } from 'react-icons/bs';
+import axios from 'axios';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Route, Routes, useNavigate, useParams } from 'react-router-dom';
 import ProductContent from '../components/ProductComponents/ProductContent';
 import ProductReviews from '../components/ProductComponents/ProductReviews';
 import ProductUpdate from '../components/ProductComponents/ProductUpdate';
-import ProductPNCR from '../components/ProductComponents/ProductPNCR';
-import axios from 'axios';
+import ProductPncr from '../components/ProductComponents/ProductPncr.jsx';
+import Detail from '../components/ProductComponents/Detail/Detail.jsx';
 import { Button, IconButton } from '@mui/material';
 import { pink } from '@mui/material/colors';
+import { BsFillStarFill } from 'react-icons/bs';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-
-
-
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { AuthContext } from '../context/authContext.js';
+import { format } from 'date-fns';
 
 export const Product = ({ getDevelopers }) => {
+  const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const [reviewCnt, setReviewCnt] = useState([]);
   const { productId } = useParams();
 
   // 좋아요 수 가져오기와 업데이트 하기 
   const [likeCount, setLikeCount] = useState(0);
-  const handleLike = async () => {
+  const [liked, setLiked] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null); // selectedRow 추가
+  // const [completeStatus, setCompleteStatus] = useState(0); // completeStatus 추가
+  // const [isAuthorized, setIsAuthorized] = useState(false); // isAuthorized 추가
 
+  const fetchLikeCount = useCallback(async () => {
     try {
-      // const newLikeCount = likeCount + 1;
-      // setLikeCount(newLikeCount);
-      // await axios.put(`/api/solutions/likes/${productId}`, { likeCnt: newLikeCount });
-      const response = await axios.post(`/api/solutions/likes/${productId}`);
-      const updatedLikeCount = response.data.likeCnt; // 백엔드에서 업데이트된 좋아요 수 받기
-      setLikeCount(updatedLikeCount); // 상태 업데이트
-
+      const response = await axios.get(`/api/solutions/getSolutionLikes?sol_id=${productId}`);
+      // console.log("Response from getSolutionLikes:", response.data); // 디버그를 위해 추가
+      // console.log("Like count:", response.data.likeCnt); // likeCnt 값을 로그로 출력
+      setLikeCount(response.data.likeCnt);
     } catch (error) {
-      console.error("좋아요 업데이트 실패: ", error);
+      console.error("fetchLikeCount 좋아요 수 가져오기 실패: ", error);
     }
-  };
+  }, [productId]);
+
+  const fetchLikes = useCallback(async () => {
+    try {
+      const userLikeResponse = await axios.get(`/api/solutions/solutionlike/check`,
+        { params: { sol_id: productId, n_id: currentUser.userId } });
+      setLiked(userLikeResponse.data.liked);
+    } catch (error) {
+      console.error("fetchLikes 좋아요 등록 여부: ", error);
+    }
+  }, [productId, currentUser.userId]);
 
   useEffect(() => {
-    const fetchLikes = async () => {
-      try {
-        const response = await axios.get(`/api/solutions/likes/${productId}`);
-        setLikeCount(response.data.likeCnt); // 받아온 좋아요 수로 상태 업데이트
-      } catch (error) {
-        console.error("좋아요 수 가져오기 실패: ", error);
-      }
-    };
+    fetchLikeCount();
     fetchLikes();
-  }, [productId]); // productId가 변경될 때마다 실행
+  }, [fetchLikeCount, fetchLikes]);
+
+  const handleLike = async () => {
+    if (!liked) {
+      const logData = {
+        sol_id: productId,
+        n_id: currentUser.userId,
+        n_name: currentUser.name,
+        team: currentUser.deptName,
+        headqt: currentUser.prntDeptName,
+        date: format(new Date(), 'yyyy-MM-dd HH:mm'),
+        category: 'like',
+      };
+
+      try {
+        await axios.post('/api/solutions/solutionlike', logData);
+        setLiked(true);
+        await fetchLikeCount();  // 최신 좋아요 수를 가져와서 상태를 업데이트
+      } catch (error) {
+        if (error.response && error.response.status === 400) {
+          alert(error.response.data.message);
+        } else {
+          console.error('Error logging like:', error);
+        }
+      }
+    }
+    else {
+      alert("이미 좋아요를 누르셨습니다.");
+    }
+  };
 
   ////////////////////////
   // Product ID 기준 불러오기
@@ -87,16 +122,40 @@ export const Product = ({ getDevelopers }) => {
     fetchReview();
   }, [productId]);
 
-  const handleLinkClick = (e, url) => {
+  // 좋아요 저장하는 구간
+  const handleLinkClick = async (e, url) => {
     e.preventDefault();
+
     if (url) {
-      window.open(url, '_blank', 'noopener,noreferrer')
-    } else alert("등록된 URL이 없습니다.");
+      if (currentUser) {
+        const logData = {
+          sol_id: productId,
+          n_id: currentUser.userId,
+          n_name: currentUser.name,
+          team: currentUser.deptName,
+          headqt: currentUser.prntDeptName,
+          date: new Date().toISOString(),
+          category: 'connect',
+        };
+
+        try {
+          await axios.post('/api/solutions/solutionlike', logData);
+        } catch (error) {
+          console.error('Error logging connection:', error);
+        }
+      }
+
+      window.open(url, '_blank', 'noopener,noreferrer');
+    } else {
+      alert("등록된 URL이 없습니다.");
+    }
   };
-  // console.log("reviewCnt : ", reviewCnt.length)
-  // console.log("Product에서 보는 product : ", product);
-  // console.log("Product에서 보는 productId : ", productId);
-  // console.log("Product에서 보는 getDevelopers : ", getDevelopers);
+
+  const goToDetail = (row) => {
+    setSelectedRow(row);
+    navigate(`/product/${productId}/pncrdetail/${row.id}`);
+  };
+
 
   return (
     <div className="product" >
@@ -167,11 +226,12 @@ export const Product = ({ getDevelopers }) => {
                   onClick={handleLike} sx={{ backgroundColor: pink[300] }}>
                   마음에 들면 좋아요
                 </Button>
-                <IconButton sx={{ color: pink[500] }}>
-                  <FavoriteIcon />
+                <IconButton onClick={handleLike} sx={{ color: pink[500] }}>
+                  {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
                 </IconButton>
                 <p>{likeCount}</p>
               </div>
+
             </div>
           </div>
         </div>
@@ -181,7 +241,8 @@ export const Product = ({ getDevelopers }) => {
         <Route path="/" element={<ProductContent solutionData={product} productId={productId} getDevelopers={getDevelopers} />} />
         <Route path="/reviews" element={<ProductReviews productId={productId} />} />
         <Route path="/update" element={<ProductUpdate solutionData={product} productId={productId} getDevelopers={getDevelopers} />} />
-        <Route path="/pncr" element={<ProductPNCR productId={productId} />} />
+        <Route path="/pncr" element={<ProductPncr productId={productId} currentUser={currentUser} goToDetail={goToDetail} />} />
+        <Route path="/pncrdetail/:id" element={<Detail selectedRow={selectedRow} currentUser={currentUser} />} />
       </Routes>
     </div>
   )

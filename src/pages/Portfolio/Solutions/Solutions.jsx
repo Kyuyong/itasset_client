@@ -70,7 +70,7 @@ const Solutions = () => {
   return (
     <div className="solutions" ref={ref}>
       <div className="progress">
-        <h1>Featured Works</h1>
+        <h1>'24년 AI/DT Working Group Solutions</h1>
         <motion.div style={{ scaleX }} className="progressBar"></motion.div>
       </div>
 

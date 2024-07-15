@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../context/authContext';
-
+import { TextField, Button, Box, Typography } from '@mui/material';
 
 
 export const Login = ({ onLogin }) => {
@@ -41,7 +41,7 @@ export const Login = ({ onLogin }) => {
           <div className="loginTitle">Welcome to You!</div>
         </div>
 
-        <form onSubmit={handleLogin} >
+        {/* <form onSubmit={handleLogin} >
           <div className="inputName">사번</div>
           <div className="inputWrap">
             <input
@@ -63,7 +63,6 @@ export const Login = ({ onLogin }) => {
             />
           </div>
 
-          {/* {loginError && <div className="errorMessageWrap">로그인 정보가 올바르지 않습니다.</div>} */}
           {loginError && (
             <div className="errorMessageWrap">
               로그인 정보가 올바르지 않습니다.
@@ -77,8 +76,47 @@ export const Login = ({ onLogin }) => {
           <div>
             <button className="bottomButton" type="submit">로그인</button>
           </div>
-
-        </form>
+        </form> */}
+        <Box
+          component="form"
+          onSubmit={handleLogin}
+          sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '300px', margin: '0 auto' }}
+        >
+          <Typography variant="h6" component="div" className="formTitle">LOGIN</Typography>
+          <TextField
+            label="사번"
+            variant="outlined"
+            placeholder="N+사번을 입력하세요."
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="비밀번호"
+            variant="outlined"
+            placeholder="i-net 비밀번호를 입력하세요."
+            value={password}
+            type="password"
+            autoComplete="off"
+            onChange={(e) => setPassword(e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+          {loginError && (
+            <div className="errorMessageWrap">
+              로그인 정보가 올바르지 않습니다.
+              {loginAttempts > 0 && (
+                <div className="loginAttemptsMessage">
+                  로그인 시도 {loginAttempts}회 실패했습니다. 5회 이상 실패 시 로그인이 제한됩니다.
+                </div>
+              )}
+            </div>
+          )}
+          <Button variant="contained" color="primary" type="submit" className="loginBtn">
+            로그인
+          </Button>
+        </Box>
       </div>
     </div>
   )

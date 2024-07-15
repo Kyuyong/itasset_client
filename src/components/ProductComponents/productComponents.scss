@@ -27,6 +27,12 @@
             justify-content: space-between;
             align-items: center;
 
+            .title {
+              font-size: 30px;
+              font-weight: 300;
+              color: $grayColor;
+            }
+
           }
 
           .edit {
@@ -44,17 +50,27 @@
           }
 
 
-          .title {
-            font-size: 30px;
-            color: $grayColor;
-          }
+          .subTitleArea {
+            position: relative;
+            display: flex;
+            align-items: center;
 
-          .subTitle {
-            font-size: 24px;
-            font-weight: 600;
-            color: $grayColor;
-            margin: 10px 10px;
+            .subTitleBox {
+              position: absolute;
+              top: 10;
+              left: 0;
+              width: 5px;
+              height: 20px;
+              background-color: $blueColor;
+            }
 
+            .subTitle {
+              font-size: 24px;
+              font-weight: 600;
+              color: $grayColor;
+              margin: 10px 15px;
+
+            }
           }
 
           .desc {
@@ -65,9 +81,10 @@
             .itemBox {
               padding: 20px;
               height: 100%;
-              background-color: #f4f4f4;
+              background-color: #ffff;
               color: $grayColor;
-              border-radius: 10px;
+              border-radius: 5px;
+              border: 1px solid #b6b6b6;
             }
           }
         }
@@ -135,13 +152,13 @@
               }
 
               .desc {
-                // background-color: #fafafa;
+                background-color: #f7f7f7;
                 margin: 0 20px;
                 color: $grayColor;
                 padding: 15px;
                 font-size: 14px;
                 border-radius: 8px;
-                border: 1px solid $whitegrayColor;
+                // border: 1px solid $whitegrayColor;
                 text-align: justify;
               }
             }
@@ -198,9 +215,8 @@
         color: $grayColor;
         font-family: $notoSans;
         font-size: 30px;
-        font-weight: 350;
-        padding: 5px;
-        margin-left: 10px;
+        font-weight: 300;
+        margin-bottom: 10px;
       }
 
       .scored {
@@ -548,16 +564,52 @@
     max-width: 1400px;
     margin: 0 auto;
 
+    .wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
 
-    .title {
-      font-size: 30px;
-      color: $grayColor;
-    }
+      .titleWrap {
+        display: flex;
+        flex-direction: column;
 
-    h4 {
-      font-size: 16px;
-      color: $grayColor;
-      font-weight: 400;
+        .title {
+          font-size: 30px;
+          font-weight: 300;
+          color: $grayColor;
+          margin-bottom: 10px;
+        }
+
+        h4 {
+          font-size: 16px;
+          color: $grayColor;
+          font-weight: 400;
+        }
+
+        p {
+          font-size: 16px;
+          color: $grayColor;
+        }
+      }
+
+
+      // .chartContainer {
+      //   width: 300px;
+      //   height: 180px;
+      //   margin: auto;
+      //   display: flex;
+      //   justify-content: center;
+      //   align-items: center;
+      // }
+
+      button {
+        width: 150px;
+        height: 50px;
+        font-size: 16px;
+        margin-right: 20px;
+
+      }
     }
 
   }
