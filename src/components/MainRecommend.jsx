@@ -3,6 +3,7 @@ import SolutionBox from './SolutionBox';
 import { Link } from 'react-router-dom';
 import { BsFillStarFill } from 'react-icons/bs';
 import { Box, Button, Typography } from '@mui/material';
+import axios from 'axios';
 
 export const MainRecommend = ({ solutionData, getDevelopers }) => {
 
@@ -13,15 +14,24 @@ export const MainRecommend = ({ solutionData, getDevelopers }) => {
     setLatestSolutions(sortedSolutions.slice(0, 4));
   }, [solutionData]);
 
-  //좋아요 등록수 많은 Solutions
+  console.log("soltuiondata: ", solutionData);
+
+  // 좋아요 등록수 많은 Solutions
   const [topLikedSolutions, setTopLikedSolutions] = useState([]);
   useEffect(() => {
-    const sortedByLikes = solutionData.sort((a, b) => parseInt(b.likeCnt, 10) - parseInt(a.likeCnt, 10));
-    setTopLikedSolutions(sortedByLikes.slice(0, 4));
-  }, [solutionData]);
+    const fetchTopLikedSolutions = async () => {
+      try {
+        const response = await axios.get('/api/solutions/getTopLikedSolutions');
+        setTopLikedSolutions(response.data);
+      } catch (error) {
+        console.error('Error fetching top liked solutions:', error);
+      }
+    };
+
+    fetchTopLikedSolutions();
+  }, []);
 
 
-  // console.log("topLikedSolutions : ", topLikedSolutions);
 
   //랜덤으로 개발자 소개 (3명)
   const [randomDevelopers, setRandomDevelopers] = useState([]);
@@ -29,22 +39,16 @@ export const MainRecommend = ({ solutionData, getDevelopers }) => {
 
   // 랜덤 개발자 목록 생성 함수
   const generateRandomDevelopers = (developers, size) => {
-    // const shuffled = developers.sort(() => 0.5 - Math.random());
-    // return shuffled.slice(0, size);
-    // 암호학적으로 안전한 난수 배열 생성
     const randomValues = new Uint32Array(developers.length);
     window.crypto.getRandomValues(randomValues);
-
-    // 개발자 목록을 섞습니다.
     const shuffled = developers.sort((a, b) => {
       const randomA = randomValues[developers.indexOf(a)] / 4294967295;
       const randomB = randomValues[developers.indexOf(b)] / 4294967295;
       return randomA - randomB;
     });
-
-    // 요청된 크기만큼의 개발자 목록을 반환합니다.
     return shuffled.slice(0, size);
   };
+
   // 초기 랜덤 개발자 목록 설정
   useEffect(() => {
     const randomDevs = generateRandomDevelopers(getDevelopers, 3);
@@ -56,6 +60,10 @@ export const MainRecommend = ({ solutionData, getDevelopers }) => {
   // "더보기/접기" 상태 토글 함수
   const toggleExpand = (id) => {
     setExpandedStates((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  const handleDevImageError = (e) => {
+    e.target.src = process.env.PUBLIC_URL + "/image/icons/noavatar.png";
   };
 
   return (
@@ -111,17 +119,7 @@ export const MainRecommend = ({ solutionData, getDevelopers }) => {
       </div>
 
       <div className="gap-60"></div>
-      {/* 
-      <div className="mainBanner">
-        <p className="text">Creative AI/DT Solution Courses</p>
-        <p className="subText">‘24년 새로운 AI/DT Solution 및 과제를 소개합니다.</p>
-        <hr className="line" />
-        <p className="subText"> No. 1 기술전문회사로 도약하기 위해서 우리의 본업인 현장 경쟁력 강화를 위해 AI/DT전문가 양성하였습니다. <br></br>
-          우리 회사 IT 전문가들의 잠재능력을 유감없이 보여주는 여러가지 사례와 과제들을 확인해보세요.</p>
-        <button type="button" className="bannerBtn">
-          <Link to="/portfolio" className="text">See More</Link>
-        </button>
-      </div> */}
+
       <div className="mainBanner">
         <div className="left">
           <p className="text">Creative AI/DT Solution Courses</p>
@@ -211,6 +209,7 @@ export const MainRecommend = ({ solutionData, getDevelopers }) => {
                 src={process.env.PUBLIC_URL + developer.dev_img}
                 className="personCircle"
                 alt="developer_img"
+                onError={handleDevImageError}
               />
               <Typography
                 variant="body2"

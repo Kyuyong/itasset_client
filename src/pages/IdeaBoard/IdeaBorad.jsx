@@ -64,17 +64,17 @@ const IdeaBorad = () => {
 
       <div className="wrapp">
         <div className="sideMenu">
-          <div className="menuNm">Menu 01</div>
-          <div className="menuNm">Menu 01</div>
-          <div className="menuNm">Menu 01</div>
-          <div className="menuNm">Menu 01</div>
-          <div className="menuNm">Menu 01</div>
+          <div className="menuNm">아이디어 등록</div>
+          <div className="menuNm">팀 구성</div>
+          <div className="menuNm">Solution 등록</div>
+          <div className="menuNm">진행률 관리</div>
+          <div className="menuNm">과제 평가</div>
 
 
         </div>
         <div className="contents">
           <h1>
-            IdeaBorad
+            IdeaBorad (화면 구성 중)
           </h1>
           <button>아이디어 등록</button>
           <DataTable slug="idea" columns={columns} rows={rows} />

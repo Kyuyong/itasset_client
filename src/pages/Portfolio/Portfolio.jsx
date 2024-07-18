@@ -4,7 +4,7 @@ import PortNavbar from "./PortNavbar/PortNavbar";
 import Hero from "./hero/Hero";
 import Parallax from "./Parallax/Parallax";
 import Solutions from "./Solutions/Solutions";
-import Services from "./Services/Services";
+// import Services from "./Services/Services";
 import Cursor from "./Cursor/Cursor";
 
 const Portfolio = () => {
@@ -53,9 +53,9 @@ const Portfolio = () => {
       <section id="Target">
         <Parallax />
       </section>
-      <section id="Services">
+      {/* <section id="Services">
         <Services />
-      </section>
+      </section> */}
       <section id="Solutions">
         <Solutions />
       </section>

@@ -56,6 +56,10 @@ export const ProductContent = ({ solutionData, productId, getDevelopers }) => {
     return <div dangerouslySetInnerHTML={{ __html: cleanHTML }} />;
   };
 
+  const handleDevImageError = (e) => {
+    e.target.src = process.env.PUBLIC_URL + "/image/icons/noavatar.png";
+  };
+
   return (
     <div className="productContent">
       <div className="contentBox">
@@ -108,11 +112,19 @@ export const ProductContent = ({ solutionData, productId, getDevelopers }) => {
             <div className="rightSide">
               <div className="devDesc">
                 <div className="developer">
-                  <img
+                  {/* <img
                     src={developerData?.dev_img ?
                       `${process.env.PUBLIC_URL}${developerData.dev_img}` :
                       `${process.env.PUBLIC_URL}/image/developer/basic.jpg`}
-                    className="devImg" alt="devImg" />
+                    className="devImg" alt="devImg"
+                    onError={handleDevImageError}
+                  /> */}
+                  <img
+                    src={`${process.env.PUBLIC_URL}${developerData?.dev_img}`}
+                    className="devImg"
+                    alt="devImg"
+                    onError={handleDevImageError}
+                  />
                   <div>
                     <span style={{ color: '#585858' }}>{solutionData.headquarters} </span>
                     <span style={{ color: '#1CA8DB' }}>{solutionData.team} </span>

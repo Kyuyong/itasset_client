@@ -25,11 +25,17 @@ export const SolutionBox = ({ id, solName, solFullName, korName, url, img }) => 
     }
   };
 
+  const handleImageError = (e) => {
+    e.target.src = process.env.PUBLIC_URL + "/image/error/noimage.png";
+  };
+
   return (
     <div className="solutionBox">
       <div className="imgBox">
         <img src={process.env.PUBLIC_URL + img}
-          alt="solutionImg" />
+          alt="solutionImg"
+          onError={handleImageError}
+        />
         <div className="overlayWrap">
           <div className="overlayBox">
             <div className="left">

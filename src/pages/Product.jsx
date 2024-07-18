@@ -156,6 +156,9 @@ export const Product = ({ getDevelopers }) => {
     navigate(`/product/${productId}/pncrdetail/${row.id}`);
   };
 
+  const handleImageError = (e) => {
+    e.target.src = process.env.PUBLIC_URL + "/image/error/noimage.png";
+  };
 
   return (
     <div className="product" >
@@ -165,7 +168,9 @@ export const Product = ({ getDevelopers }) => {
             <div className="leftSide">
               <div className="imgBox">
                 {product && product.img && (
-                  <img src={process.env.PUBLIC_URL + product.img} alt="newsolution-box" />
+                  <img src={process.env.PUBLIC_URL + product.img} alt="newsolution-box"
+                    onError={handleImageError}
+                  />
                 )}
               </div>
               <div className="btnList">

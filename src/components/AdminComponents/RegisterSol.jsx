@@ -32,6 +32,8 @@ export const RegisterSol = ({ onSubmit }) => {
   }, []);
   ////////////////////////
 
+  // console.log("getsolution: 3prerpperrep ", getsolutions);
+
   ////////////////////////
   // Solution 등록 선언 구간 
   const [solution, setSolution] = useState({

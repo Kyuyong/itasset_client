@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { BsLockFill } from 'react-icons/bs';
 import { LuClipboardEdit } from "react-icons/lu";
-import { BsClipboardData } from "react-icons/bs";
-import { AiOutlineDashboard } from "react-icons/ai";
+// import { BsClipboardData } from "react-icons/bs";
+// import { AiOutlineDashboard } from "react-icons/ai";
 import { FaCode } from "react-icons/fa6";
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import { AuthContext } from '../context/authContext';
@@ -45,14 +45,14 @@ export const MainNavBar = () => {
             <LuClipboardEdit size={24} />
             <span>Idea 등록</span>
           </Link>
-          <Link to="/solmgmt" className="menu regLink">
+          {/* <Link to="/solmgmt" className="menu regLink">
             <BsClipboardData size={24} />
             <span>Sol Mgmt</span>
           </Link>
           <Link to="/dashboard" className="menu regLink">
             <AiOutlineDashboard size={24} />
             <span>DashBoard</span>
-          </Link>
+          </Link> */}
           <Link to="/portfolio" className="menu regLink">
             <FaCode size={24} />
             <span>Working Group</span>
