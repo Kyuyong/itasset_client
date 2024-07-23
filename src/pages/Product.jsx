@@ -134,7 +134,7 @@ export const Product = ({ getDevelopers }) => {
           n_name: currentUser.name,
           team: currentUser.deptName,
           headqt: currentUser.prntDeptName,
-          date: new Date().toISOString(),
+          date: format(new Date(), 'yyyy-MM-dd HH:mm'),
           category: 'connect',
         };
 
