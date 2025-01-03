@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import SolutionBox from './SolutionBox';
+import SolutionBox from '../SolutionBox';
+import "./main.scss";
 
 
 export const SearchList = ({ searchResults }) => {

@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-import MainContents from "../components/MainContents";
-import MiddleNavBar from "../components/MiddleNavBar";
-import MainRecommend from "../components/MainRecommend";
-import SearchList from "../components/SearchList";
-import AllSolution from '../components/AllSolution';
-import WorkField from '../components/WorkField';
+import MainContents from "../components/MainComponents/MainContents";
+import MiddleNavBar from "../components/MainComponents/MiddleNavBar";
+import MainRecommend from "../components/MainComponents/MainRecommend";
+import SearchList from "../components/MainComponents/SearchList";
+import AllSolution from '../components/MainComponents/AllSolution';
+import WorkField from '../components/MainComponents/WorkField';
 
 // import developerData from '../json/developerdata.json';
 

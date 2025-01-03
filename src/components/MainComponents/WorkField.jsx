@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import SolutionBox from './SolutionBox';
+import SolutionBox from '../SolutionBox';
 import { useNavigate } from 'react-router-dom';
+import "./main.scss";
 
 
 export const WorkField = ({ solutionData }) => {

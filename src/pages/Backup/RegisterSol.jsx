@@ -53,7 +53,7 @@ export const RegisterSol = ({ onSubmit }) => {
     setFile(e.target.files[0]);
   };
 
-  console.log("업로드 file: ", file);
+  // console.log("업로드 file: ", file);
 
   // const upload = async () => {
   //   try {

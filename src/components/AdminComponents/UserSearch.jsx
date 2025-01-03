@@ -34,10 +34,10 @@ export const UserSearch = () => {
       return;
     }
     const filteredResults = user.filter(user =>
-      user.n_id.toLowerCase().includes(value) ||
-      user.name.toLowerCase().includes(value) ||
-      user.team.toLowerCase().includes(value) ||
-      user.headquarters.toLowerCase().includes(value)
+      user.n_id?.toLowerCase().includes(value) ||
+      user.name?.toLowerCase().includes(value) ||
+      user.team?.toLowerCase().includes(value) ||
+      user.headquarters?.toLowerCase().includes(value)
     );
 
     setSearchResults(filteredResults);

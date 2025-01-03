@@ -46,6 +46,7 @@ const DataTable = ({ columns, rows, onRowClick }) => {
             },
           },
         }}
+        pageSizeOptions={[5, 10, 15]}
         components={{
           Toolbar: GridToolbar,
         }}
@@ -55,7 +56,7 @@ const DataTable = ({ columns, rows, onRowClick }) => {
             quickFilterProps: { debounceMs: 500 }
           }
         }}
-        pageSizeOptions={[5]}
+        // pageSizeOptions={[5]}
         // checkboxSelection
         disableRowSelectionOnClick
         disableColumnFilter

@@ -1,26 +1,55 @@
 import "./admin.scss";
-import { Button, Container, Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow, TextField, Typography } from '@mui/material';
+import {
+  Button, Container, Dialog, DialogActions,
+  DialogContent, DialogTitle, Grid, TextField, Typography
+} from '@mui/material';
 import React, { useEffect, useState } from 'react'
-import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import axios from 'axios';
 import UserSearch from './UserSearch';
+import DataTable from "../DataTable/DataTable";
 
 export const RegisterDev = () => {
 
+  const [getDevelopers, setGetDevelopers] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
   const [developerInfo, setDeveloperInfo] = useState({
     n_id: '',
     introduction: '',
   });
-  const maxChars = 300; // 개발자 소개글 최대 문자 수
   const [file, setFile] = useState(null);
-  const [getDevelopers, setGetDevelopers] = useState([]);
+  const maxChars = 300; // 개발자 소개글 최대 문자 수
+
+  // Fetch developers
+  const fetchDevelopers = async () => {
+    try {
+      const response = await axios.get("/api/developers/getdeveloper");
+      setGetDevelopers(response.data);
+    } catch (error) {
+      console.error("개발자 목록 가져오기 실패:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchDevelopers();
+  }, []);
+
+
 
   const handleInputChange = (e) => {
     setDeveloperInfo({ ...developerInfo, [e.target.name]: e.target.value });
   };
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+  // const handleFileChange = (e) => {
+  //   setFile(e.target.files[0]);
+  // };
+
+
+  // Handle modal open/close
+  const handleOpenModal = () => setOpenModal(true);
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    setDeveloperInfo({ n_id: "", introduction: "" });
+    setFile(null);
   };
 
   const upload = async () => {
@@ -43,63 +72,179 @@ export const RegisterDev = () => {
     }
   };
 
-  const handleAddDeveloper = async (e) => {
-    e.preventDefault();
-    const dev_img = (await upload()).filePath;
-    const developerData = { ...developerInfo, dev_img };
+  // Handle developer registration
+  const handleRegisterDeveloper = async () => {
     try {
-      const response = await axios.post("/api/developers/registerdev", developerData, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
+      const img = await upload();
+      const developerData = { ...developerInfo, img };
+      const response = await axios.post(
+        "/api/developers/registerdev",
+        developerData,
+        { headers: { "Content-Type": "application/json" } }
+      );
       if (response.status === 200) {
-        console.log("서버로부터 받은 데이터:", response.data);
-        setGetDevelopers((prevDevelopers) => [...prevDevelopers, response.data]);
-        setDeveloperInfo({
-          n_id: '',
-          introduction: ''
-        });
-        alert('개발자 등록 성공하였습니다.');
+        alert("개발자 등록 성공!");
+        fetchDevelopers(); // Refresh list
+        handleCloseModal(); // Close modal
       } else {
-        throw new Error('개발자 등록에 실패했습니다.');
+        throw new Error("등록 실패");
       }
     } catch (error) {
-      let errorMessage = '개발자 등록 실패';
-      if (error.response && error.response.status === 409) {
-        errorMessage = error.response.data;
-      } else {
-        errorMessage = `솔루션 등록 실패: ${error.message}`;
-      }
-      alert(errorMessage);
-      console.error('솔루션 등록 중 에러 발생', error);
+      console.error("개발자 등록 실패:", error);
+      alert("개발자 등록 중 오류가 발생했습니다.");
     }
-    setDeveloperInfo({
-      n_id: '',
-      introduction: ''
-    })
   };
 
-  const fetchDevelopers = async () => {
-    try {
-      const response = await axios.get("/api/developers/getdeveloper");
-      setGetDevelopers(response.data);
-    } catch (error) {
-      console.log("개발자 가져올때 오류가 발생했습니다.", error);
-    };
-  };
-  useEffect(() => {
-    fetchDevelopers();
-  }, []);
-  // console.log(developerInfo.introduction.length);
+
+  // DataTable columns
+  const columns = [
+    { field: "n_id", headerName: "사번", width: 150 },
+    { field: "name", headerName: "성명", width: 200 },
+    { field: "team", headerName: "팀", width: 200 },
+    { field: "headquarters", headerName: "담당", width: 200 },
+    {
+      field: "introduction",
+      headerName: "개발자 소개글",
+      width: 400,
+      renderCell: (params) => (
+        <div
+          style={{
+            maxWidth: "350px",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+          }}
+          title={params.value}
+        >
+          {params.value}
+        </div>
+      ),
+    },
+  ];
+
+  // const rows = getDevelopers.map((developer, index) => ({
+  //   ...developer,
+  //   id: index, // 또는 developer의 고유 필드
+  // }));
+
+
+  // const handleAddDeveloper = async (e) => {
+  //   e.preventDefault();
+  //   const dev_img = (await upload()).filePath;
+  //   const developerData = { ...developerInfo, dev_img };
+  //   try {
+  //     const response = await axios.post("/api/developers/registerdev", developerData, {
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       }
+  //     });
+  //     if (response.status === 200) {
+  //       console.log("서버로부터 받은 데이터:", response.data);
+  //       setGetDevelopers((prevDevelopers) => [...prevDevelopers, response.data]);
+  //       setDeveloperInfo({
+  //         n_id: '',
+  //         introduction: ''
+  //       });
+  //       alert('개발자 등록 성공하였습니다.');
+  //     } else {
+  //       throw new Error('개발자 등록에 실패했습니다.');
+  //     }
+  //   } catch (error) {
+  //     let errorMessage = '개발자 등록 실패';
+  //     if (error.response && error.response.status === 409) {
+  //       errorMessage = error.response.data;
+  //     } else {
+  //       errorMessage = `솔루션 등록 실패: ${error.message}`;
+  //     }
+  //     alert(errorMessage);
+  //     console.error('솔루션 등록 중 에러 발생', error);
+  //   }
+  //   setDeveloperInfo({
+  //     n_id: '',
+  //     introduction: ''
+  //   })
+  // };
+
 
   return (
     <div className="registerDev">
       <div className="gap-40"></div>
 
       <Container maxWidth="xl">
-        <Grid container spacing={2}>
-          {/* Admin 계정 등록 섹션 */}
+        <Grid container alignItems="center" justifyContent="space-between" spacing={2}>
+          <Grid item xs>
+            <Typography component="h1" variant="h5" className="title">
+              <ListAltIcon /> 개발자 등록 List
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Button variant="contained" color="primary" onClick={handleOpenModal}>
+              개발자 등록
+            </Button>
+          </Grid>
+        </Grid>
+        <div style={{ marginTop: "20px" }}>
+          <DataTable
+            rows={getDevelopers}
+            columns={columns}
+            onRowClick={(params) => {
+              console.log("클릭된 데이터:", params.row);
+            }}
+          />
+        </div>
+
+        {/* Register Developer Modal */}
+        <Dialog open={openModal} onClose={handleCloseModal}>
+          <DialogTitle>개발자 등록</DialogTitle>
+          <DialogContent>
+            <TextField
+              margin="normal"
+              label="사번 (N-ID)"
+              fullWidth
+              name="n_id"
+              value={developerInfo.n_id}
+              onChange={handleInputChange}
+              required
+            />
+            <TextField
+              margin="normal"
+              label="개발자 소개글"
+              fullWidth
+              name="introduction"
+              multiline
+              rows={4}
+              value={developerInfo.introduction}
+              onChange={handleInputChange}
+              helperText={`등록한 글자 수: ${developerInfo.introduction.length} / 최대 글자 수 : ${maxChars}`}
+            />
+            {/* <input
+              type="file"
+              onChange={handleFileChange}
+              style={{ marginTop: "16px" }}
+            /> */}
+            <hr style={{ marginTop: '30px', marginBottom: '30px' }} />
+
+            <UserSearch
+              onUserSelect={(user) => {
+                setDeveloperInfo((prev) => ({ ...prev, n_id: user.n_id }));
+                alert(`${user.name} (${user.n_id}) 구성원이 선택되었습니다.`);
+              }}
+            />
+
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseModal} color="secondary">
+              취소
+            </Button>
+            <Button onClick={handleRegisterDeveloper} variant="contained" color="primary">
+              등록
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </Container>
+
+      <Container maxWidth="xl">
+        {/* <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <Typography component="h1" variant="h5" className="title" style={{ marginBottom: '20px' }}>
               <AssignmentIndIcon />개발자 등록
@@ -140,16 +285,14 @@ export const RegisterDev = () => {
               </Button>
             </form>
           </Grid>
-
-          {/* Admin 계정 리스트 섹션 */}
           <Grid item xs={12} md={6}>
             <UserSearch />
           </Grid>
 
-        </Grid>
+        </Grid> */}
       </Container>
 
-      <hr style={{ margin: '0 auto', width: '93%', marginTop: '20px' }} />
+      {/* <hr style={{ margin: '0 auto', width: '93%', marginTop: '20px' }} />
 
       <Container component="main" maxWidth="xl">
         <Grid container alignItems="center" justifyContent="space-between" spacing={2} sx={{ mt: 3, mb: 2 }}>
@@ -205,7 +348,7 @@ export const RegisterDev = () => {
       </Container>
       <div className="gap-100"></div>
       <div className="gap-100"></div>
-      <div className="gap-100"></div>
+      <div className="gap-100"></div> */}
     </div>
   )
 }

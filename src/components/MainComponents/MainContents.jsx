@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { BsSearch } from 'react-icons/bs';
+import "./main.scss";
 
 export const MainContents = ({ solutionData, onSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');

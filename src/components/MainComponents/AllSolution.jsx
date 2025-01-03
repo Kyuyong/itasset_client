@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import SolutionBox from './SolutionBox';
+import SolutionBox from '../SolutionBox';
+import "./main.scss";
 
 
 export const AllSolution = ({ solutionData }) => {
@@ -8,8 +9,6 @@ export const AllSolution = ({ solutionData }) => {
   useEffect(() => {
     setCount(solutionData.length);
   }, [solutionData]);
-
-  // console.log("All Solution Data 로그값 : ",solutionData);
 
 
   return (

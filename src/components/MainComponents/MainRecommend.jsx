@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import SolutionBox from './SolutionBox';
+import SolutionBox from '../SolutionBox';
 import { Link } from 'react-router-dom';
 import { BsFillStarFill } from 'react-icons/bs';
 import { Box, Button, Typography } from '@mui/material';
 import axios from 'axios';
+import "./main.scss";
 
 export const MainRecommend = ({ solutionData, getDevelopers }) => {
 
@@ -14,7 +15,7 @@ export const MainRecommend = ({ solutionData, getDevelopers }) => {
     setLatestSolutions(sortedSolutions.slice(0, 4));
   }, [solutionData]);
 
-  console.log("soltuiondata: ", solutionData);
+  // console.log("soltuiondata: ", solutionData);
 
   // 좋아요 등록수 많은 Solutions
   const [topLikedSolutions, setTopLikedSolutions] = useState([]);

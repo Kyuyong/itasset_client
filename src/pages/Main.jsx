@@ -12,8 +12,6 @@ import RequireAdmin from "../components/AdminComponents/RequireAdmin";
 // Page List
 import Home from './Home';
 import Product from './Product';
-import Introduction from './Introduction';
-import FileUpload from './FileUpload';
 import Admin from './Admin';
 import { AuthContext } from '../context/authContext';
 import IdeaBorad from './IdeaBoard/IdeaBorad';
@@ -66,12 +64,11 @@ export const Main = () => {
         <Routes>
           <Route path="*" element={<Home getDevelopers={getDevelopers} />} />
           <Route path="/product/:productId/*" element={<Product getDevelopers={getDevelopers} />} />
-          <Route path="/introduction" element={<Introduction />}></Route>
           <Route path="/portfolio" element={<Portfolio />}></Route>
           {currentUser && currentUser.isAdmin && (
             <Route path="/controlpanel/*" element={<RequireAdmin><Admin /></RequireAdmin>} />
           )}
-          <Route path="/fileupload" element={<FileUpload />} />
+          {/* <Route path="/fileupload" element={<FileUpload />} /> */}
           <Route path="/idearegister" element={<IdeaBorad />} />
           <Route path="/solmgmt" element={<SolMgmt />} />
           <Route path="/dashboard" element={<DashBoard />} />
